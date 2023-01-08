@@ -1,0 +1,139 @@
+/* CUSTOM SIDEBAR */
+.sidebar {
+  width: 300px;
+  height: 100vh;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  transition: all ease-in-out 0.2s;
+  box-sizing: border-box;
+}
+.sidebar.is-collapse {
+  width: 65px !important;
+  transition: all ease-in-out 0.2s;
+}
+.sidebar.is-collapse * .menu-name {
+  display: none;
+}
+.sidebar.is-collapse * #logo {
+  display: none;
+}
+.sidebar.is-collapse:hover {
+  width: 300px !important;
+  transition: all ease-in-out 0.2s;
+}
+.sidebar.is-collapse:hover * .menu-name {
+  display: block;
+}
+.sidebar.is-collapse:hover * #logo {
+  display: block;
+}
+.sidebar.is-collapse * #toggle-sidebar {
+  height: 30px;
+  width: 50px;
+}
+.sidebar.is-collapse:hover * #toggle-sidebar {
+  height: 30px;
+  width: 30px;
+}
+.sidebar.is-collapse * .icon-logout {
+  display: block;
+}
+.sidebar.is-collapse:hover * .icon-logout {
+  display: none;
+}
+#toggle-sidebar {
+  border-radius: 10px;
+  background-color: #eff2f4;
+  height: 30px;
+  width: 30px;
+  margin-left: auto;
+  padding: 2px;
+}
+#toggle-sidebar:hover {
+  background-color: #c1dbec !important;
+}
+
+.icon-toggle {
+  vertical-align: middle !important;
+}
+.menu-item {
+  cursor: pointer;
+  display: flex;
+  background-color: #eff2f4;
+  border-radius: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 8px;
+}
+.menu-item:hover {
+  background-color: #dceaf3;
+}
+.menu-item-dropdown {
+  cursor: pointer;
+  background-color: #eff2f4;
+  border-radius: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 8px;
+}
+.menu-item-dropdown:hover {
+  background-color: #dceaf3;
+}
+.sub-menu {
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
+  border-radius: 5px;
+  color: #0173a7;
+}
+.sub-menu:hover {
+  background-color: #eff2f4;
+  color: #0173a7;
+}
+.menu-logout {
+  background-color: #0173a7;
+}
+.menu-logout:hover {
+  background-color: #5fabcf !important;
+}
+.icon-logout {
+  display: none;
+}
+
+/* CUSTOM MAIN CONTENT */
+.main-content{
+  height: 100vh;
+  overflow: auto;
+  overflow-anchor: none;
+}
+
+/* CUSTOM USABLE */
+
+.is-active {
+  background-color: #c1dbec;
+}
+.card {
+  border: none !important;
+}
+.bg-talent {
+  background-color: #0173a7 !important;
+}
+.text-talent {
+  color: #0173a7 !important;
+}
+.bg-menu {
+  background-color: #eff2f4 !important;
+}
+.bg-menu:hover {
+  background-color: #c1dbec !important;
+}
+.menu-name {
+  margin-left: 5px;
+}
+.clickable {
+  cursor: pointer;
+}
