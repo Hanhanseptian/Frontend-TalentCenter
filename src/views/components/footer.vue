@@ -1,8 +1,8 @@
 <template>
-  <div class="sticky-bottom pb-1 pt-1" style="background-color:#eff2f4">
-      <div class="d-flex">
+  <div class="sticky-bottom pb-1 pt-1 mt-5" style="background-color:#eff2f4">
+      <div class="d-flex fs-12">
         <span class="text-talent">Copyright@ 2023 PT Haromoni Mitra Jayandra</span>
-        <span class="text-talent ms-auto">version 1.0.0</span>
+        <span class="text-talent ml-auto">version 1.0.0</span>
       </div>
   </div>
 </template>

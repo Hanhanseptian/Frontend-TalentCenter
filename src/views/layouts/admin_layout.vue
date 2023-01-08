@@ -35,7 +35,7 @@
           >
             <i class="bi bi-menu-button-fill"></i>
             <div class="menu-name">Manage Talents</div>
-            <i class="ms-auto bi bi-chevron-down menu-name"></i>
+            <i class="ml-auto bi bi-chevron-down menu-name"></i>
           </div>
           <div class="collapse mt-1" id="collapse-menu">
             <router-link

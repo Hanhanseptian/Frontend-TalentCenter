@@ -105,7 +105,7 @@
 }
 
 /* CUSTOM MAIN CONTENT */
-.main-content{
+.main-content {
   height: 100vh;
   overflow: auto;
   overflow-anchor: none;
@@ -136,4 +136,102 @@
 }
 .clickable {
   cursor: pointer;
+}
+.card-header {
+  border: none !important;
+  background-color: white !important;
+}
+.fs-10 {
+  font-size: 10px;
+}
+.fs-12 {
+  font-size: 12px;
+}
+.rounded-talent {
+  border-radius: 8px !important;
+}
+.form-talent {
+  border-top-right-radius: 10px !important;
+  border-bottom-right-radius: 10px !important;
+  color: #0173a7 !important;
+  border-left: none !important;
+  font-size: 12px !important;
+  height: 2rem !important;
+  margin-left: -5px !important;
+  width: 15rem !important;
+}
+.form-talent:focus {
+  box-shadow: none !important;
+  border-color: #55bcec !important;
+}
+.input-group-text {
+  border-top-left-radius: 10px !important;
+  border-bottom-left-radius: 10px !important;
+  border-right: none !important;
+  border-color: #0173a7 !important;
+  color: #0173a7 !important;
+}
+.input-group:focus-within {
+  box-shadow: 2px 2px 2px #0173a7 !important;
+  border-radius: 10px !important;
+}
+.input-group:focus-within .input-group-text {
+  border-color: #55bcec !important;
+}
+.form-talent {
+  border-color: #0173a7 !important;
+}
+::placeholder {
+  color: #033349 !important;
+  opacity: 0.4 !important;
+}
+.sr-only {
+  display: none !important;
+}
+.btn-talent {
+  background-color: #0173a7 !important;
+}
+.btn-talent:hover {
+  opacity: 0.7;
+}
+.custom-select {
+  border-color: #0173a7 !important;
+  color: #0173a7 !important;
+  font-size: 12px !important;
+  border-radius: 10px !important;
+}
+.custom-select:focus {
+  box-shadow: 2px 2px 2px #0173a7 !important;
+}
+.page-link {
+  background-color: #c1dbec !important;
+  color: #0173a7 !important;
+  font-size: 12px !important;
+  border: none !important;
+}
+.page-link:hover {
+  opacity: 0.7;
+}
+.page-link:focus {
+  box-shadow: none !important;
+}
+.active .page-link {
+  background-color: #81c1df !important;
+}
+.badge {
+  border-radius: 10px !important;
+}
+.bgtl-warning {
+  background-color: #fecd08 !important;
+  color: white !important;
+}
+.bgtl-success {
+  background-color: #57d86c !important;
+  color: white !important;
+}
+.btn-xs{
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  padding-left: 4px !important;
+  padding-right: 4px !important;
 }

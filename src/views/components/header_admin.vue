@@ -1,11 +1,11 @@
 <template>
   <b-card class="shadow sticky-top">
     <div class="d-flex">
-      <span class="mx-auto text-talent h4">TALENT CENTER</span>
+      <span class="mx-auto text-talent">TALENT CENTER</span>
     </div>
     <div
       style="position: absolute; right: 0; top: 0"
-      class="d-flex align-items-center mt-2 me-2"
+      class="d-flex align-items-center mt-2 mr-2"
     >
       <i class="bi bi-bell h5"></i>
       <b-badge
@@ -19,7 +19,7 @@
         "
         >10</b-badge
       >
-      <span class="me-2 text-talent">Admin</span>
+      <span class="mr-2 text-talent">Admin</span>
       <i class="bi bi-person-circle h2 text-talent"></i>
     </div>
   </b-card>
