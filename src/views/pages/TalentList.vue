@@ -65,7 +65,7 @@ export default {
             key: "no",
             thClass: "text-talent text-center fs-12",
             tdClass: "fs-12 text-talent text-center",
-            thStyle: "background-color: #c1dbec;width:2%",
+            thStyle: "background-color: #c1dbec;width:5%",
           },
           {
             key: "name",

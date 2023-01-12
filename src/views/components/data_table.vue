@@ -3,7 +3,7 @@
     <b-table
       hover
       responsive
-
+      small
       :per-page="per_page"
       :current-page="current_page"
       :fields="data.fields"
@@ -55,17 +55,46 @@
         </div>
       </template>
 
+      <!-- CELL PASSWORD -->
+      <template #cell(password)>
+        <span>12h68902hjKASA</span>
+      </template>
+
       <!-- CELL ACTION -->
       <template #cell(action)>
         <div class="d-flex">
-          <button class="btn btn-outline-success btn-xs ml-auto">
+          <button
+            class="btn btn-outline-success btn-xs ml-auto"
+            v-b-tooltip.hover="{ variant: 'info' }"
+            title="Lihat Detail"
+          >
             <i class="bi bi-eye"></i>
           </button>
-          <button class="btn btn-outline-info btn-xs mx-1">
+          <button
+            class="btn btn-outline-info btn-xs mx-1"
+            v-b-tooltip.hover="{ variant: 'info' }"
+            title="Edit"
+          >
             <i class="bi bi-pencil-square"></i>
           </button>
-          <button class="btn btn-outline-danger btn-xs mr-auto">
+          <button
+            class="btn btn-outline-danger btn-xs mr-auto"
+            v-b-tooltip.hover="{ variant: 'info' }"
+            title="Delete"
+          >
             <i class="bi bi-trash"></i>
+          </button>
+        </div>
+      </template>
+
+      <!-- CELL ACTION WAITING -->
+      <template #cell(action_hired)>
+        <div class="d-flex">
+          <button class="badge btn-success btn-sm btn ml-auto mr-1 px-2 py-1">
+            <span class="fs-10">Approve</span>
+          </button>
+          <button class="badge btn-danger btn-sm btn mr-auto px-3 py-1">
+            <span class="fs-10">Reject</span>
           </button>
         </div>
       </template>
@@ -102,7 +131,14 @@
 </template>
 
 <script>
-import { BTable, BFormSelect, BAvatar, BPagination } from "bootstrap-vue";
+import {
+  BTable,
+  BFormSelect,
+  BAvatar,
+  BPagination,
+  BButton,
+  VBTooltip,
+} from "bootstrap-vue";
 
 export default {
   name: "data_table",
@@ -111,6 +147,7 @@ export default {
     BFormSelect,
     BPagination,
     BAvatar,
+    BButton,
   },
 
   props: {
@@ -123,6 +160,9 @@ export default {
       page_options: [3, 5, 10],
       current_page: 1,
     };
+  },
+  directives: {
+    "b-tooltip": VBTooltip,
   },
 };
 </script>

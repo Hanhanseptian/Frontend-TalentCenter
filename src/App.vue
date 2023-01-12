@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <admin_layout />
+    <!-- <router-view /> -->
   </div>
 </template>
 <script>

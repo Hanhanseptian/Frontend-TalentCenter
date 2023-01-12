@@ -19,8 +19,8 @@
         "
         >10</b-badge
       >
-      <span class="mr-2 text-talent">Admin</span>
-      <i class="bi bi-person-circle h2 text-talent"></i>
+      <span class="mr-2 text-talent fs-12">Admin</span>
+      <i class="bi bi-person-circle h4 mt-1 text-talent"></i>
     </div>
   </b-card>
 </template>
