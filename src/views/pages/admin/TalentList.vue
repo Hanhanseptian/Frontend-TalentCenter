@@ -3,18 +3,26 @@
     <!-- BREADCUMB -->
     <div class="d-flex align-items-center mb-3">
       <span>Manage Talents |</span>
-      <i class="bi bi-person-fill-check mx-1 fs-10 mt-1"></i>
+      <i class="bi bi-list-check mx-1 fs-10 mt-1"></i>
       <i class="bi bi-chevron-right fs-10 mt-1"></i>
-      <small class="fs-12 mt-1">Talent on Job</small>
+      <small class="fs-12 mt-1">Talent List</small>
     </div>
     <!-- MAIN CONTENT -->
     <b-card no-body>
       <b-card-header class="d-flex align-items-center">
         <div>
-          <span>Talent on Job</span> <br />
-          <small class="fs-10">Showing All of Talents on Job</small>
+          <span>Talent List</span> <br />
+          <small class="fs-10">Showing All of Available Talents</small>
         </div>
         <div class="ml-auto">
+          <button
+            class="btn btn-talent text-white shadow btn-sm rounded-talent"
+          >
+            <i class="bi bi-person-plus-fill mr-1"></i>
+            <span class="fs-12">Add Talent</span>
+          </button>
+        </div>
+        <div class="ml-2">
           <div class="input-group input-group-sm">
             <span class="input-group-text bg-white">
               <i class="bi bi-search fs-12"></i>
@@ -36,10 +44,10 @@
 </template>
 <script>
 import { BCard, BCardHeader, BCardBody, BTable } from "bootstrap-vue";
-import data_table from "../components/data_table.vue";
+import data_table from "../../components/data_table.vue";
 
 export default {
-  name: "TalentOnJob",
+  name: "TalentList",
   components: {
     BCard,
     BCardHeader,

@@ -3,16 +3,16 @@
     <!-- BREADCUMB -->
     <div class="d-flex align-items-center mb-3">
       <span>Manage Talents |</span>
-      <i class="bi bi-clipboard-check-fill mx-1 fs-10 mt-1"></i>
+      <i class="bi bi-person-fill-check mx-1 fs-10 mt-1"></i>
       <i class="bi bi-chevron-right fs-10 mt-1"></i>
-      <small class="fs-12 mt-1">Waiting Hired List</small>
+      <small class="fs-12 mt-1">Talent on Job</small>
     </div>
     <!-- MAIN CONTENT -->
     <b-card no-body>
       <b-card-header class="d-flex align-items-center">
         <div>
-          <span>Waiting Hired List</span> <br />
-          <small class="fs-10">Showing All of Waiting Talent Hired List</small>
+          <span>Talent on Job</span> <br />
+          <small class="fs-10">Showing All of Talents on Job</small>
         </div>
         <div class="ml-auto">
           <div class="input-group input-group-sm">
@@ -36,10 +36,10 @@
 </template>
 <script>
 import { BCard, BCardHeader, BCardBody, BTable } from "bootstrap-vue";
-import data_table from "../components/data_table.vue";
+import data_table from "../../components/data_table.vue";
 
 export default {
-  name: "WaitingHiredList",
+  name: "TalentOnJob",
   components: {
     BCard,
     BCardHeader,
@@ -84,7 +84,13 @@ export default {
             thStyle: "background-color: #c1dbec;width:5%",
           },
           {
-            key: "action_hired",
+            key: "status",
+            thClass: "text-talent text-center fs-12",
+            tdClass: "fs-12 text-talent text-center",
+            thStyle: "background-color: #c1dbec;width:10%",
+          },
+          {
+            key: "action",
             thClass: "text-talent text-center fs-12",
             tdClass: "fs-12 text-talent text-center",
             thStyle: "background-color: #c1dbec;width:15%",

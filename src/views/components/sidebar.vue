@@ -15,7 +15,7 @@
     </div>
     <div class="menu mt-5">
       <router-link
-        to="/"
+        to="/admin/dashboard"
         class="menu-item text-talent text-decoration-none"
         :class="active_route == 'Dashboard' ? 'is-active' : ''"
       >
@@ -39,7 +39,7 @@
         </div>
         <div class="collapse mt-1" id="collapse-menu">
           <router-link
-            to="/talent-list"
+            to="/admin/talent-list"
             class="sub-menu text-decoration-none"
             :class="active_route == 'Talent List' ? 'is-active' : ''"
           >
@@ -47,7 +47,7 @@
             <div class="menu-name">Talent List</div>
           </router-link>
           <router-link
-            to="/waiting-hired-list"
+            to="/admin/waiting-hired-list"
             class="sub-menu text-decoration-none"
             :class="active_route == 'Waiting Hired List' ? 'is-active' : ''"
           >
@@ -55,7 +55,7 @@
             <div class="menu-name">Waiting Hired List</div>
           </router-link>
           <router-link
-            to="/talent-on-job"
+            to="/admin/talent-on-job"
             class="sub-menu text-decoration-none"
             :class="active_route == 'Talent on Job' ? 'is-active' : ''"
           >
@@ -65,7 +65,7 @@
         </div>
       </div>
       <router-link
-        to="/manage-user"
+        to="/admin/manage-user"
         class="menu-item text-talent text-decoration-none"
         :class="active_route == 'Manage User' ? 'is-active' : ''"
       >
@@ -76,12 +76,11 @@
         class="menu-item menu-logout text-white"
         style="position: absolute; bottom: 0"
       >
-        <i class="bi bi-box-arrow-right icon-logout"></i>
         <div
           class="menu-name"
-          style="padding-left: 4.46rem; padding-right: 4.46rem"
+          style="padding-left: 4.44rem; padding-right: 4.44rem;font-size:12px"
         >
-          Logout
+          Sign Out
         </div>
       </div>
     </div>
@@ -100,7 +99,7 @@ export default {
     return {
       is_collapse: false,
       sub_menu_collapse:false,
-      active_route: this.$route,
+      active_route: this.$route.name,
     };
   },
   methods: {

@@ -5,10 +5,27 @@
       <div class="text-center">
         <img src="../../../public/logo.png" width="50%" class="my-4" />
       </div>
-      <!-- login form -->
+      <!-- register form -->
       <form class="px-5">
-        <!-- usename -->
-        <div class="mt-3">
+        <!-- pic information text -->
+        <center><span>PIC Information</span></center>
+        <!-- name -->
+        <div>
+          <label for="name" class="fs-12">Name</label>
+          <div class="d-flex">
+            <div class="icon-talent d-flex p-0 form-control mr-1">
+              <i class="bi bi-person-fill mx-auto my-auto"></i>
+            </div>
+            <input
+              type="text"
+              id="name"
+              placeholder="Input Your Name"
+              class="form-control input-talent ml-auto text-talent"
+            />
+          </div>
+        </div>
+        <!-- username -->
+        <div class="mt-2">
           <label for="username" class="fs-12">Username</label>
           <div class="d-flex">
             <div class="icon-talent d-flex p-0 form-control mr-1">
@@ -17,7 +34,7 @@
             <input
               type="text"
               id="username"
-              placeholder="Input Username or Email"
+              placeholder="Masukkan Username"
               class="form-control input-talent ml-auto text-talent"
             />
           </div>
@@ -32,7 +49,7 @@
             <input
               :type="show_password ? 'text' : 'password'"
               id="password"
-              placeholder="Input Password"
+              placeholder="Masukkan Password"
               class="form-control input-talent ml-auto text-talent"
             />
             <i
@@ -63,22 +80,38 @@
             ></i>
           </div>
         </div>
-        <!-- sign in button -->
+        <!-- email -->
+        <div class="mt-2">
+          <label for="email" class="fs-12">Email</label>
+          <div class="d-flex">
+            <div class="icon-talent d-flex p-0 form-control mr-1">
+              <i class="bi bi-envelope mx-auto my-auto"></i>
+            </div>
+            <input
+              type="text"
+              id="email"
+              placeholder="Input Company or Your Email"
+              class="form-control input-talent ml-auto text-talent"
+            />
+          </div>
+        </div>
+        <!-- sign up button -->
         <button
-          class="form-control mt-4 mb-1 text-center btn-login"
+          class="form-control mt-5 mb-1 text-center btn-login"
           @click="login"
+          disabled
         >
-          Sign In
+          Next Step
         </button>
-        <!-- to sign up link -->
+        <!-- to sign in link -->
         <center>
           <span class="fs-12">
-            Don't have an Account?
+            Already have an Account?
             <u
               class="clickable link text-talent"
-              @click="$router.push('register')"
+              @click="$router.push('login')"
             >
-              Sign Up
+              Sign In
             </u>
           </span>
         </center>
@@ -114,8 +147,8 @@ export default {
   align-items: center;
 }
 .login-form {
-  height: 60%;
-  width: 25vw;
+  height: 80%;
+  width: 30vw;
   border-radius: 1.5rem;
   margin-top: 5rem;
   margin-left: auto !important;
@@ -127,7 +160,7 @@ export default {
   border-color: #0173a7 !important;
   color: #0173a7 !important;
   font-size: 12px !important;
-  height: 2.5rem !important;
+  height: 5vh !important;
   width: 85% !important;
   background-color: #eff2f4;
 }
@@ -141,8 +174,8 @@ export default {
   border-color: #0173a7 !important;
   background-color: #eff2f4;
   font-size: 20px !important;
-  height: 2.5rem !important;
-  width: 2.5rem !important;
+  height: 5vh !important;
+  width: 5vh !important;
 }
 .btn-login {
   border-radius: 10px !important;
@@ -167,8 +200,8 @@ export default {
 }
 @media only screen and (max-width: 600px) {
   .login-form {
-    height: 50%;
-    width: 70%;
+    height: 70%;
+    width: 75%;
   }
 }
 </style>

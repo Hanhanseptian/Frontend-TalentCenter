@@ -1,24 +1,33 @@
 <template>
   <div id="app">
-    <admin_layout />
-    <!-- <router-view /> -->
+    <layout-component v-if="!isLayoutFull"/>
+    <router-view v-else/>
   </div>
 </template>
 <script>
-import admin_layout from "./views/layouts/admin_layout.vue";
+import Layouts from "./views/layouts/Layouts.vue";
 
 export default {
   name: "App",
   components: {
-    admin_layout,
+    "layout-component": Layouts,
   },
+  computed:{
+    isLayoutFull(){
+      if(this.$route.meta.full==true){
+        return true
+      }else{
+        return false
+      }
+    }
+  }
 };
 </script>
 <style>
 #app {
   font-family: "Montserrat", sans-serif !important;
 }
-body{
-  background-color: #EFF2F4 !important;
+body {
+  background-color: #eff2f4 !important;
 }
 </style>

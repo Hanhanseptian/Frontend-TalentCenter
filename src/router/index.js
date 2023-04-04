@@ -6,33 +6,67 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
+    name: "Landing Page",
+    component: () => import("../views/pages/LandingPage.vue"),
+    meta: {
+      full: true,
+    },
+  },
+  {
+    path: "/admin/dashboard",
     name: "Dashboard",
-    component: () => import("../views/pages/Dashboard.vue"),
+    component: () => import("../views/pages/admin/Dashboard.vue"),
+    meta: {
+      full: false,
+    },
   },
   {
-    path: "/talent-list",
+    path: "/admin/talent-list",
     name: "Talent List",
-    component: () => import("../views/pages/TalentList.vue"),
+    component: () => import("../views/pages/admin/TalentList.vue"),
+    meta: {
+      full: false,
+    },
   },
   {
-    path: "/waiting-hired-list",
+    path: "/admin/waiting-hired-list",
     name: "Waiting Hired List",
-    component: () => import("../views/pages/WaitingHiredList.vue"),
+    component: () => import("../views/pages/admin/WaitingHiredList.vue"),
+    meta: {
+      full: false,
+    },
   },
   {
-    path: "/talent-on-job",
+    path: "/admin/talent-on-job",
     name: "Talent on Job",
-    component: () => import("../views/pages/TalentOnJob.vue"),
+    component: () => import("../views/pages/admin/TalentOnJob.vue"),
+    meta: {
+      full: false,
+    },
   },
   {
-    path: "/manage-user",
+    path: "/admin/manage-user",
     name: "Manage User",
-    component: () => import("../views/pages/ManageUser.vue"),
+    component: () => import("../views/pages/admin/ManageUser.vue"),
+    meta: {
+      full: false,
+    },
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: () => import("../views/pages/Register.vue"),
+    meta: {
+      full: true,
+    },
   },
   {
     path: "/login",
     name: "Login",
     component: () => import("../views/pages/Login.vue"),
+    meta: {
+      full: true,
+    },
   },
 ];
 const router = new VueRouter({
