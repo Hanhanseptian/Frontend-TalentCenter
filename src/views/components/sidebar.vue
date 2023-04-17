@@ -47,12 +47,12 @@
             <div class="menu-name">Talent List</div>
           </router-link>
           <router-link
-            to="/admin/waiting-hired-list"
+            to="/admin/request-list"
             class="sub-menu text-decoration-none"
-            :class="active_route == 'Waiting Hired List' ? 'is-active' : ''"
+            :class="active_route == 'Request List' ? 'is-active' : ''"
           >
             <i class="bi bi-clipboard-check-fill menu-name my-1"></i>
-            <div class="menu-name">Waiting Hired List</div>
+            <div class="menu-name">Request List</div>
           </router-link>
           <router-link
             to="/admin/talent-on-job"
@@ -61,6 +61,14 @@
           >
             <i class="bi bi-person-fill-check menu-name my-1"></i>
             <div class="menu-name">Talent on Job</div>
+          </router-link>
+          <router-link
+            to="/admin/terminate-history"
+            class="sub-menu text-decoration-none"
+            :class="active_route == 'Terminate History' ? 'is-active' : ''"
+          >
+            <i class="bi bi-x-circle menu-name my-1"></i>
+            <div class="menu-name">Terminate History</div>
           </router-link>
         </div>
       </div>
@@ -79,6 +87,7 @@
         <div
           class="menu-name"
           style="padding-left: 4.44rem; padding-right: 4.44rem;font-size:12px"
+          @click="logout"
         >
           Sign Out
         </div>
@@ -106,6 +115,9 @@ export default {
     toggleCollapse() {
       this.is_collapse = !this.is_collapse;
     },
+    logout(){
+      this.$router.push('/login')
+    }
   },
   watch: {
     $route() {

@@ -5,7 +5,7 @@
       style="position: absolute; bottom: 0; background-color: #eff2f4"
     >
       <div class="d-flex fs-12">
-        <span class="text-talent mb-1"
+        <span class="mb-1"
           >Copyright@ 2023 PT Haromoni Mitra Jayandra</span
         >
       </div>
@@ -15,7 +15,7 @@
       style="background-color: #eff2f4; position: absolute; bottom: 0; right: 0"
     >
       <div class="d-flex fs-12">
-        <span class="text-talent ml-auto mb-1">Version 1.0.0</span>
+        <span class="ml-auto mb-1">Version 1.0.0</span>
       </div>
     </div>
   </div>

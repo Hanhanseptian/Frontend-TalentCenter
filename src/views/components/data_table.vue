@@ -3,13 +3,11 @@
     <b-table
       hover
       responsive
-      small
       :per-page="per_page"
       :current-page="current_page"
       :fields="data.fields"
       :items="data.items"
       :filter="data.filter"
-      sticky-header="700px"
       show-empty
     >
       <!-- SHOW EMPTY DATA -->
@@ -31,42 +29,72 @@
         {{ data.index + 1 }}
       </template>
 
-      <!-- CELL CONTACT -->
-      <template #cell(contact)>
-        <i
-          class="bi bi-telegram"
-          style="color: #00acee !important; font-size: 20px"
-        ></i>
+      <!-- CELL GENDER -->
+      <template #cell(gender)="data">
+        <b-badge pill v-if="data.value == 'Male'" style="width:90%" class="bg-talent">
+          <i class="bi bi-gender-male"></i>
+          Male
+        </b-badge>
+        <b-badge pill v-else style="width:90%" class="bg-pink">
+          <i class="bi bi-gender-female"></i>
+          Female
+        </b-badge>
       </template>
 
       <!-- CELL STATUS -->
       <template #cell(status)="data">
-        <div v-if="data.value == 'on_job'" class="badge badge-success px-2">
-          On Job
-        </div>
-        <div v-if="data.value == 'waiting'" class="badge bgtl-warning px-2">
-          Waiting Approve
-        </div>
-        <div
-          v-if="data.value == 'free'"
-          class="badge bg-talent text-white px-2"
+        <b-badge
+          v-if="data.value == 'on_job'"
+          variant="success"
+          style="width: 100%"
         >
-          Free
-        </div>
+          On Job
+        </b-badge>
+        <b-badge
+          v-if="data.value == 'on_request'"
+          variant="warning"
+          style="width: 100%"
+        >
+          On request
+        </b-badge>
+        <b-badge
+          v-if="data.value == 'available'"
+          class="bg-talent text-white"
+          style="width: 100%"
+        >
+          Available
+        </b-badge>
       </template>
 
-      <!-- CELL PASSWORD -->
-      <template #cell(password)>
-        <span>12h68902hjKASA</span>
+      <!-- CELL START DATE -->
+      <template #cell(start_date)>
+        <span>01 April 2023</span>
+      </template>
+
+      <!-- CELL START DATE -->
+      <template #cell(end_date)>
+        <span>01 April 2023</span>
+      </template>
+
+      <!-- CELL START DATE -->
+      <template #cell(terminate_date)>
+        <span>01 April 2023</span>
+      </template>
+
+      <!-- CELL REQUEST TYPE -->
+      <template #cell(request_type)="data">
+        <b-badge v-if="data.value=='recruite'" variant="success" style="width:85%">Recruite</b-badge>
+        <b-badge v-else variant="warning" style="width:85%">Extend Contract</b-badge>
       </template>
 
       <!-- CELL ACTION -->
-      <template #cell(action)>
+      <template #cell(action)="data">
         <div class="d-flex">
           <button
             class="btn btn-outline-success btn-xs ml-auto"
             v-b-tooltip.hover="{ variant: 'info' }"
             title="Lihat Detail"
+            @click="showDetail(data.item.id)"
           >
             <i class="bi bi-eye"></i>
           </button>
@@ -74,6 +102,7 @@
             class="btn btn-outline-info btn-xs mx-1"
             v-b-tooltip.hover="{ variant: 'info' }"
             title="Edit"
+            @click="editItem(data.item.id)"
           >
             <i class="bi bi-pencil-square"></i>
           </button>
@@ -81,22 +110,18 @@
             class="btn btn-outline-danger btn-xs mr-auto"
             v-b-tooltip.hover="{ variant: 'info' }"
             title="Delete"
+            @click="deleteItem(data.item.id)"
           >
             <i class="bi bi-trash"></i>
           </button>
         </div>
       </template>
 
-      <!-- CELL ACTION WAITING -->
+      <!-- CELL ACTION REWUEST -->
       <template #cell(action_hired)>
-        <div class="d-flex">
-          <button class="badge btn-success btn-sm btn ml-auto mr-1 px-2 py-1">
-            <span class="fs-10">Approve</span>
-          </button>
-          <button class="badge btn-danger btn-sm btn mr-auto px-3 py-1">
-            <span class="fs-10">Reject</span>
-          </button>
-        </div>
+        <b-button size="sm" variant="outline-info">
+          View Detail
+        </b-button>
       </template>
     </b-table>
 
@@ -152,6 +177,9 @@ export default {
 
   props: {
     data: Object,
+    deleteItem: Function,
+    editItem: Function,
+    showDetail: Function,
   },
 
   data() {

@@ -5,22 +5,23 @@
       <div class="text-center">
         <img src="../../../public/logo.png" width="50%" class="my-4" />
       </div>
-      <!-- register form -->
-      <form class="px-5">
+      <!-- pic information -->
+      <form v-if="!is_next_step" class="px-5" @submit.prevent="nextStep">
         <!-- pic information text -->
         <center><span>PIC Information</span></center>
         <!-- name -->
-        <div>
+        <div class="mt-2">
           <label for="name" class="fs-12">Name</label>
           <div class="d-flex">
             <div class="icon-talent d-flex p-0 form-control mr-1">
-              <i class="bi bi-person-fill mx-auto my-auto"></i>
+              <i class="bi bi-person-lines-fill mx-auto my-auto"></i>
             </div>
             <input
+              v-model="register.name"
               type="text"
               id="name"
               placeholder="Input Your Name"
-              class="form-control input-talent ml-auto text-talent"
+              class="form-control input-talent ml-auto"
             />
           </div>
         </div>
@@ -29,13 +30,14 @@
           <label for="username" class="fs-12">Username</label>
           <div class="d-flex">
             <div class="icon-talent d-flex p-0 form-control mr-1">
-              <i class="bi bi-person-fill mx-auto my-auto"></i>
+              <i class="bi bi-person-fill-lock mx-auto my-auto"></i>
             </div>
             <input
+              v-model="register.username"
               type="text"
               id="username"
-              placeholder="Masukkan Username"
-              class="form-control input-talent ml-auto text-talent"
+              placeholder="Input Username"
+              class="form-control input-talent ml-auto"
             />
           </div>
         </div>
@@ -44,13 +46,14 @@
           <label for="password" class="fs-12">Password</label>
           <div class="d-flex">
             <div class="icon-talent d-flex p-0 form-control mr-1">
-              <i class="bi bi-lock-fill mx-auto my-auto"></i>
+              <i class="bi bi-key-fill mx-auto my-auto"></i>
             </div>
             <input
+              v-model="register.password"
               :type="show_password ? 'text' : 'password'"
               id="password"
-              placeholder="Masukkan Password"
-              class="form-control input-talent ml-auto text-talent"
+              placeholder="Input Password"
+              class="form-control input-talent ml-auto"
             />
             <i
               v-if="!show_password"
@@ -85,23 +88,120 @@
           <label for="email" class="fs-12">Email</label>
           <div class="d-flex">
             <div class="icon-talent d-flex p-0 form-control mr-1">
-              <i class="bi bi-envelope mx-auto my-auto"></i>
+              <i class="bi bi-envelope-at mx-auto my-auto"></i>
             </div>
             <input
+              v-model="register.email"
               type="text"
               id="email"
               placeholder="Input Company or Your Email"
+              class="form-control input-talent ml-auto"
+            />
+          </div>
+        </div>
+        <!-- next step button -->
+        <button
+          class="form-control mt-4 mb-1 text-center btn-login"
+          type="submit"
+        >
+          Next Step
+        </button>
+        <!-- to sign in link -->
+        <center>
+          <span class="fs-12">
+            Already have an Account?
+            <u
+              class="clickable link text-talent"
+              @click="$router.push('login')"
+            >
+              Sign In
+            </u>
+          </span>
+        </center>
+      </form>
+      <!-- company information -->
+      <form v-else class="px-5" @submit.prevent="nextStep">
+        <!-- company information text -->
+        <center><span>Company Information</span></center>
+        <!-- company name -->
+        <div class="mt-2">
+          <label for="company_name" class="fs-12">Company Name</label>
+          <div class="d-flex">
+            <div class="icon-talent d-flex p-0 form-control mr-1">
+              <i class="bi bi-building-check mx-auto my-auto"></i>
+            </div>
+            <input
+              v-model="register.company_name"
+              type="text"
+              id="company_name"
+              required
+              placeholder="Input Your Company Name"
               class="form-control input-talent ml-auto text-talent"
             />
           </div>
         </div>
+        <!-- telephone number -->
+        <div class="mt-2">
+          <label for="telephone_number" class="fs-12">Telephone Number</label>
+          <div class="d-flex">
+            <div class="icon-talent d-flex p-0 form-control mr-1">
+              <i class="bi bi-telephone mx-auto my-auto"></i>
+            </div>
+            <input
+              v-model="register.telephone_number"
+              type="text"
+              id="telephone_number"
+              placeholder="Input Company Telephone Number"
+              class="form-control input-talent ml-auto text-talent"
+            />
+          </div>
+        </div>
+        <!-- company address -->
+        <div class="mt-2">
+          <label for="company_address" class="fs-12">Company Address</label>
+          <div class="d-flex">
+            <div class="icon-talent d-flex p-0 form-control mr-1">
+              <i class="bi bi-geo-alt mx-auto my-auto"></i>
+            </div>
+            <input
+              v-model="register.company_address"
+              type="text"
+              id="company_address"
+              placeholder="Input Company Address"
+              class="form-control input-talent ml-auto text-talent"
+            />
+          </div>
+        </div>
+        <!-- company subject -->
+        <div class="mt-2">
+          <label for="company_subject" class="fs-12">Company Subject</label>
+          <div class="d-flex">
+            <div class="icon-talent d-flex p-0 form-control mr-1">
+              <i class="bi bi-info-circle mx-auto my-auto"></i>
+            </div>
+            <input
+              v-model="register.company_subject"
+              type="text"
+              id="company_subject"
+              placeholder="Input Company Subject"
+              class="form-control input-talent ml-auto text-talent"
+            />
+          </div>
+        </div>
+        <div class="d-flex">
+          <span
+            class="fs-12 ml-auto clickable link text-talent mt-2"
+            @click="is_next_step = false"
+          >
+            <i class="bi bi-chevron-double-left mx-auto my-auto"></i> Previous
+          </span>
+        </div>
         <!-- sign up button -->
         <button
-          class="form-control mt-5 mb-1 text-center btn-login"
-          @click="login"
-          disabled
+          class="form-control mt-3 mb-1 text-center btn-login"
+          type="submit"
         >
-          Next Step
+          Sign Up
         </button>
         <!-- to sign in link -->
         <center>
@@ -128,11 +228,25 @@ export default {
   data() {
     return {
       show_password: false,
+      is_next_step: false,
+      register: {
+        name: "",
+        username: "",
+        pasword: "",
+        email: "",
+        company_name: "",
+        telephone_number: "",
+        company_address: "",
+        company_subject: "",
+      },
     };
   },
   methods: {
     login() {
       this.$router.push("/admin/dashboard");
+    },
+    nextStep() {
+      this.is_next_step = true;
     },
   },
   directives: {
@@ -156,9 +270,8 @@ export default {
   background-color: white;
 }
 .input-talent {
-  border-radius: 15px !important;
+  border-radius: 7px !important;
   border-color: #0173a7 !important;
-  color: #0173a7 !important;
   font-size: 12px !important;
   height: 5vh !important;
   width: 85% !important;
@@ -169,8 +282,7 @@ export default {
   border-color: none !important;
 }
 .icon-talent {
-  border-radius: 15px !important;
-  color: #0173a7 !important;
+  border-radius: 7px !important;
   border-color: #0173a7 !important;
   background-color: #eff2f4;
   font-size: 20px !important;

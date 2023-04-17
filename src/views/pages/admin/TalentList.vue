@@ -1,50 +1,61 @@
 <template>
-  <div class="text-talent">
+  <div id="talent-list">
     <!-- BREADCUMB -->
     <div class="d-flex align-items-center mb-3">
-      <span>Manage Talents |</span>
-      <i class="bi bi-list-check mx-1 fs-10 mt-1"></i>
-      <i class="bi bi-chevron-right fs-10 mt-1"></i>
-      <small class="fs-12 mt-1">Talent List</small>
+      <span class="fs-22">Manage Talents |</span>
+      <i class="bi bi-list-check mx-1 fs-14 mt-1"></i>
+      <i class="bi bi-chevron-right fs-14 mt-1"></i>
+      <small class="fs-14 mt-1">Talent List</small>
     </div>
     <!-- MAIN CONTENT -->
-    <b-card no-body>
-      <b-card-header class="d-flex align-items-center">
-        <div>
-          <span>Talent List</span> <br />
-          <small class="fs-10">Showing All of Available Talents</small>
-        </div>
-        <div class="ml-auto">
-          <button
-            class="btn btn-talent text-white shadow btn-sm rounded-talent"
-          >
-            <i class="bi bi-person-plus-fill mr-1"></i>
-            <span class="fs-12">Add Talent</span>
-          </button>
-        </div>
-        <div class="ml-2">
-          <div class="input-group input-group-sm">
-            <span class="input-group-text bg-white">
-              <i class="bi bi-search fs-12"></i>
-            </span>
-            <input
-              type="text"
-              class="form-control form-talent"
-              placeholder="Search..."
-              v-model="data_table.filter"
-            />
+    <b-card>
+      <b-card-header>
+        <b-card-title class="d-flex align-items-center">
+          Talent List
+          <div class="ml-auto">
+            <button
+              class="btn btn-talent text-white shadow btn-sm rounded-talent"
+              @click="addData"
+            >
+              <i class="bi bi-person-plus-fill mr-1"></i>
+              <span>Add Talent</span>
+            </button>
           </div>
-        </div>
+          <div class="ml-2">
+            <div class="input-group input-group-sm">
+              <span class="input-group-text bg-white">
+                <i class="bi bi-search fs-12"></i>
+              </span>
+              <input
+                type="text"
+                class="form-control form-talent"
+                placeholder="Search..."
+                v-model="data_table.filter"
+              />
+            </div>
+          </div>
+        </b-card-title>
+        <span>Showing All of Available Talents</span>
       </b-card-header>
       <b-card-body class="p-0 mt-3">
-        <data_table striped hover :data="data_table"></data_table>
+        <data_table
+          striped
+          hover
+          :data="data_table"
+          :deleteItem="deleteData"
+          :editItem="editData"
+          :showDetail="showDetail"
+        ></data_table>
       </b-card-body>
     </b-card>
+    <addTalentModalVue />
   </div>
 </template>
 <script>
 import { BCard, BCardHeader, BCardBody, BTable } from "bootstrap-vue";
 import data_table from "../../components/data_table.vue";
+import Swal from "sweetalert2";
+import addTalentModalVue from "../../components/admin/addTalentModal.vue";
 
 export default {
   name: "TalentList",
@@ -54,6 +65,7 @@ export default {
     BCardBody,
     BTable,
     data_table,
+    addTalentModalVue,
   },
   data() {
     return {
@@ -63,45 +75,52 @@ export default {
         fields: [
           {
             key: "no",
-            thClass: "text-talent text-center fs-12",
-            tdClass: "fs-12 text-talent text-center",
+            label: "NO",
+            thClass: "text-talent text-center ",
+            tdClass: " text-talent text-center",
             thStyle: "background-color: #c1dbec;width:5%",
           },
           {
             key: "name",
-            thClass: "text-talent text-left fs-12",
-            tdClass: "fs-12 text-talent text-left",
+            label: "NAME",
+            thClass: "text-talent text-left ",
+            tdClass: " text-talent text-left",
             thStyle: "background-color: #c1dbec;width:auto",
           },
           {
             key: "gender",
-            thClass: "text-talent text-center fs-12",
-            tdClass: "fs-12 text-talent text-center",
+            label: "GENDER",
+            thClass: "text-talent text-center ",
+            tdClass: " text-talent text-center",
             thStyle: "background-color: #c1dbec;width:10%",
           },
           {
             key: "email",
-            thClass: "text-talent text-left fs-12",
-            tdClass: "fs-12 text-talent text-left",
+            label: "EMAIL",
+            thClass: "text-talent text-left ",
+            tdClass: " text-talent text-left",
             thStyle: "background-color: #c1dbec;width:20%",
           },
           {
-            key: "contact",
-            thClass: "text-talent text-center fs-12",
-            tdClass: "fs-12 text-talent text-center",
-            thStyle: "background-color: #c1dbec;width:5%",
+            key: "company",
+            label: "COMPANY",
+            thClass: "text-talent text-center ",
+            tdClass: " text-talent text-center",
+            thStyle: "background-color: #c1dbec;width:15%",
           },
           {
             key: "status",
-            thClass: "text-talent text-center fs-12",
-            tdClass: "fs-12 text-talent text-center",
+            label: "STATUS",
+            thClass: "text-talent text-center ",
+            tdClass: " text-talent text-center",
             thStyle: "background-color: #c1dbec;width:10%",
           },
           {
             key: "action",
-            thClass: "text-talent text-center fs-12",
-            tdClass: "fs-12 text-talent text-center",
-            thStyle: "background-color: #c1dbec;width:15%",
+            label: "ACTION",
+            thClass: "text-talent text-center ",
+            tdClass: " text-talent text-center",
+            thStyle: "background-color: #c1dbec;width:10%",
           },
         ],
         items: [
@@ -110,6 +129,7 @@ export default {
             name: "Dickerson",
             gender: "Male",
             email: "Macdonald@gmail.com",
+            company: "PT Jayandra",
             status: "on_job",
           },
           {
@@ -117,20 +137,23 @@ export default {
             name: "Larsen",
             gender: "Male",
             email: "Shaw@gmail.com",
-            status: "free",
+            company: "PT Jayandra",
+            status: "on_request",
           },
           {
             gender: "Male",
             id: 3,
             name: "Geneva",
             email: "Wilson@gmail.com",
-            status: "free",
+            company: "PT Jayandra",
+            status: "on_request",
           },
           {
             id: 4,
             name: "Jami",
             gender: "Female",
             email: "Carney@gmail.com",
+            company: "PT Jayandra",
             status: "on_job",
           },
           {
@@ -138,20 +161,23 @@ export default {
             name: "Jami",
             gender: "Female",
             email: "Carney@gmail.com",
-            status: "waiting",
+            company: "PT Jayandra",
+            status: "available",
           },
           {
             id: 6,
             name: "Jami",
             gender: "Male",
             email: "Carney@gmail.com",
-            status: "waiting",
+            company: "PT Jayandra",
+            status: "available",
           },
           {
             id: 7,
             name: "Jami",
             gender: "Female",
             email: "Carney@gmail.com",
+            company: "PT Jayandra",
             status: "on_job",
           },
           {
@@ -159,6 +185,7 @@ export default {
             name: "Jami",
             gender: "Male",
             email: "Carney@gmail.com",
+            company: "PT Jayandra",
             status: "on_job",
           },
           {
@@ -166,13 +193,15 @@ export default {
             name: "Jami",
             gender: "Male",
             email: "Carney@gmail.com",
-            status: "waiting",
+            company: "PT Jayandra",
+            status: "available",
           },
           {
             id: 10,
             name: "Jami",
             gender: "Male",
             email: "Carney@gmail.com",
+            company: "PT Jayandra",
             status: "on_job",
           },
           {
@@ -180,11 +209,40 @@ export default {
             name: "Jami",
             gender: "Male",
             email: "Carney@gmail.com",
+            company: "PT Jayandra",
             status: "on_job",
           },
         ],
       },
     };
+  },
+  methods: {
+    addData() {
+      this.$bvModal.show("add-talent")
+    },
+    deleteData(id) {
+      console.log(id);
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You to delete this Talent",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+        reverseButtons: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire("Deleted!", "Talent has been deleted.", "success");
+        }
+      });
+    },
+    editData(id) {
+      console.log(id);
+    },
+    showDetail(id) {
+      console.log(id);
+    },
   },
 };
 </script>

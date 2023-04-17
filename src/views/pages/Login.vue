@@ -12,13 +12,14 @@
           <label for="username" class="fs-12">Username</label>
           <div class="d-flex">
             <div class="icon-talent d-flex p-0 form-control mr-1">
-              <i class="bi bi-person-fill mx-auto my-auto"></i>
+              <i class="bi bi-person-fill-lock mx-auto my-auto"></i>
             </div>
             <input
               type="text"
               id="username"
+              v-model="username"
               placeholder="Input Username or Email"
-              class="form-control input-talent ml-auto text-talent"
+              class="form-control input-talent ml-auto"
             />
           </div>
         </div>
@@ -27,13 +28,14 @@
           <label for="password" class="fs-12">Password</label>
           <div class="d-flex">
             <div class="icon-talent d-flex p-0 form-control mr-1">
-              <i class="bi bi-lock-fill mx-auto my-auto"></i>
+              <i class="bi bi-key-fill mx-auto my-auto"></i>
             </div>
             <input
               :type="show_password ? 'text' : 'password'"
               id="password"
+              v-model="password"
               placeholder="Input Password"
-              class="form-control input-talent ml-auto text-talent"
+              class="form-control input-talent ml-auto"
             />
             <i
               v-if="!show_password"
@@ -95,11 +97,19 @@ export default {
   data() {
     return {
       show_password: false,
+      username: "",
+      password: "",
     };
   },
   methods: {
     login() {
-      this.$router.push("/admin/dashboard");
+      if(this.username=="bizdev"){
+        this.$router.push("/admin/dashboard");
+      }else if(this.username=="recruiter"){
+        this.$router.push("/home");
+      }else{
+        this.$router.push("/talent-profile");
+      }
     },
   },
   directives: {
@@ -123,9 +133,8 @@ export default {
   background-color: white;
 }
 .input-talent {
-  border-radius: 15px !important;
+  border-radius: 7px !important;
   border-color: #0173a7 !important;
-  color: #0173a7 !important;
   font-size: 12px !important;
   height: 2.5rem !important;
   width: 85% !important;
@@ -136,8 +145,7 @@ export default {
   border-color: none !important;
 }
 .icon-talent {
-  border-radius: 15px !important;
-  color: #0173a7 !important;
+  border-radius: 7px !important;
   border-color: #0173a7 !important;
   background-color: #eff2f4;
   font-size: 20px !important;
