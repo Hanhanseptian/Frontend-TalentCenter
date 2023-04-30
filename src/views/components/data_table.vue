@@ -13,14 +13,14 @@
       <!-- SHOW EMPTY DATA -->
       <template #empty="scope">
         <center>
-          <div class="fs-12 text-talent">{{ scope.emptyText }}</div>
+          <span class="text-talent">{{ scope.emptyText }}</span>
         </center>
       </template>
 
       <!-- SHOW EMPTY FILTERED -->
       <template #emptyfiltered="scope">
         <center>
-          <div class="fs-12 text-talent">{{ scope.emptyFilteredText }}</div>
+          <span class="text-talent">{{ scope.emptyFilteredText }}</span>
         </center>
       </template>
 

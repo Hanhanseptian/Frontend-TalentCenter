@@ -7,29 +7,39 @@
           <router-link
             to="/home"
             class="mr-2 btn btn-sm"
-            :class="$route.name == 'Home' ? 'btn-talent' : 'btn-outline-talent'"
-            >Home</router-link
+            :class="$route.name == 'Home' ? 'btn-talent' : 'btn-hover'"
           >
+            <i class="bi bi-house-fill"></i>
+            Home
+          </router-link>
+          <router-link
+            to="/my-cart"
+            class="mr-2 btn btn-sm"
+            :class="$route.name == 'My Cart' ? 'btn-talent' : 'btn-hover'"
+          >
+            <i class="bi bi-cart-fill"></i>
+            My Cart
+          </router-link>
           <router-link
             to="/my-talent"
             class="btn btn-sm"
-            :class="
-              $route.name == 'My Talent' ? 'btn-talent' : 'btn-outline-talent'
-            "
-            >My Talent</router-link
+            :class="$route.name == 'My Talent' ? 'btn-talent' : 'btn-hover'"
           >
+            <i class="bi bi-people-fill"></i>
+            My Talent
+          </router-link>
         </div>
         <div class="navbar" v-if="$route.meta.access == 3">
           <router-link
             to="/talent-profile"
             class="mr-2 btn btn-sm"
             :class="
-              $route.name == 'Profile Talent'
-                ? 'btn-talent'
-                : 'btn-outline-talent'
+              $route.name == 'Profile Talent' ? 'btn-talent' : 'btn-hover'
             "
-            >My Profile</router-link
           >
+            <i class="bi bi-person-fill"></i>
+            My Profile
+          </router-link>
         </div>
         <b-dropdown
           id="profile"
@@ -38,14 +48,18 @@
           variant="link"
         >
           <template #button-content>
-            <div class="d-flex align-items-center">
-              <span class="ml-auto mr-2 text-talent fs-14">User</span>
+            <div class="d-flex align-items-center btn-hover">
+              <span class="ml-auto mr-2 fs-14">User</span>
               <i class="bi bi-person-circle fs-30"></i>
             </div>
           </template>
-          <b-dropdown-item>My Account</b-dropdown-item>
+          <b-dropdown-item>
+            <span class="fs-14">My Account</span>
+          </b-dropdown-item>
           <b-dropdown-divider></b-dropdown-divider>
-          <b-dropdown-item @click="signOut">Sign Out</b-dropdown-item>
+          <b-dropdown-item @click="signOut">
+            <span class="fs-14">Sign Out</span>
+          </b-dropdown-item>
         </b-dropdown>
       </div>
     </div>
@@ -60,11 +74,11 @@ export default {
     BCard,
     BBadge,
   },
-  methods:{
-    signOut(){
-      this.$router.push('/')
-    }
-  }
+  methods: {
+    signOut() {
+      this.$router.push("/");
+    },
+  },
 };
 </script>
 <style scoped>
@@ -78,6 +92,9 @@ export default {
 }
 .nav-logo {
   width: 150px;
+}
+.btn-hover:hover {
+  opacity: 0.5;
 }
 @media only screen and (max-width: 600px) {
   .btn-sm {

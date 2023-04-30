@@ -43,7 +43,7 @@
           </div>
           <span class="ml-2 fs-20"
             >Checkout Your <br />
-            Talents</span
+            Request</span
           >
         </div>
       </div>

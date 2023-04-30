@@ -10,6 +10,7 @@ import ManageUser from "../views/pages/admin/ManageUser.vue";
 // recruiter page
 import Home from "../views/pages/recruiter/Home.vue";
 import MyTalent from "../views/pages/recruiter/MyTalent.vue";
+import MyCart from "../views/pages/recruiter/MyCart.vue";
 // talent
 import ProfileTalent from "../views/pages/talent/Profile.vue";
 
@@ -85,6 +86,15 @@ const routes = [
     path: "/home",
     name: "Home",
     component: Home,
+    meta: {
+      full: false,
+      access: 2,
+    },
+  },
+  {
+    path: "/my-cart",
+    name: "My Cart",
+    component: MyCart,
     meta: {
       full: false,
       access: 2,
