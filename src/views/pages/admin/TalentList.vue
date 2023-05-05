@@ -37,7 +37,7 @@
         </b-card-title>
         <span>Showing All of Available Talents</span>
       </b-card-header>
-      <b-card-body class="p-0 mt-3">
+      <b-card-body class="mt-3">
         <data_table
           striped
           hover

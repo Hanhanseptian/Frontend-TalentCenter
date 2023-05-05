@@ -28,7 +28,7 @@
         </b-card-title>
         <span>Showing All of 082130123922 Talent Hired List</span>
       </b-card-header>
-      <b-card-body class="p-0 mt-3">
+      <b-card-body class="mt-3">
         <data_table striped hover :data="data_table"></data_table>
       </b-card-body>
     </b-card>
@@ -83,6 +83,7 @@ export default {
           },
           {
             key: "contact",
+            label: "CONTACT",
             thClass: "text-talent text-center ",
             tdClass: " text-talent text-center",
             thStyle: "background-color: #c1dbec;width:10%",

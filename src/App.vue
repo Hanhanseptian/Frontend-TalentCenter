@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <layout-component v-if="!isLayoutFull"/>
-    <router-view v-else/>
+    <layout-component v-if="!isLayoutFull" />
+    <router-view v-else />
   </div>
 </template>
 <script>
@@ -12,15 +12,23 @@ export default {
   components: {
     "layout-component": Layouts,
   },
-  computed:{
-    isLayoutFull(){
-      if(this.$route.meta.full==true){
-        return true
-      }else{
-        return false
+  computed: {
+    isLayoutFull() {
+      if (this.$route.meta.full == true) {
+        return true;
+      } else {
+        return false;
       }
-    }
-  }
+    },
+  },
+  created() {
+    document.title = this.$route.name + " | Talent Center";
+  },
+  watch: {
+    $route() {
+      document.title = this.$route.name + " | Talent Center";
+    },
+  },
 };
 </script>
 <style>

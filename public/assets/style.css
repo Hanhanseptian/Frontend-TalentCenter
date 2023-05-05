@@ -180,6 +180,19 @@
   box-shadow: none !important;
   border-color: #55bcec !important;
 }
+.form-date-talent {
+  border-color: #0173a7 !important;
+  font-size: 10px !important;
+  height: 1.5rem !important;
+}
+.form-search{
+  width:30% !important
+}
+@media only screen and (max-width: 600px) {
+  .form-search{
+    width:100% !important
+  }
+}
 .input-group-text {
   border-top-left-radius: 5px !important;
   border-bottom-left-radius: 5px !important;
@@ -278,6 +291,7 @@
   padding-bottom: 0 !important;
   padding-left: 4px !important;
   padding-right: 4px !important;
+  font-size: 10px !important;
 }
 .text-facebook {
   color: #3b5998;

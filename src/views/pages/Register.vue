@@ -5,226 +5,269 @@
       <div class="text-center">
         <img src="../../../public/logo.png" width="50%" class="my-4" />
       </div>
-      <!-- pic information -->
-      <form v-if="!is_next_step" class="px-5" @submit.prevent="nextStep">
-        <!-- pic information text -->
-        <center><span>PIC Information</span></center>
-        <!-- name -->
-        <div class="mt-2">
-          <label for="name" class="fs-12">Name</label>
-          <div class="d-flex">
-            <div class="icon-talent d-flex p-0 form-control mr-1">
-              <i class="bi bi-person-lines-fill mx-auto my-auto"></i>
-            </div>
-            <input
-              v-model="register.name"
-              type="text"
-              id="name"
-              placeholder="Input Your Name"
-              class="form-control input-talent ml-auto"
-            />
-          </div>
-        </div>
-        <!-- username -->
-        <div class="mt-2">
-          <label for="username" class="fs-12">Username</label>
-          <div class="d-flex">
-            <div class="icon-talent d-flex p-0 form-control mr-1">
-              <i class="bi bi-person-fill-lock mx-auto my-auto"></i>
-            </div>
-            <input
-              v-model="register.username"
-              type="text"
-              id="username"
-              placeholder="Input Username"
-              class="form-control input-talent ml-auto"
-            />
-          </div>
-        </div>
-        <!-- password -->
-        <div class="mt-2">
-          <label for="password" class="fs-12">Password</label>
-          <div class="d-flex">
-            <div class="icon-talent d-flex p-0 form-control mr-1">
-              <i class="bi bi-key-fill mx-auto my-auto"></i>
-            </div>
-            <input
-              v-model="register.password"
-              :type="show_password ? 'text' : 'password'"
-              id="password"
-              placeholder="Input Password"
-              class="form-control input-talent ml-auto"
-            />
-            <i
-              v-if="!show_password"
-              class="bi bi-eye clickable"
-              style="
-                margin-left: -2rem;
-                margin-right: 1rem;
-                margin-top: 0.5rem;
-                font-size: 120%;
-              "
-              @click="show_password = !show_password"
-              v-b-tooltip.hover="{ variant: 'info' }"
-              title="Show Password"
-            ></i>
-            <i
-              v-if="show_password"
-              class="bi bi-eye-slash clickable"
-              style="
-                margin-left: -2rem;
-                margin-right: 1rem;
-                margin-top: 0.5rem;
-                font-size: 120%;
-              "
-              @click="show_password = !show_password"
-              v-b-tooltip.hover="{ variant: 'info' }"
-              title="Hide Password"
-            ></i>
-          </div>
-        </div>
-        <!-- email -->
-        <div class="mt-2">
-          <label for="email" class="fs-12">Email</label>
-          <div class="d-flex">
-            <div class="icon-talent d-flex p-0 form-control mr-1">
-              <i class="bi bi-envelope-at mx-auto my-auto"></i>
-            </div>
-            <input
-              v-model="register.email"
-              type="text"
-              id="email"
-              placeholder="Input Company or Your Email"
-              class="form-control input-talent ml-auto"
-            />
-          </div>
-        </div>
-        <!-- next step button -->
-        <button
-          class="form-control mt-4 mb-1 text-center btn-login"
-          type="submit"
+      <ValidationObserver v-slot="{ handleSubmit }">
+        <!-- pic information -->
+        <form
+          v-if="!is_next_step"
+          class="px-5"
+          @submit.prevent="handleSubmit(nextStep)"
         >
-          Next Step
-        </button>
-        <!-- to sign in link -->
-        <center>
-          <span class="fs-12">
-            Already have an Account?
-            <u
-              class="clickable link text-talent"
-              @click="$router.push('login')"
-            >
-              Sign In
-            </u>
-          </span>
-        </center>
-      </form>
-      <!-- company information -->
-      <form v-else class="px-5" @submit.prevent="nextStep">
-        <!-- company information text -->
-        <center><span>Company Information</span></center>
-        <!-- company name -->
-        <div class="mt-2">
-          <label for="company_name" class="fs-12">Company Name</label>
-          <div class="d-flex">
-            <div class="icon-talent d-flex p-0 form-control mr-1">
-              <i class="bi bi-building-check mx-auto my-auto"></i>
+          <!-- pic information text -->
+          <center><span>PIC Information</span></center>
+          <ValidationProvider rules="required" v-slot="{ errors }">
+            <!-- name -->
+            <div class="mt-2">
+              <label for="name" class="fs-12">
+                Full Name
+                <span class="text-danger">*</span>
+              </label>
+              <div class="d-flex">
+                <div class="icon-talent d-flex p-0 form-control mr-1">
+                  <i class="bi bi-person-lines-fill mx-auto my-auto"></i>
+                </div>
+                <input
+                  v-model="register.name"
+                  type="text"
+                  id="name"
+                  placeholder="Input Your Full Name"
+                  class="form-control input-talent ml-auto"
+                />
+              </div>
             </div>
-            <input
-              v-model="register.company_name"
-              type="text"
-              id="company_name"
-              required
-              placeholder="Input Your Company Name"
-              class="form-control input-talent ml-auto text-talent"
-            />
-          </div>
-        </div>
-        <!-- telephone number -->
-        <div class="mt-2">
-          <label for="telephone_number" class="fs-12">Telephone Number</label>
-          <div class="d-flex">
-            <div class="icon-talent d-flex p-0 form-control mr-1">
-              <i class="bi bi-telephone mx-auto my-auto"></i>
+            <span class="text-danger fs-10">{{ errors[0] }}</span>
+          </ValidationProvider>
+          <ValidationProvider rules="required|email" v-slot="{ errors }">
+            <!-- email -->
+            <div class="mt-2">
+              <label for="email" class="fs-12">
+                Email <span class="text-danger">*</span>
+              </label>
+              <div class="d-flex">
+                <div class="icon-talent d-flex p-0 form-control mr-1">
+                  <i class="bi bi-envelope-at-fill mx-auto my-auto"></i>
+                </div>
+                <input
+                  v-model="register.email"
+                  type="text"
+                  id="email"
+                  placeholder="Input Your Email"
+                  class="form-control input-talent ml-auto"
+                />
+              </div>
             </div>
-            <input
-              v-model="register.telephone_number"
-              type="text"
-              id="telephone_number"
-              placeholder="Input Company Telephone Number"
-              class="form-control input-talent ml-auto text-talent"
-            />
-          </div>
-        </div>
-        <!-- company address -->
-        <div class="mt-2">
-          <label for="company_address" class="fs-12">Company Address</label>
-          <div class="d-flex">
-            <div class="icon-talent d-flex p-0 form-control mr-1">
-              <i class="bi bi-geo-alt mx-auto my-auto"></i>
+            <span class="text-danger fs-10">{{ errors[0] }}</span>
+          </ValidationProvider>
+          <ValidationProvider rules="required" v-slot="{ errors }">
+            <!-- password -->
+            <div class="mt-2">
+              <label for="password" class="fs-12">
+                Password <span class="text-danger">*</span>
+              </label>
+              <div class="d-flex">
+                <div class="icon-talent d-flex p-0 form-control mr-1">
+                  <i class="bi bi-key-fill mx-auto my-auto"></i>
+                </div>
+                <input
+                  v-model="register.password"
+                  :type="show_password ? 'text' : 'password'"
+                  id="password"
+                  placeholder="Input Password"
+                  class="form-control input-talent ml-auto"
+                />
+                <i
+                  v-if="!show_password"
+                  class="bi bi-eye clickable"
+                  style="
+                    margin-left: -2rem;
+                    margin-right: 1rem;
+                    margin-top: 0.5rem;
+                    font-size: 120%;
+                  "
+                  @click="show_password = !show_password"
+                  v-b-tooltip.hover="{ variant: 'info' }"
+                  title="Show Password"
+                ></i>
+                <i
+                  v-if="show_password"
+                  class="bi bi-eye-slash clickable"
+                  style="
+                    margin-left: -2rem;
+                    margin-right: 1rem;
+                    margin-top: 0.5rem;
+                    font-size: 120%;
+                  "
+                  @click="show_password = !show_password"
+                  v-b-tooltip.hover="{ variant: 'info' }"
+                  title="Hide Password"
+                ></i>
+              </div>
             </div>
-            <input
-              v-model="register.company_address"
-              type="text"
-              id="company_address"
-              placeholder="Input Company Address"
-              class="form-control input-talent ml-auto text-talent"
-            />
-          </div>
-        </div>
-        <!-- company subject -->
-        <div class="mt-2">
-          <label for="company_subject" class="fs-12">Company Subject</label>
-          <div class="d-flex">
-            <div class="icon-talent d-flex p-0 form-control mr-1">
-              <i class="bi bi-info-circle mx-auto my-auto"></i>
+            <span class="text-danger fs-10">{{ errors[0] }}</span>
+          </ValidationProvider>
+          <ValidationProvider rules="required|numeric" v-slot="{ errors }">
+            <!-- telephone number -->
+            <div class="mt-2">
+              <label for="telephone_number" class="fs-12">
+                Telephone Number <span class="text-danger">*</span>
+              </label>
+              <div class="d-flex">
+                <div class="icon-talent d-flex p-0 form-control mr-1">
+                  <i class="bi bi-telephone-fill mx-auto my-auto"></i>
+                </div>
+                <input
+                  v-model="register.telephone_number"
+                  type="text"
+                  maxLength="12"
+                  id="telephone_number"
+                  placeholder="Input Telephone Number"
+                  class="form-control input-talent ml-auto"
+                />
+              </div>
             </div>
-            <input
-              v-model="register.company_subject"
-              type="text"
-              id="company_subject"
-              placeholder="Input Company Subject"
-              class="form-control input-talent ml-auto text-talent"
-            />
-          </div>
-        </div>
-        <div class="d-flex">
-          <span
-            class="fs-12 ml-auto clickable link text-talent mt-2"
-            @click="is_next_step = false"
+            <span class="text-danger fs-10">{{ errors[0] }}</span>
+          </ValidationProvider>
+          <!-- next step button -->
+          <button
+            class="form-control mt-4 mb-1 text-center btn-login"
+            type="submit"
           >
-            <i class="bi bi-chevron-double-left mx-auto my-auto"></i> Previous
-          </span>
-        </div>
-        <!-- sign up button -->
-        <button
-          class="form-control mt-3 mb-1 text-center btn-login"
-          type="submit"
+            Next Step
+          </button>
+          <!-- to sign in link -->
+          <center>
+            <span class="fs-12">
+              Already have an Account?
+              <u
+                class="clickable link text-talent"
+                @click="$router.push('login')"
+              >
+                Sign In
+              </u>
+            </span>
+          </center>
+        </form>
+      </ValidationObserver>
+      <ValidationObserver v-slot="{ handleSubmit }">
+        <!-- company information -->
+        <form
+          v-if="is_next_step"
+          class="px-5"
+          @submit.prevent="handleSubmit(setRegister)"
         >
-          Sign Up
-        </button>
-        <!-- to sign in link -->
-        <center>
-          <span class="fs-12">
-            Already have an Account?
-            <u
-              class="clickable link text-talent"
-              @click="$router.push('login')"
+          <!-- company information text -->
+          <center><span>Company Information</span></center>
+          <ValidationProvider rules="required" v-slot="{ errors }">
+            <!-- company name -->
+            <div class="mt-2">
+              <label for="company_name" class="fs-12">
+                Company Name <span class="text-danger">*</span>
+              </label>
+              <div class="d-flex">
+                <div class="icon-talent d-flex p-0 form-control mr-1">
+                  <i class="bi bi-building-check mx-auto my-auto"></i>
+                </div>
+                <input
+                  v-model="register.company_name"
+                  type="text"
+                  id="company_name"
+                  placeholder="Input Company Name"
+                  class="form-control input-talent ml-auto"
+                />
+              </div>
+            </div>
+            <span class="text-danger fs-10">{{ errors[0] }}</span>
+          </ValidationProvider>
+          <ValidationProvider rules="required" v-slot="{ errors }">
+            <!-- company address -->
+            <div class="mt-2">
+              <label for="company_address" class="fs-12">Company Address</label>
+              <div class="d-flex">
+                <div class="icon-talent d-flex p-0 form-control mr-1">
+                  <i class="bi bi-geo-alt mx-auto my-auto"></i>
+                </div>
+                <input
+                  v-model="register.company_address"
+                  type="text"
+                  id="company_address"
+                  placeholder="Input Company Address"
+                  class="form-control input-talent ml-auto"
+                />
+              </div>
+            </div>
+            <span class="text-danger fs-10">{{ errors[0] }}</span>
+          </ValidationProvider>
+          <ValidationProvider rules="required" v-slot="{ errors }">
+            <!-- company subject -->
+            <div class="mt-2">
+              <label for="company_subject" class="fs-12">Company Subject</label>
+              <div class="d-flex">
+                <div class="icon-talent d-flex p-0 form-control mr-1">
+                  <i class="bi bi-info-circle mx-auto my-auto"></i>
+                </div>
+                <input
+                  v-model="register.company_subject"
+                  type="text"
+                  id="company_subject"
+                  placeholder="Input Company Subject"
+                  class="form-control input-talent ml-auto"
+                />
+              </div>
+            </div>
+            <span class="text-danger fs-10">{{ errors[0] }}</span>
+          </ValidationProvider>
+          <div class="d-flex">
+            <span
+              class="fs-12 ml-auto clickable link text-talent mt-2"
+              @click="is_next_step = false"
             >
-              Sign In
-            </u>
-          </span>
-        </center>
-      </form>
+              <i class="bi bi-chevron-double-left mx-auto my-auto"></i> Previous
+            </span>
+          </div>
+          <!-- sign up button -->
+          <button
+            class="form-control mt-3 mb-1 text-center btn-login"
+            type="submit"
+          >
+            Sign Up
+          </button>
+          <!-- to sign in link -->
+          <center>
+            <span class="fs-12">
+              Already have an Account?
+              <u
+                class="clickable link text-talent"
+                @click="$router.push('login')"
+              >
+                Sign In
+              </u>
+            </span>
+          </center>
+        </form>
+      </ValidationObserver>
     </div>
   </div>
 </template>
 <script>
 import { VBTooltip } from "bootstrap-vue";
+import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
+import { required, email, numeric } from "vee-validate/dist/rules";
+
+extend("email", {
+  ...email,
+  message: "This Email is Not Valid",
+});
+extend("required", {
+  ...required,
+  message: "This Field is Required",
+});
+extend("numeric", {
+  ...numeric,
+  message: "This Field Must be a Number",
+});
 
 export default {
   name: "Login",
-  components: {},
+  components: { ValidationProvider, ValidationObserver },
   data() {
     return {
       show_password: false,
@@ -242,8 +285,8 @@ export default {
     };
   },
   methods: {
-    login() {
-      this.$router.push("/admin/dashboard");
+    setRegister() {
+      this.$router.push("/login");
     },
     nextStep() {
       this.is_next_step = true;

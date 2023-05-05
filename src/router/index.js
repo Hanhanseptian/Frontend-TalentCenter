@@ -122,7 +122,7 @@ const routes = [
   // all user
   {
     path: "/register",
-    name: "Register",
+    name: "Sign Up",
     component: () => import("../views/pages/Register.vue"),
     meta: {
       full: true,
@@ -130,7 +130,7 @@ const routes = [
   },
   {
     path: "/login",
-    name: "Login",
+    name: "Sign In",
     component: () => import("../views/pages/Login.vue"),
     meta: {
       full: true,

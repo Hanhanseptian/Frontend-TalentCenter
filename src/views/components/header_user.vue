@@ -53,7 +53,7 @@
               <i class="bi bi-person-circle fs-30"></i>
             </div>
           </template>
-          <b-dropdown-item>
+          <b-dropdown-item @click="showMyAccountModal('talent')">
             <span class="fs-14">My Account</span>
           </b-dropdown-item>
           <b-dropdown-divider></b-dropdown-divider>
@@ -63,20 +63,28 @@
         </b-dropdown>
       </div>
     </div>
+    <my-account-talent-modal />
   </b-card>
 </template>
 <script>
 import { BCard, BBadge } from "bootstrap-vue";
+import myAccountModal from "./talent/myAccountModal.vue";
 
 export default {
   name: "sidebar",
   components: {
     BCard,
     BBadge,
+    "my-account-talent-modal": myAccountModal,
   },
   methods: {
     signOut() {
       this.$router.push("/");
+    },
+    showMyAccountModal(tipe) {
+      if (tipe) {
+        this.$bvModal.show("my-account-talent");
+      }
     },
   },
 };

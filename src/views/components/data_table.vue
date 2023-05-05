@@ -3,6 +3,7 @@
     <b-table
       hover
       responsive
+      bordered
       :per-page="per_page"
       :current-page="current_page"
       :fields="data.fields"
@@ -31,11 +32,16 @@
 
       <!-- CELL GENDER -->
       <template #cell(gender)="data">
-        <b-badge pill v-if="data.value == 'Male'" style="width:90%" class="bg-talent">
+        <b-badge
+          pill
+          v-if="data.value == 'Male'"
+          style="width: 90%"
+          class="bg-talent"
+        >
           <i class="bi bi-gender-male"></i>
           Male
         </b-badge>
-        <b-badge pill v-else style="width:90%" class="bg-pink">
+        <b-badge pill v-else style="width: 90%" class="bg-pink">
           <i class="bi bi-gender-female"></i>
           Female
         </b-badge>
@@ -47,6 +53,7 @@
           v-if="data.value == 'on_job'"
           variant="success"
           style="width: 100%"
+          class="p-1"
         >
           On Job
         </b-badge>
@@ -54,12 +61,13 @@
           v-if="data.value == 'on_request'"
           variant="warning"
           style="width: 100%"
+          class="p-1"
         >
           On request
         </b-badge>
         <b-badge
           v-if="data.value == 'available'"
-          class="bg-talent text-white"
+          class="bg-talent text-white p-1"
           style="width: 100%"
         >
           Available
@@ -67,24 +75,39 @@
       </template>
 
       <!-- CELL START DATE -->
-      <template #cell(start_date)>
-        <span>01 April 2023</span>
+      <template #cell(start_date)="data">
+        <b-badge variant="success" style="width: 90%" class="p-1">
+          {{ data.value }}
+        </b-badge>
+      </template>
+
+      <!-- CELL END DATE -->
+      <template #cell(end_date)="data">
+        <b-badge variant="warning" style="width: 90%" class="p-1">
+          {{ data.value }}
+        </b-badge>
       </template>
 
       <!-- CELL START DATE -->
-      <template #cell(end_date)>
-        <span>01 April 2023</span>
-      </template>
-
-      <!-- CELL START DATE -->
-      <template #cell(terminate_date)>
-        <span>01 April 2023</span>
+      <template #cell(terminate_date)="data">
+        <b-badge variant="danger" style="width: 90%" class="p-1">
+          {{ data.value }}
+        </b-badge>
       </template>
 
       <!-- CELL REQUEST TYPE -->
       <template #cell(request_type)="data">
-        <b-badge v-if="data.value=='recruite'" variant="success" style="width:85%">Recruite</b-badge>
-        <b-badge v-else variant="warning" style="width:85%">Extend Contract</b-badge>
+        <b-badge
+          v-if="data.value == 'recruite'"
+          variant="success"
+          style="width: 85%"
+          class="p-1"
+        >
+          Recruite
+        </b-badge>
+        <b-badge v-else variant="warning" style="width: 85%" class="p-1">
+          Extend Contract
+        </b-badge>
       </template>
 
       <!-- CELL ACTION -->
@@ -117,17 +140,15 @@
         </div>
       </template>
 
-      <!-- CELL ACTION REWUEST -->
+      <!-- CELL ACTION REQUEST -->
       <template #cell(action_hired)>
-        <b-button size="sm" variant="outline-info">
-          View Detail
-        </b-button>
+        <b-button size="sm" variant="outline-info"> View Detail </b-button>
       </template>
     </b-table>
 
     <div class="d-flex align-items-center mt-2 mb-2">
       <!-- ROW INFORMATION AND SELECT ROW -->
-      <div class="d-flex align-items-center mr-auto ml-3 fs-12">
+      <div class="d-flex align-items-center mr-auto fs-12">
         <div>Showing {{ current_page }} to</div>
         <div class="mr-1 ml-1">
           <b-form-select
@@ -143,7 +164,7 @@
       </div>
 
       <!-- PAGINATION -->
-      <div class="ml-auto mr-3 mt-1">
+      <div class="ml-auto mt-1">
         <b-pagination
           v-model="current_page"
           :total-rows="data.items.length"

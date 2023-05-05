@@ -90,7 +90,34 @@
               >
                 <div class="d-flex">
                   <i class="bi bi-kanban fs-14 mr-1"></i>
-                  <span class="text-justify"> NLP for Analytics </span>
+                  <span class="text-justify" style="word-break: break-all;"> NLP Machine Learning untuk Gojek Company </span>
+                </div>
+              </li>
+              <li
+                class="list-group-item p-1"
+                style="border-color: #0173a7 !important"
+              >
+                <div class="d-flex">
+                  <i class="bi bi-kanban fs-14 mr-1"></i>
+                  <span class="text-justify" style="word-break: break-all;"> NLP Machine Learning untuk Gojek Company </span>
+                </div>
+              </li>
+              <li
+                class="list-group-item p-1"
+                style="border-color: #0173a7 !important"
+              >
+                <div class="d-flex">
+                  <i class="bi bi-kanban fs-14 mr-1"></i>
+                  <span class="text-justify" style="word-break: break-all;"> NLP Machine Learning untuk Gojek Company </span>
+                </div>
+              </li>
+              <li
+                class="list-group-item p-1"
+                style="border-color: #0173a7 !important"
+              >
+                <div class="d-flex">
+                  <i class="bi bi-kanban fs-14 mr-1"></i>
+                  <span class="text-justify" style="word-break: break-all;"> NLP Machine Learning untuk Gojek Company </span>
                 </div>
               </li>
             </ul>

@@ -6,108 +6,128 @@
         <img src="../../../public/logo.png" width="50%" class="my-4" />
       </div>
       <!-- login form -->
-      <form class="px-5">
-        <!-- usename -->
-        <div class="mt-3">
-          <label for="username" class="fs-12">Username</label>
-          <div class="d-flex">
-            <div class="icon-talent d-flex p-0 form-control mr-1">
-              <i class="bi bi-person-fill-lock mx-auto my-auto"></i>
+      <ValidationObserver v-slot="{ handleSubmit }">
+        <form class="px-5" @submit.prevent="handleSubmit(login)">
+          <!-- usename -->
+          <ValidationProvider rules="required|email" v-slot="{ errors }">
+            <div class="mt-3">
+              <label for="email" class="fs-12">Email</label>
+              <div class="d-flex">
+                <div class="icon-talent d-flex p-0 form-control mr-1">
+                  <i class="bi bi-envelope-check-fill mx-auto my-auto"></i>
+                </div>
+
+                <input
+                  type="text"
+                  id="email"
+                  v-model="email"
+                  placeholder="Input Your Email"
+                  class="form-control input-talent ml-auto"
+                />
+              </div>
             </div>
-            <input
-              type="text"
-              id="username"
-              v-model="username"
-              placeholder="Input Username or Email"
-              class="form-control input-talent ml-auto"
-            />
-          </div>
-        </div>
-        <!-- password -->
-        <div class="mt-2">
-          <label for="password" class="fs-12">Password</label>
-          <div class="d-flex">
-            <div class="icon-talent d-flex p-0 form-control mr-1">
-              <i class="bi bi-key-fill mx-auto my-auto"></i>
+            <span class="text-danger fs-10">{{ errors[0] }}</span>
+          </ValidationProvider>
+          <!-- password -->
+          <ValidationProvider rules="required" v-slot="{ errors }">
+            <div class="mt-2">
+              <label for="password" class="fs-12">Password</label>
+              <div class="d-flex">
+                <div class="icon-talent d-flex p-0 form-control mr-1">
+                  <i class="bi bi-key-fill mx-auto my-auto"></i>
+                </div>
+                <input
+                  :type="show_password ? 'text' : 'password'"
+                  id="password"
+                  v-model="password"
+                  placeholder="Input Password"
+                  class="form-control input-talent ml-auto"
+                />
+                <i
+                  v-if="!show_password"
+                  class="bi bi-eye clickable"
+                  style="
+                    margin-left: -2rem;
+                    margin-right: 1rem;
+                    margin-top: 0.5rem;
+                    font-size: 120%;
+                  "
+                  @click="show_password = !show_password"
+                  v-b-tooltip.hover="{ variant: 'info' }"
+                  title="Show Password"
+                ></i>
+                <i
+                  v-if="show_password"
+                  class="bi bi-eye-slash clickable"
+                  style="
+                    margin-left: -2rem;
+                    margin-right: 1rem;
+                    margin-top: 0.5rem;
+                    font-size: 120%;
+                  "
+                  @click="show_password = !show_password"
+                  v-b-tooltip.hover="{ variant: 'info' }"
+                  title="Hide Password"
+                ></i>
+              </div>
             </div>
-            <input
-              :type="show_password ? 'text' : 'password'"
-              id="password"
-              v-model="password"
-              placeholder="Input Password"
-              class="form-control input-talent ml-auto"
-            />
-            <i
-              v-if="!show_password"
-              class="bi bi-eye clickable"
-              style="
-                margin-left: -2rem;
-                margin-right: 1rem;
-                margin-top: 0.5rem;
-                font-size: 120%;
-              "
-              @click="show_password = !show_password"
-              v-b-tooltip.hover="{ variant: 'info' }"
-              title="Show Password"
-            ></i>
-            <i
-              v-if="show_password"
-              class="bi bi-eye-slash clickable"
-              style="
-                margin-left: -2rem;
-                margin-right: 1rem;
-                margin-top: 0.5rem;
-                font-size: 120%;
-              "
-              @click="show_password = !show_password"
-              v-b-tooltip.hover="{ variant: 'info' }"
-              title="Hide Password"
-            ></i>
-          </div>
-        </div>
-        <!-- sign in button -->
-        <button
-          class="form-control mt-4 mb-1 text-center btn-login"
-          @click="login"
-        >
-          Sign In
-        </button>
-        <!-- to sign up link -->
-        <center>
-          <span class="fs-12">
-            Don't have an Account?
-            <u
-              class="clickable link text-talent"
-              @click="$router.push('register')"
-            >
-              Sign Up
-            </u>
-          </span>
-        </center>
-      </form>
+            <span class="text-danger fs-10">{{ errors[0] }}</span>
+          </ValidationProvider>
+          <!-- sign in button -->
+          <button
+            class="form-control mt-4 mb-1 text-center btn-login"
+            type="submit"
+          >
+            Sign In
+          </button>
+          <!-- to sign up link -->
+          <center>
+            <span class="fs-12">
+              Don't have an Account?
+              <u
+                class="clickable link text-talent"
+                @click="$router.push('register')"
+              >
+                Sign Up
+              </u>
+            </span>
+          </center>
+        </form>
+      </ValidationObserver>
     </div>
   </div>
 </template>
 <script>
 import { VBTooltip } from "bootstrap-vue";
+import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
+import { required, email } from "vee-validate/dist/rules";
+
+extend("email", {
+  ...email,
+  message: "This Email is Not Valid",
+});
+extend("required", {
+  ...required,
+  message: "This Field is Required",
+});
 
 export default {
   name: "Login",
-  components: {},
+  components: { ValidationProvider, ValidationObserver },
   data() {
     return {
       show_password: false,
-      username: "",
+      email: "",
       password: "",
     };
   },
   methods: {
     login() {
-      if(this.username=="bizdev"){
+      if (this.email.includes("bizdev")) {
         this.$router.push("/admin/dashboard");
-      }else if(this.username=="recruiter"){
+      } else if (this.email.includes("recruiter")) {
         this.$router.push("/home");
-      }else{
+      } else {
         this.$router.push("/talent-profile");
       }
     },
