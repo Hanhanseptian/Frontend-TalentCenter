@@ -68,7 +68,7 @@
 </template>
 <script>
 import { BCard, BBadge } from "bootstrap-vue";
-import myAccountModal from "./talent/myAccountModal.vue";
+import myAccountModal from "./myAccountModal.vue";
 
 export default {
   name: "sidebar",

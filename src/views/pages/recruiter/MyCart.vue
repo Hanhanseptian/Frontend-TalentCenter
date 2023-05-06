@@ -3,10 +3,10 @@
     <div class="container">
       <b-card>
         <b-card-header>
-          <b-card-title>
-            <i class="bi bi-cart-fill mr-1"></i> My Cart
+          <b-card-title class="fs-20">
+            <i class="bi bi-cart-fill"></i> My Cart
           </b-card-title>
-          <span>Show Talent to Recruite</span>
+          <span class="fs-14 text-muted">Show Talent List on Cart</span>
         </b-card-header>
         <b-card-body>
           <b-input-group class="form-search ml-auto">
@@ -52,36 +52,48 @@
                 </div>
                 <!-- start date -->
                 <div class="d-flex align-items-center">
-                  <div class="mr-2">
+                  <div class="mr-2 w-50">
                     <label for="start-date" class="fs-12">Start Date</label>
                     <b-form-datepicker
                       size="sm"
                       class="mb-2 form-date-talent"
                       v-model="item.start_date"
+                      :date-format-options="{
+                        year: 'numeric',
+                        month: 'long',
+                        day: '2-digit',
+                      }"
+                      locale="en"
                       placeholder="Start Date"
                     ></b-form-datepicker>
                   </div>
                   <!-- end date -->
-                  <div class="mr-2">
+                  <div class="w-50">
                     <label for="start-date" class="fs-12">End Date</label>
                     <b-form-datepicker
                       size="sm"
                       class="mb-2 form-date-talent"
                       v-model="item.end_date"
+                      :date-format-options="{
+                        year: 'numeric',
+                        month: 'long',
+                        day: '2-digit',
+                      }"
+                      locale="en"
                       placeholder="End Date"
                     ></b-form-datepicker>
                   </div>
-                  <!-- delete button -->
-                  <div class="mt-4 ml-auto">
-                    <b-button
-                      size="xs"
-                      variant="danger"
-                      @click="deleteCart(item.talent_name)"
-                    >
-                      <i class="bi bi-trash fs-12"></i>
-                      <small>Delete</small>
-                    </b-button>
-                  </div>
+                </div>
+                <!-- delete button -->
+                <div class="ml-auto">
+                  <b-button
+                    size="xs"
+                    variant="danger"
+                    @click="deleteCart(item.talent_name)"
+                  >
+                    <i class="bi bi-trash fs-12"></i>
+                    <small>Delete</small>
+                  </b-button>
                 </div>
               </b-card>
             </div>

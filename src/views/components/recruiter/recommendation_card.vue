@@ -90,7 +90,9 @@
               >
                 <div class="d-flex">
                   <i class="bi bi-kanban fs-14 mr-1"></i>
-                  <span class="text-justify" style="word-break: break-all;"> NLP Machine Learning untuk Gojek Company </span>
+                  <span class="text-justify" style="word-break: break-all">
+                    NLP Machine Learning untuk Gojek Company
+                  </span>
                 </div>
               </li>
               <li
@@ -99,7 +101,9 @@
               >
                 <div class="d-flex">
                   <i class="bi bi-kanban fs-14 mr-1"></i>
-                  <span class="text-justify" style="word-break: break-all;"> NLP Machine Learning untuk Gojek Company </span>
+                  <span class="text-justify" style="word-break: break-all">
+                    NLP Machine Learning untuk Gojek Company
+                  </span>
                 </div>
               </li>
               <li
@@ -108,7 +112,9 @@
               >
                 <div class="d-flex">
                   <i class="bi bi-kanban fs-14 mr-1"></i>
-                  <span class="text-justify" style="word-break: break-all;"> NLP Machine Learning untuk Gojek Company </span>
+                  <span class="text-justify" style="word-break: break-all">
+                    NLP Machine Learning untuk Gojek Company
+                  </span>
                 </div>
               </li>
               <li
@@ -117,7 +123,9 @@
               >
                 <div class="d-flex">
                   <i class="bi bi-kanban fs-14 mr-1"></i>
-                  <span class="text-justify" style="word-break: break-all;"> NLP Machine Learning untuk Gojek Company </span>
+                  <span class="text-justify" style="word-break: break-all">
+                    NLP Machine Learning untuk Gojek Company
+                  </span>
                 </div>
               </li>
             </ul>
@@ -219,24 +227,35 @@
       </div>
       <div class="row mt-2">
         <div class="col-12">
-          <b-button class="btn-talent btn-xs float-right">
+          <b-button class="btn-talent btn-xs float-right" @click="addToCart()">
             <i class="bi bi-cart-plus fs-12"></i>
             <span class="fs-12"> Add to Cart</span>
           </b-button>
         </div>
       </div>
+      <request_date_modal :id="data.id" />
     </b-card>
   </div>
 </template>
 <script>
+import request_date_modal from "./requestDateModal.vue";
+
 export default {
   name: "recommendation-card",
+  components: {
+    request_date_modal,
+  },
   props: {
     data: {
       type: Object,
       default: function () {
         return {};
       },
+    },
+  },
+  methods: {
+    addToCart() {
+      this.$bvModal.show("set-date-modal-" + this.data.id.toString());
     },
   },
 };
@@ -279,7 +298,7 @@ export default {
 .skill-wrapper::-webkit-scrollbar-corner {
   background-color: #d3eeff;
 }
-.shadow-md{
+.shadow-md {
   box-shadow: 2px 3px 2px #c7cbcd !important;
 }
 </style>

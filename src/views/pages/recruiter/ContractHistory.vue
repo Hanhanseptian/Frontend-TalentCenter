@@ -29,14 +29,10 @@
               <span class="fs-12 ml-1">
                 <b-badge
                   style="position: absolute"
-                  :variant="
-                    item.type == 'extend_contract' ? 'warning' : 'success'
-                  "
+                  :variant="item.type == 'discontinue' ? 'info' : 'danger'"
                 >
                   {{
-                    item.type == "extend_contract"
-                      ? "Extend Contract"
-                      : "New Contract"
+                    item.type == "discontinue" ? "Discontinue" : "Termination"
                   }}
                 </b-badge>
               </span>
@@ -56,40 +52,55 @@
           </div>
           <!-- start date -->
           <div class="d-flex align-items-center mt-2">
-            <div class="mr-auto" style="width:30%">
+            <div class="mr-2 w-50">
               <label for="start-date" class="fs-12">Start Date</label>
               <b-form-datepicker
                 id="start-date"
                 size="sm"
                 class="mb-2 form-date-talent"
                 v-model="item.start_date"
-                :date-format-options="{ year: 'numeric', month: 'short', day: '2-digit'}"
+                :date-format-options="{
+                  year: 'numeric',
+                  month: 'long',
+                  day: '2-digit',
+                }"
                 locale="en"
                 disabled
               ></b-form-datepicker>
             </div>
             <!-- end date -->
-            <div class="mx-auto" style="width:30%">
+            <div
+              class="mr-auto w-50"
+              v-if="item.type == 'discontinue'"
+            >
               <label for="start-date" class="fs-12">End Date</label>
               <b-form-datepicker
                 id="start-date"
                 size="sm"
                 class="mb-2 form-date-talent"
                 v-model="item.end_date"
-                :date-format-options="{ year: 'numeric', month: 'short', day: '2-digit'}"
+                :date-format-options="{
+                  year: 'numeric',
+                  month: 'long',
+                  day: '2-digit',
+                }"
                 locale="en"
                 disabled
               ></b-form-datepicker>
             </div>
             <!-- terminate date -->
-            <div class="ml-auto" style="width:30%">
+            <div class="mr-auto w-50" v-else>
               <label for="start-date" class="fs-12">Terminate Date</label>
               <b-form-datepicker
                 id="start-date"
                 size="sm"
                 class="mb-2 form-date-talent"
                 v-model="item.end_date"
-                :date-format-options="{ year: 'numeric', month: 'short', day: '2-digit'}"
+                :date-format-options="{
+                  year: 'numeric',
+                  month: 'long',
+                  day: '2-digit',
+                }"
                 locale="en"
                 disabled
               ></b-form-datepicker>
@@ -124,60 +135,54 @@ export default {
           id: 1,
           talent_name: "Elon Musk",
           role: "Frontend Developer",
-          type: "new_contract",
+          type: "termination",
           start_date: "2023-10-01",
           end_date: "2024-20-01",
-          status: "waiting",
           reason: "Talent not dicipline",
         },
         {
           id: 2,
           talent_name: "Elon Musk Junior",
           role: "Backend Developer",
-          type: "extend_contract",
+          type: "discontinue",
           start_date: "2023-10-01",
           end_date: "2024-20-01",
-          status: "rejected",
           reason: "Talent not dicipline",
         },
         {
           id: 3,
           talent_name: "Ayah Elon Musk",
           role: "Frontend Developer",
-          type: "extend_contract",
+          type: "discontinue",
           start_date: "2023-10-01",
           end_date: "2024-20-01",
-          status: "waiting",
           reason: "Talent not dicipline",
         },
         {
           id: 4,
           talent_name: "Kakak Elon Musk",
           role: "Backend Developer",
-          type: "new_contract",
+          type: "termination",
           start_date: "2023-10-01",
           end_date: "2024-20-01",
-          status: "rejected",
           reason: "Talent not dicipline",
         },
         {
           id: 5,
           talent_name: "Keponakan Elon Musk",
           role: "Fullstack Developer",
-          type: "extend_contract",
+          type: "discontinue",
           start_date: "2023-10-01",
           end_date: "2024-20-01",
-          status: "rejected",
           reason: "Talent not dicipline",
         },
         {
           id: 6,
           talent_name: "Ibu Elon Musk",
           role: "Frontend Developer",
-          type: "new_contract",
+          type: "termination",
           start_date: "2023-10-01",
           end_date: "2024-20-01",
-          status: "waiting",
           reason: "Talent not dicipline",
         },
       ],

@@ -5,158 +5,161 @@
         <div class="col-md-4 col-sm-12 mb-3">
           <b-card no-body class="h-100 pt-2">
             <b-card-header>
-              <b-card-title>Requirements</b-card-title>
+              <b-card-title class="fs-20">
+                <i class="bi bi-list-ul"></i> Requirements
+              </b-card-title>
             </b-card-header>
             <b-card-body>
-              <!-- form requirements -->
-              <form @submit.prevent="setRequirements">
-                <!-- Programming Language -->
-                <div class="mb-2">
-                  <label for="programming-language" class="fs-12"
-                    >Programming Language</label
-                  >
-                  <div class="d-flex">
-                    <v-select
-                      :options="programming_language_options"
-                      multiple
-                      placeholder="Select Programming Language"
-                    ></v-select>
-                    <b-form-input
-                      type="number"
-                      min="0"
-                      max="100"
-                      class="ml-2 input-persent"
-                      v-model="requirements.programming_language.percent"
-                    />
+              <ValidationObserver v-slot="{ handleSubmit }">
+                <!-- form requirements -->
+                <form @submit.prevent="handleSubmit(setRequirements)">
+                  <ValidationProvider rules="required" v-slot="{ errors }">
+                    <!-- programming language -->
+                    <div>
+                      <label for="programming-language" class="fs-12 d-flex">
+                        Programming Language
+                        <span class="text-danger ml-1">*</span>
+                        <span class="ml-auto">Value %</span>
+                      </label>
+                      <div class="d-flex">
+                        <v-select
+                          :options="programming_language_options"
+                          multiple
+                          placeholder="Select Programming Language"
+                          v-model="requirements.programming_language.value"
+                        ></v-select>
+                        <b-form-input
+                          type="number"
+                          min="0"
+                          class="ml-2 input-persent"
+                          v-model="requirements.programming_language.percent"
+                        />
+                      </div>
+                    </div>
+                    <span class="text-danger fs-10">{{ errors[0] }}</span>
+                  </ValidationProvider>
+                  <!-- role -->
+                  <div class="mt-2">
+                    <label for="Role" class="fs-12">Role</label>
+                    <div class="d-flex">
+                      <v-select
+                        :options="[
+                          'Frontend Developer',
+                          'Backend Developer',
+                          'Fullstack Developer',
+                        ]"
+                        v-model="requirements.role.value"
+                        placeholder="Select Role"
+                      ></v-select>
+                      <b-form-input
+                        type="number"
+                        min="0"
+                        class="ml-2 input-persent"
+                        v-model="requirements.role.percent"
+                      />
+                    </div>
                   </div>
-                </div>
-                <!-- add more button -->
-                <b-button
-                  v-if="!is_add_more"
-                  class="btn-outline-talent btn-xs btn-block mt-3"
-                  variant="light"
-                  @click="is_add_more = true"
-                >
-                  <span class="fs-14 text-talent">
-                    <i class="bi bi-plus"></i> Add More
-                  </span>
-                </b-button>
-                <!-- Role -->
-                <div v-if="is_add_more" class="mb-2">
-                  <label for="Role" class="fs-12">Role</label>
-                  <div class="d-flex">
-                    <v-select
-                      :options="[
-                        'Frontend Developer',
-                        'Backend Developer',
-                        'Fullstack Developer',
-                      ]"
-                      placeholder="Select Role"
-                    ></v-select>
-                    <b-form-input
-                      type="number"
-                      min="0"
-                      :max="maxPercent"
-                      class="ml-2 input-persent"
-                      v-model="requirements.role.percent"
-                    />
+                  <!-- framework -->
+                  <div class="mt-2">
+                    <label for="Framework" class="fs-12"
+                      >Framework Skills</label
+                    >
+                    <div class="d-flex">
+                      <v-select
+                        :options="['VueJS', 'ReactJS']"
+                        placeholder="Select Framework Skills"
+                        v-model="requirements.framework_skills.value"
+                      ></v-select>
+                      <b-form-input
+                        type="number"
+                        min="0"
+                        class="ml-2 input-persent"
+                        v-model="requirements.framework_skills.percent"
+                      />
+                    </div>
                   </div>
-                </div>
-                <!-- framework -->
-                <div v-if="is_add_more" class="mb-2">
-                  <label for="Framework" class="fs-12">Framework Skills</label>
-                  <div class="d-flex">
-                    <v-select
-                      :options="['VueJS', 'ReactJS']"
-                      placeholder="Select Framework Skills"
-                    ></v-select>
-                    <b-form-input
-                      type="number"
-                      min="0"
-                      :max="maxPercent"
-                      class="ml-2 input-persent"
-                      v-model="requirements.framework_skills.percent"
-                    />
+                  <!-- database -->
+                  <div class="mt-2">
+                    <label for="Database" class="fs-12">Database Skills</label>
+                    <div class="d-flex">
+                      <v-select
+                        :options="['MySQL', 'SQL Server', 'MongoDB']"
+                        placeholder="Select Database Skills"
+                        v-model="requirements.database_skills.value"
+                      ></v-select>
+                      <b-form-input
+                        type="number"
+                        min="0"
+                        class="ml-2 input-persent"
+                        v-model="requirements.database_skills.percent"
+                      />
+                    </div>
                   </div>
-                </div>
-                <!-- database -->
-                <div v-if="is_add_more" class="mb-2">
-                  <label for="Database" class="fs-12">Database Skills</label>
-                  <div class="d-flex">
-                    <v-select
-                      :options="['MySQL', 'SQL Server', 'MongoDB']"
-                      placeholder="Select Database Skills"
-                    ></v-select>
-                    <b-form-input
-                      type="number"
-                      min="0"
-                      :max="maxPercent"
-                      class="ml-2 input-persent"
-                      v-model="requirements.database_skills.percent"
-                    />
+                  <!-- work experience -->
+                  <div class="mt-2">
+                    <label for="work-experience" class="fs-12">
+                      Minimum Work Experience (Years)
+                    </label>
+                    <div class="d-flex">
+                      <input
+                        type="number"
+                        id="work-experience"
+                        placeholder="Input Minimum Work Experience"
+                        class="form-control input-talent"
+                        v-model="requirements.work_experience.value"
+                      />
+                      <b-form-input
+                        type="number"
+                        min="0"
+                        class="ml-2 input-persent"
+                        v-model="requirements.work_experience.percent"
+                      />
+                    </div>
                   </div>
-                </div>
-                <!-- work experience -->
-                <div v-if="is_add_more" class="mb-2">
-                  <label for="work-experience" class="fs-12"
-                    >Minimum Work Experience</label
-                  >
-                  <div class="d-flex">
-                    <input
-                      type="text"
-                      id="work-experience"
-                      placeholder="Input Framework or Email"
-                      class="form-control input-talent"
-                    />
-                    <b-form-input
-                      type="number"
-                      min="0"
-                      :max="maxPercent"
-                      class="ml-2 input-persent"
-                      v-model="requirements.work_experience.percent"
-                    />
+                  <!-- gender -->
+                  <div class="mt-2">
+                    <label for="Gender" class="fs-12">Gender</label>
+                    <div class="d-flex">
+                      <v-select
+                        :options="['Male', 'Female']"
+                        placeholder="Select Gender"
+                        v-model="requirements.gender.value"
+                      ></v-select>
+                      <b-form-input
+                        type="number"
+                        min="0"
+                        class="ml-2 input-persent"
+                        v-model="requirements.gender.percent"
+                      />
+                    </div>
                   </div>
-                </div>
-                <!-- gender -->
-                <div v-if="is_add_more" class="mb-2">
-                  <label for="Gender" class="fs-12">Gender</label>
-                  <div class="d-flex">
-                    <v-select
-                      :options="['Male', 'Female']"
-                      placeholder="Select Gender"
-                    ></v-select>
-                    <b-form-input
-                      type="number"
-                      min="0"
-                      :max="maxPercent"
-                      class="ml-2 input-persent"
-                      v-model="requirements.gender.percent"
-                    />
+                  <!-- max age -->
+                  <div class="mt-2">
+                    <label for="max-age" class="fs-12">
+                      Maximum Age (Years)
+                    </label>
+                    <div class="d-flex">
+                      <input
+                        type="number"
+                        id="max-age"
+                        placeholder="Input Maximum Age"
+                        class="form-control input-talent"
+                        v-model="requirements.max_age.value"
+                      />
+                      <b-form-input
+                        type="number"
+                        min="0"
+                        class="ml-2 input-persent"
+                        v-model="requirements.max_age.percent"
+                      />
+                    </div>
                   </div>
-                </div>
-                <!-- max age -->
-                <div v-if="is_add_more" class="mb-2">
-                  <label for="max-age" class="fs-12">Maximum Age</label>
-                  <div class="d-flex">
-                    <input
-                      type="number"
-                      id="max-age"
-                      placeholder="Input Maximum Age"
-                      class="form-control input-talent"
-                    />
-                    <b-form-input
-                      type="number"
-                      min="0"
-                      :max="maxPercent"
-                      class="ml-2 input-persent"
-                      v-model="requirements.max_age.percent"
-                    />
-                  </div>
-                </div>
-                <b-button type="submit" class="btn-talent btn-block mt-5">
-                  Set Requirements
-                </b-button>
-              </form>
+                  <!-- set requirements button -->
+                  <b-button type="submit" class="btn-talent btn-block mt-5">
+                    Set Requirements
+                  </b-button>
+                </form>
+              </ValidationObserver>
             </b-card-body>
           </b-card>
         </div>
@@ -164,7 +167,9 @@
         <div class="col-md-8 col-sm-12 mb-3">
           <b-card no-body class="pt-2 h-100">
             <b-card-header>
-              <b-card-title>Recommendation Talents</b-card-title>
+              <b-card-title class="fs-20">
+                <i class="bi bi-person-vcard"></i> Recommendation Talents
+              </b-card-title>
             </b-card-header>
             <b-card-body class="recommendation-wrapper">
               <div v-for="item in data" :key="item.id">
@@ -178,13 +183,22 @@
   </div>
 </template>
 <script>
+import Swal from "sweetalert2";
 import recommendation_card from "../../components/recruiter/recommendation_card.vue";
-import { VueSelect } from "vue-select";
+import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
+import { required } from "vee-validate/dist/rules";
+
+extend("required", {
+  ...required,
+  message: "This Field is Required",
+});
 
 export default {
   name: "Home",
   components: {
     recommendation_card,
+    ValidationProvider,
+    ValidationObserver,
   },
   data() {
     return {
@@ -249,24 +263,32 @@ export default {
     };
   },
   computed: {
-    maxPercent() {
+    totalPercent() {
       let val =
-        100 -
-        this.requirements.programming_language.percent -
-        this.requirements.role.percent -
-        this.requirements.framework_skills.percent -
-        this.requirements.database_skills.percent -
-        this.requirements.work_experience.percent -
-        this.requirements.gender.percent -
-        this.requirements.max_age.percent;
+        parseInt(this.requirements.programming_language.percent) +
+        parseInt(this.requirements.role.percent) +
+        parseInt(this.requirements.framework_skills.percent) +
+        parseInt(this.requirements.database_skills.percent) +
+        parseInt(this.requirements.work_experience.percent) +
+        parseInt(this.requirements.gender.percent) +
+        parseInt(this.requirements.max_age.percent);
       return val;
     },
   },
-  methods:{
-    setRequirements(){
-      alert("submitted")
-    }
-  }
+  methods: {
+    setRequirements() {
+      if (this.totalPercent > 100) {
+        Swal.fire({
+          icon: "error",
+          title: "Failed",
+          text: "Total Percentage Value Shouldn't be more than 100!",
+          footer: "",
+        });
+      } else {
+        alert("submitted");
+      }
+    },
+  },
 };
 </script>
 <style>

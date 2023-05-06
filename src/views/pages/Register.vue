@@ -108,7 +108,7 @@
             <!-- telephone number -->
             <div class="mt-2">
               <label for="telephone_number" class="fs-12">
-                Telephone Number <span class="text-danger">*</span>
+                Phone Number <span class="text-danger">*</span>
               </label>
               <div class="d-flex">
                 <div class="icon-talent d-flex p-0 form-control mr-1">
@@ -215,6 +215,7 @@
             </div>
             <span class="text-danger fs-10">{{ errors[0] }}</span>
           </ValidationProvider>
+          <!-- previous button -->
           <div class="d-flex">
             <span
               class="fs-12 ml-auto clickable link text-talent mt-2"

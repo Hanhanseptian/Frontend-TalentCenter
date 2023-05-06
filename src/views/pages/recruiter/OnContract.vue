@@ -17,86 +17,19 @@
         :key="item.id"
         class="col-md-6 col-sm-12 mb-3"
       >
-        <!-- talent card -->
-        <b-card no-body class="shadow-sm border p-3">
-          <!-- identity -->
-          <div class="d-flex">
-            <i class="bi bi-person-circle fs-30"></i>
-            <div class="ml-2">
-              <!-- talent name -->
-              <span class="fs-14"> {{ item.talent_name }} </span>
-              <!-- type contract -->
-              <span class="fs-12 ml-1">
-                <b-badge
-                  style="position: absolute"
-                  :variant="
-                    item.type == 'extend_contract' ? 'warning' : 'success'
-                  "
-                >
-                  {{
-                    item.type == "extend_contract"
-                      ? "Extend Contract"
-                      : "New Contract"
-                  }}
-                </b-badge>
-              </span>
-              <br />
-              <!-- role -->
-              <div class="fs-12">
-                <i class="bi bi-toggles2"></i>
-                Frontend Developer
-              </div>
-            </div>
-          </div>
-          <!-- start date -->
-          <div class="d-flex align-items-center mt-2">
-            <div class="mr-2">
-              <label for="start-date" class="fs-12">Start Date</label>
-              <b-form-datepicker
-                id="start-date"
-                size="sm"
-                class="mb-2 form-date-talent"
-                v-model="item.start_date"
-                disabled
-              ></b-form-datepicker>
-            </div>
-            <!-- end date -->
-            <div class="mr-2">
-              <label for="start-date" class="fs-12">End Date</label>
-              <b-form-datepicker
-                id="start-date"
-                size="sm"
-                class="mb-2 form-date-talent"
-                v-model="item.end_date"
-                disabled
-              ></b-form-datepicker>
-            </div>
-            <!-- cancel button -->
-            <div class="mt-4 ml-auto">
-              <b-button
-                size="xs"
-                variant="danger"
-              >
-                <i class="bi bi-x-circle mr-1"></i>
-                <small>Terminate</small>
-              </b-button>
-              <b-button
-                size="xs"
-                class="btn-talent ml-1"
-              >
-                <i class="bi bi-plus-circle mr-1"></i>
-                <small>Extend</small>
-              </b-button>
-            </div>
-          </div>
-        </b-card>
+        <on-contract-card :data="item" />
       </div>
     </div>
   </div>
 </template>
 <script>
+import onContractCardVue from "../../components/recruiter/onContractCard.vue";
+
 export default {
   name: "OnContract",
+  components: {
+    "on-contract-card": onContractCardVue,
+  },
   data() {
     return {
       on_contract_data: [
@@ -163,6 +96,5 @@ export default {
       ],
     };
   },
-  methods: {},
 };
 </script>

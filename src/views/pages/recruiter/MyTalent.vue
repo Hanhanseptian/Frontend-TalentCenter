@@ -3,10 +3,10 @@
     <div class="container">
       <b-card>
         <b-card-header>
-          <b-card-title>
-            <i class="bi bi-people-fill mr-1"></i> My Talent
+          <b-card-title class="fs-20">
+            <i class="bi bi-people-fill"></i> My Talent
           </b-card-title>
-          <span>Showing History of Recruited Talents</span>
+          <span class="fs-14 text-muted">Showing History of Recruited Talents</span>
         </b-card-header>
         <b-card-body>
           <div class="btn-group mb-3">
@@ -31,12 +31,12 @@
               "
               @click="changePage('terminate_contract')"
             >
-              Terminate Contract
+              Contract History
             </div>
           </div>
           <MyRequest v-if="is_my_request" />
           <OnContract v-else-if="is_on_contract" />
-          <TerminateContract v-else-if="is_terminate_contract" />
+          <ContractHistory v-else-if="is_terminate_contract" />
         </b-card-body>
       </b-card>
     </div>
@@ -45,14 +45,14 @@
 <script>
 import OnContract from "./OnContract.vue";
 import MyRequest from "./MyRequest.vue";
-import TerminateContract from "./TerminateContract.vue";
+import ContractHistory from "./ContractHistory.vue";
 
 export default {
   name: "MyTalent",
   components: {
     OnContract,
     MyRequest,
-    TerminateContract,
+    ContractHistory,
   },
   data() {
     return {
