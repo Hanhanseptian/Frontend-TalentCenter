@@ -10,20 +10,31 @@
       <i class="bi bi bi-calendar-fill"></i>
       Request Date
     </template>
-    <template #modal-footer>
-      <span class="display-none"></span>
-    </template>
     <ValidationObserver v-slot="{ handleSubmit }">
       <form @submit.prevent="handleSubmit(addToCart)">
+        <!-- talent name -->
+        <div>
+          <label for="name" class="fs-14 font-weight-bolder">
+            Talent Name <span class="text-danger">*</span>
+          </label>
+          <div class="d-flex">
+            <input
+              type="text"
+              id="name"
+              class="form-control date-talent"
+              disabled
+              v-model="name"
+            />
+          </div>
+        </div>
         <ValidationProvider rules="required" v-slot="{ errors }">
           <!-- start date -->
-          <div class="mr-2 w-100">
+          <div class="mt-3 mr-2 w-100">
             <label for="start-date" class="fs-14 font-weight-bolder">
               Start Date <span class="text-danger">*</span>
             </label>
             <b-form-datepicker
-              size="sm"
-              class="mb-2"
+              class="mb-2 date-talent"
               :date-format-options="{
                 year: 'numeric',
                 month: 'long',
@@ -42,8 +53,7 @@
               End Date <span class="text-danger">*</span>
             </label>
             <b-form-datepicker
-              size="sm"
-              class="mb-2"
+              class="mb-2 date-talent"
               :date-format-options="{
                 year: 'numeric',
                 month: 'long',
@@ -55,6 +65,7 @@
           </div>
           <span class="text-danger fs-12">{{ errors[0] }}</span>
         </ValidationProvider>
+        <!-- action button -->
         <div class="d-flex mt-3">
           <b-button
             size="sm"
@@ -99,6 +110,7 @@ export default {
   },
   data() {
     return {
+      name: "Hanhan Septian",
       start_date: null,
       end_date: null,
     };
@@ -119,3 +131,16 @@ export default {
   },
 };
 </script>
+<style scoped>
+.date-talent {
+  border-radius: 7px !important;
+  border-color: #0173a7 !important;
+  /* font-size: 16px !important; */
+  height: 2.5rem !important;
+  background-color: #eff2f4;
+}
+.date-talent:focus {
+  box-shadow: 2px 2px 2px #0173a7 !important;
+  border-color: none !important;
+}
+</style>

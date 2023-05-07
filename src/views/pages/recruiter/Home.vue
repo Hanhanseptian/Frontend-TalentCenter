@@ -26,6 +26,7 @@
                           :options="programming_language_options"
                           multiple
                           placeholder="Select Programming Language"
+                          :selectable="() => requirements.programming_language.value.length < 4"
                           v-model="requirements.programming_language.value"
                         ></v-select>
                         <b-form-input
@@ -206,7 +207,7 @@ export default {
       programming_language_options: ["Javascript", "Go", "PHP", "HTML", "CSS"],
       requirements: {
         programming_language: {
-          value: null,
+          value: [],
           percent: 0,
         },
         role: {

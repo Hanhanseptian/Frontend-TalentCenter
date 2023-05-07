@@ -18,111 +18,20 @@
         class="col-md-6 col-sm-12 mb-3"
       >
         <!-- talent card -->
-        <b-card no-body class="shadow-sm border p-3">
-          <!-- identity -->
-          <div class="d-flex">
-            <i class="bi bi-person-circle fs-30"></i>
-            <div class="ml-2">
-              <!-- talent name -->
-              <span class="fs-14"> {{ item.talent_name }} </span>
-              <!-- type contract -->
-              <span class="fs-12 ml-1">
-                <b-badge
-                  style="position: absolute"
-                  :variant="
-                    item.type == 'extend_contract' ? 'warning' : 'success'
-                  "
-                >
-                  {{
-                    item.type == "extend_contract"
-                      ? "Extend Contract"
-                      : "New Contract"
-                  }}
-                </b-badge>
-              </span>
-              <br />
-              <!-- role -->
-              <div class="fs-12">
-                <i class="bi bi-toggles2"></i>
-                Frontend Developer
-              </div>
-            </div>
-            <!-- status -->
-            <span
-              v-if="item.status == 'rejected'"
-              class="text-danger ml-auto fs-14"
-            >
-              Rejected
-            </span>
-            <span v-else class="text-talent ml-auto fs-14"> Waiting </span>
-          </div>
-          <!-- start date -->
-          <div class="d-flex align-items-center mt-2">
-            <div class="mr-2 w-50">
-              <label for="start-date" class="fs-12">Start Date</label>
-              <b-form-datepicker
-                id="start-date"
-                size="sm"
-                class="mb-2 form-date-talent"
-                v-model="item.start_date"
-                :date-format-options="{
-                  year: 'numeric',
-                  month: 'long',
-                  day: '2-digit',
-                }"
-                locale="en"
-                disabled
-              ></b-form-datepicker>
-            </div>
-            <!-- end date -->
-            <div class="w-50">
-              <label for="start-date" class="fs-12">End Date</label>
-              <b-form-datepicker
-                id="start-date"
-                size="sm"
-                class="mb-2 form-date-talent"
-                v-model="item.end_date"
-                :date-format-options="{
-                  year: 'numeric',
-                  month: 'long',
-                  day: '2-digit',
-                }"
-                locale="en"
-                disabled
-              ></b-form-datepicker>
-            </div>
-          </div>
-          <!-- cancel button -->
-          <div class="ml-auto">
-            <b-button
-              v-if="item.status == 'rejected'"
-              size="xs"
-              variant="danger"
-              @click="deleteRequest"
-            >
-              <i class="bi bi-trash mr-1"></i>
-              <small>Delete</small>
-            </b-button>
-            <b-button v-else size="xs" variant="danger" @click="cancelRequest">
-              <i class="bi bi-x-circle mr-1"></i>
-              <small>Cancel</small>
-            </b-button>
-          </div>
-          <!-- rejected reason info -->
-          <div class="text-danger fs-12" v-if="item.status == 'rejected'">
-            <i class="bi bi-exclamation-circle"></i>
-            {{ item.reason ? item.reason : "-" }}
-          </div>
-        </b-card>
+        <on_request_card :data="item" />
       </div>
     </div>
   </div>
 </template>
 <script>
+import on_request_card from "../../components/recruiter/onRequestCard.vue";
 import Swal from "sweetalert2";
 
 export default {
   name: "MyRequest",
+  components: {
+    on_request_card,
+  },
   data() {
     return {
       request_data: [

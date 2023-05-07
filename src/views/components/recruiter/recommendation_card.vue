@@ -225,25 +225,36 @@
           </b-card>
         </div>
       </div>
-      <div class="row mt-2">
-        <div class="col-12">
-          <b-button class="btn-talent btn-xs float-right" @click="addToCart()">
+      <div class="mt-2">
+        <div class="d-flex align-items-center">
+          <b-button
+            variant="warning"
+            class="btn-xs ml-auto"
+            @click="viewDetail()"
+          >
+            <i class="bi bi-info-circle fs-12"></i>
+            <span class="fs-12"> View Detail</span>
+          </b-button>
+          <b-button class="btn-talent btn-xs ml-2" @click="addToCart()">
             <i class="bi bi-cart-plus fs-12"></i>
             <span class="fs-12"> Add to Cart</span>
           </b-button>
         </div>
       </div>
       <request_date_modal :id="data.id" />
+      <detail_talent_modal :id="data.id" />
     </b-card>
   </div>
 </template>
 <script>
 import request_date_modal from "./requestDateModal.vue";
+import detail_talent_modal from "../detailTalentModal.vue";
 
 export default {
   name: "recommendation-card",
   components: {
     request_date_modal,
+    detail_talent_modal,
   },
   props: {
     data: {
@@ -256,6 +267,9 @@ export default {
   methods: {
     addToCart() {
       this.$bvModal.show("set-date-modal-" + this.data.id.toString());
+    },
+    viewDetail() {
+      this.$bvModal.show("detail-talent-" + this.data.id.toString());
     },
   },
 };
