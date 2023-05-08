@@ -1,52 +1,56 @@
 <template>
   <b-modal
     :id="'terminate-modal-' + id.toString()"
-    size="md"
+    size="sm"
     hide-footer
     @hidden="resetModal"
     no-close-on-backdrop
   >
     <template #modal-title>
-      <i class="bi bi bi-info-circle"></i>
-      Terminate Reason
+      <span class="fs-18">
+        <i class="bi bi-info-circle"></i>
+        Terminate Reason
+      </span>
     </template>
     <template #modal-footer>
       <span class="display-none"></span>
     </template>
-    <ValidationObserver v-slot="{ handleSubmit }">
-      <form @submit.prevent="handleSubmit(addToCart)">
-        <ValidationProvider rules="required" v-slot="{ errors }">
-          <!-- Reason -->
-          <div class="mr-2 w-100">
-            <label for="start-date" class="fs-14 font-weight-bolder">
-              Reason of Terminating <span class="text-danger">*</span>
-            </label>
-            <b-form-textarea rows="10" v-model="reason"></b-form-textarea>
+    <b-card no-body class="shadow p-2">
+      <ValidationObserver v-slot="{ handleSubmit }">
+        <form @submit.prevent="handleSubmit(addToCart)">
+          <ValidationProvider rules="required" v-slot="{ errors }">
+            <!-- Reason -->
+            <div class="mr-2 w-100">
+              <label for="start-date" class="fs-12 font-weight-bolder">
+                Reason of Terminating <span class="text-danger">*</span>
+              </label>
+              <b-form-textarea class="input-area-talent" rows="5" v-model="reason" style="font-size: 12px !important;"></b-form-textarea>
+            </div>
+            <span class="text-validation mt-1" v-if="errors[0]">
+              <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
+            </span>
+          </ValidationProvider>
+          <div class="d-flex mt-3">
+            <b-button
+              size="xs"
+              variant="danger"
+              class="ml-auto mr-2"
+              @click="closeModal"
+            >
+              <span>Cancel</span>
+            </b-button>
+            <b-button
+              size="xs"
+              variant="secondary"
+              class="btn-talent"
+              type="submit"
+            >
+              <span>Terminate</span>
+            </b-button>
           </div>
-          <span class="text-danger fs-12">{{ errors[0] }}</span>
-        </ValidationProvider>
-        <div class="d-flex mt-3">
-          <b-button
-            size="sm"
-            variant="danger"
-            class="ml-auto mr-2"
-            @click="closeModal"
-          >
-            <i class="bi bi-x-circle mr-1"></i>
-            <span>Cancel</span>
-          </b-button>
-          <b-button
-            size="sm"
-            variant="secondary"
-            class="btn-talent"
-            type="submit"
-          >
-            <i class="bi bi-check-circle mr-1"></i>
-            <span>Terminate</span>
-          </b-button>
-        </div>
-      </form>
-    </ValidationObserver>
+        </form>
+      </ValidationObserver>
+    </b-card>
   </b-modal>
 </template>
 <script>

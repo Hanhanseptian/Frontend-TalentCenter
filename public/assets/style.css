@@ -153,7 +153,6 @@
 .form-talent {
   border-top-right-radius: 5px !important;
   border-bottom-right-radius: 5px !important;
-  /* color: #0173a7 !important; */
   border-left: none !important;
   border-color: #0173a7 !important;
   font-size: 12px !important;
@@ -168,7 +167,6 @@
 .form-talent-md {
   border-top-right-radius: 5px !important;
   border-bottom-right-radius: 5px !important;
-  /* color: #0173a7 !important; */
   border-left: none !important;
   border-color: #0173a7 !important;
   font-size: 14px !important;
@@ -185,12 +183,12 @@
   font-size: 10px !important;
   height: 1.5rem !important;
 }
-.form-search{
-  width:30% !important
+.form-search {
+  width: 30% !important;
 }
 @media only screen and (max-width: 500px) {
-  .form-search{
-    width:100% !important
+  .form-search {
+    width: 100% !important;
   }
 }
 .input-group-text {
@@ -198,7 +196,6 @@
   border-bottom-left-radius: 5px !important;
   border-right: none !important;
   border-color: #0173a7 !important;
-  /* color: #0173a7 !important; */
 }
 .input-group:focus-within {
   box-shadow: 2px 2px 2px #0173a7 !important;
@@ -211,20 +208,45 @@
   border-radius: 7px !important;
   border-color: #0173a7 !important;
   font-size: 12px !important;
-  height: 2.5rem !important;
-  background-color: #eff2f4;
+  height: 2rem !important;
+  background-color: white !important;
 }
 .input-talent:focus {
   box-shadow: 2px 2px 2px #0173a7 !important;
   border-color: none !important;
 }
+.input-talent:disabled {
+  background-color: #e4e6e7 !important;
+}
+.input-area-talent {
+  border-radius: 7px !important;
+  border-color: #0173a7 !important;
+  font-size: 12px !important;
+  background-color: white !important;
+}
+.input-area-talent:focus {
+  box-shadow: 2px 2px 2px #0173a7 !important;
+  border-color: none !important;
+}
+.input-area-talent:disabled {
+  background-color: #e4e6e7 !important;
+}
 .icon-talent {
   border-radius: 7px !important;
   border-color: #0173a7 !important;
-  background-color: #eff2f4;
+  background-color: white !important;
   font-size: 20px !important;
-  height: 2.5rem !important;
+  height: 2rem !important;
   width: 2.5rem !important;
+}
+.text-validation {
+  display: flex !important;
+  align-items: center !important;
+  color: #dc3545 !important;
+  font-size: 10px !important;
+}
+.h-25 {
+  height: 2.5rem !important;
 }
 ::placeholder {
   color: #033349 !important;

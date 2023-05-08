@@ -3,7 +3,6 @@
     <b-table
       hover
       responsive
-      bordered
       :per-page="per_page"
       :current-page="current_page"
       :fields="data.fields"
@@ -35,13 +34,13 @@
         <b-badge
           pill
           v-if="data.value == 'Male'"
-          style="width: 90%"
+          style="width: 6rem"
           class="bg-talent"
         >
           <i class="bi bi-gender-male"></i>
           Male
         </b-badge>
-        <b-badge pill v-else style="width: 90%" class="bg-pink">
+        <b-badge pill v-else style="width: 6rem" class="bg-pink">
           <i class="bi bi-gender-female"></i>
           Female
         </b-badge>
@@ -74,23 +73,44 @@
         </b-badge>
       </template>
 
-      <!-- CELL START DATE -->
-      <template #cell(start_date)="data">
-        <b-badge variant="success" style="width: 90%" class="p-1">
+      <!-- CELL DATE -->
+      <template #cell(date)="data">
+        <b-badge variant="success" style="width: 6rem" class="p-1">
           {{ data.value }}
         </b-badge>
       </template>
 
-      <!-- CELL END DATE -->
-      <template #cell(end_date)="data">
-        <b-badge variant="warning" style="width: 90%" class="p-1">
+      <!-- CELL WORK FROM -->
+      <template #cell(work_from)="data">
+        <b-badge variant="success" style="width: 6rem" class="p-1">
+          {{ data.value }}
+        </b-badge>
+      </template>
+
+      <!-- CELL WORK UNTIL -->
+      <template #cell(work_until)="data">
+        <b-badge variant="warning" style="width: 6rem" class="p-1">
+          {{ data.value }}
+        </b-badge>
+      </template>
+
+      <!-- CELL FROM -->
+      <template #cell(from)="data">
+        <b-badge variant="success" style="width: 100%" class="p-1">
+          {{ data.value }}
+        </b-badge>
+      </template>
+
+      <!-- CELL TO -->
+      <template #cell(to)="data">
+        <b-badge variant="warning" style="width: 6rem" class="p-1">
           {{ data.value }}
         </b-badge>
       </template>
 
       <!-- CELL START DATE -->
       <template #cell(terminate_date)="data">
-        <b-badge variant="danger" style="width: 90%" class="p-1">
+        <b-badge variant="danger" style="width: 6rem" class="p-1">
           {{ data.value }}
         </b-badge>
       </template>
@@ -114,6 +134,7 @@
       <template #cell(action)="data">
         <div class="d-flex">
           <button
+            v-if="!hide_show"
             class="btn btn-outline-success btn-xs ml-auto"
             v-b-tooltip.hover="{ variant: 'info' }"
             title="Lihat Detail"
@@ -146,7 +167,7 @@
       </template>
     </b-table>
 
-    <div class="d-flex align-items-center mt-2 mb-2">
+    <div class="d-flex align-items-center mt-2 mb-2 mx-3">
       <!-- ROW INFORMATION AND SELECT ROW -->
       <div class="d-flex align-items-center mr-auto fs-12">
         <div>Showing {{ current_page }} to</div>
@@ -198,6 +219,12 @@ export default {
 
   props: {
     data: Object,
+    hide_show: {
+      type: Boolean,
+      default() {
+        return false;
+      },
+    },
     deleteItem: Function,
     editItem: Function,
     showDetail: Function,

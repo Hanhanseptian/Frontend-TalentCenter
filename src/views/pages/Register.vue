@@ -34,7 +34,9 @@
                 />
               </div>
             </div>
-            <span class="text-danger fs-10">{{ errors[0] }}</span>
+            <span class="text-validation mt-1" v-if="errors[0]">
+              <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
+            </span>
           </ValidationProvider>
           <ValidationProvider rules="required|email" v-slot="{ errors }">
             <!-- email -->
@@ -55,7 +57,9 @@
                 />
               </div>
             </div>
-            <span class="text-danger fs-10">{{ errors[0] }}</span>
+            <span class="text-validation mt-1" v-if="errors[0]">
+              <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
+            </span>
           </ValidationProvider>
           <ValidationProvider rules="required" v-slot="{ errors }">
             <!-- password -->
@@ -102,7 +106,9 @@
                 ></i>
               </div>
             </div>
-            <span class="text-danger fs-10">{{ errors[0] }}</span>
+            <span class="text-validation mt-1" v-if="errors[0]">
+              <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
+            </span>
           </ValidationProvider>
           <ValidationProvider rules="required|numeric" v-slot="{ errors }">
             <!-- telephone number -->
@@ -124,7 +130,9 @@
                 />
               </div>
             </div>
-            <span class="text-danger fs-10">{{ errors[0] }}</span>
+            <span class="text-validation mt-1" v-if="errors[0]">
+              <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
+            </span>
           </ValidationProvider>
           <!-- next step button -->
           <button
@@ -175,46 +183,42 @@
                 />
               </div>
             </div>
-            <span class="text-danger fs-10">{{ errors[0] }}</span>
+            <span class="text-validation mt-1" v-if="errors[0]">
+              <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
+            </span>
           </ValidationProvider>
-          <ValidationProvider rules="required" v-slot="{ errors }">
-            <!-- company address -->
-            <div class="mt-2">
-              <label for="company_address" class="fs-12">Company Address</label>
-              <div class="d-flex">
-                <div class="icon-talent d-flex p-0 form-control mr-1">
-                  <i class="bi bi-geo-alt mx-auto my-auto"></i>
-                </div>
-                <input
-                  v-model="register.company_address"
-                  type="text"
-                  id="company_address"
-                  placeholder="Input Company Address"
-                  class="form-control input-talent ml-auto"
-                />
+          <!-- company address -->
+          <div class="mt-2">
+            <label for="company_address" class="fs-12">Company Address</label>
+            <div class="d-flex">
+              <div class="icon-talent d-flex p-0 form-control mr-1">
+                <i class="bi bi-geo-alt mx-auto my-auto"></i>
               </div>
+              <input
+                v-model="register.company_address"
+                type="text"
+                id="company_address"
+                placeholder="Input Company Address"
+                class="form-control input-talent ml-auto"
+              />
             </div>
-            <span class="text-danger fs-10">{{ errors[0] }}</span>
-          </ValidationProvider>
-          <ValidationProvider rules="required" v-slot="{ errors }">
-            <!-- company subject -->
-            <div class="mt-2">
-              <label for="company_subject" class="fs-12">Company Subject</label>
-              <div class="d-flex">
-                <div class="icon-talent d-flex p-0 form-control mr-1">
-                  <i class="bi bi-info-circle mx-auto my-auto"></i>
-                </div>
-                <input
-                  v-model="register.company_subject"
-                  type="text"
-                  id="company_subject"
-                  placeholder="Input Company Subject"
-                  class="form-control input-talent ml-auto"
-                />
+          </div>
+          <!-- company subject -->
+          <div class="mt-2">
+            <label for="company_subject" class="fs-12">Company Subject</label>
+            <div class="d-flex">
+              <div class="icon-talent d-flex p-0 form-control mr-1">
+                <i class="bi bi-info-circle mx-auto my-auto"></i>
               </div>
+              <input
+                v-model="register.company_subject"
+                type="text"
+                id="company_subject"
+                placeholder="Input Company Subject"
+                class="form-control input-talent ml-auto"
+              />
             </div>
-            <span class="text-danger fs-10">{{ errors[0] }}</span>
-          </ValidationProvider>
+          </div>
           <!-- previous button -->
           <div class="d-flex">
             <span

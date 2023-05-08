@@ -6,10 +6,14 @@
     no-close-on-backdrop
   >
     <template #modal-title>
-      <i class="bi bi bi-info-circle"></i>
-      Talent Detail
+      <span class="fs-18">
+        <i class="bi bi bi-info-circle"></i>
+        Talent Detail
+      </span>
     </template>
-    TALENT DETAIL
+    <b-card no-body class="shadow p-2">
+      Detail dari Talent
+    </b-card>
   </b-modal>
 </template>
 <script>

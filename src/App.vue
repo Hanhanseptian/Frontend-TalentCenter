@@ -37,5 +37,6 @@ export default {
 }
 body {
   background-color: #eff2f4 !important;
+  font-family: "Montserrat", sans-serif !important;
 }
 </style>

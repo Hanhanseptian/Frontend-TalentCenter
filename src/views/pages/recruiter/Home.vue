@@ -26,7 +26,10 @@
                           :options="programming_language_options"
                           multiple
                           placeholder="Select Programming Language"
-                          :selectable="() => requirements.programming_language.value.length < 4"
+                          :selectable="
+                            () =>
+                              requirements.programming_language.value.length < 4
+                          "
                           v-model="requirements.programming_language.value"
                         ></v-select>
                         <b-form-input
@@ -37,7 +40,10 @@
                         />
                       </div>
                     </div>
-                    <span class="text-danger fs-10">{{ errors[0] }}</span>
+                    <span class="text-validation mt-1" v-if="errors[0]">
+                      <i class="bi bi-exclamation-circle mr-1"></i>
+                      {{ errors[0] }}
+                    </span>
                   </ValidationProvider>
                   <!-- role -->
                   <div class="mt-2">
@@ -102,11 +108,12 @@
                       Minimum Work Experience (Years)
                     </label>
                     <div class="d-flex">
-                      <input
+                      <b-form-input
                         type="number"
                         id="work-experience"
                         placeholder="Input Minimum Work Experience"
-                        class="form-control input-talent"
+                        class="input-talent"
+                        style="height:2.5rem !important"
                         v-model="requirements.work_experience.value"
                       />
                       <b-form-input
@@ -140,11 +147,12 @@
                       Maximum Age (Years)
                     </label>
                     <div class="d-flex">
-                      <input
+                      <b-form-input
                         type="number"
                         id="max-age"
                         placeholder="Input Maximum Age"
-                        class="form-control input-talent"
+                        class="input-talent"
+                        style="height:2.5rem !important"
                         v-model="requirements.max_age.value"
                       />
                       <b-form-input

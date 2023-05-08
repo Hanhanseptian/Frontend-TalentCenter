@@ -26,7 +26,9 @@
                 />
               </div>
             </div>
-            <span class="text-danger fs-10">{{ errors[0] }}</span>
+            <span class="text-validation mt-1" v-if="errors[0]">
+              <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
+            </span>
           </ValidationProvider>
           <!-- password -->
           <ValidationProvider rules="required" v-slot="{ errors }">
@@ -71,7 +73,9 @@
                 ></i>
               </div>
             </div>
-            <span class="text-danger fs-10">{{ errors[0] }}</span>
+            <span class="text-validation mt-1" v-if="errors[0]">
+              <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
+            </span>
           </ValidationProvider>
           <!-- sign in button -->
           <button
