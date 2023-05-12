@@ -241,20 +241,20 @@
           </b-button>
         </div>
       </div>
-      <request_date_modal :id="data.id" />
-      <detail_talent_modal :id="data.id" />
+      <request-talent-component :id="data.id" />
+      <detail-talent-component :id="data.id" />
     </b-card>
   </div>
 </template>
 <script>
-import request_date_modal from "./requestDateModal.vue";
-import detail_talent_modal from "../detailTalentModal.vue";
+import request_talent from "./request_talent_modal.vue";
+import detail_talent_modal from "../detail_talent_modal.vue";
 
 export default {
-  name: "recommendation-card",
+  name: "recommendation_card",
   components: {
-    request_date_modal,
-    detail_talent_modal,
+    "request-talent-component": request_talent,
+    "detail-talent-component": detail_talent_modal,
   },
   props: {
     data: {

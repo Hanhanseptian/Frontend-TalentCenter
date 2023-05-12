@@ -127,7 +127,7 @@
 import Swal from "sweetalert2";
 
 export default {
-  name: "OnContract",
+  name: "ContractHistory",
   data() {
     return {
       on_contract_data: [

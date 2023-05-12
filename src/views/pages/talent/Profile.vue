@@ -178,6 +178,25 @@
                       />
                     </div>
                   </div>
+                  <!-- Work Experience  -->
+                  <div class="mt-2">
+                    <label for="work-experience" class="fs-12">
+                      Work Experience (Years)
+                    </label>
+                    <div class="d-flex">
+                      <div class="icon-talent d-flex p-0 form-control mr-1">
+                        <i class="bi bi-person-workspace mx-auto my-auto"></i>
+                      </div>
+                      <b-form-input
+                        type="number"
+                        id="work-experience"
+                        placeholder="Input Your Work Experience"
+                        class="input-talent ml-auto"
+                        style="height: 2.5rem !important"
+                        v-model="profile.work_experience"
+                      />
+                    </div>
+                  </div>
                   <!-- Place of Birth -->
                   <div class="mt-2">
                     <label for="place-of-birth" class="fs-12">
@@ -349,7 +368,11 @@
                     </div>
                   </b-card-title>
                 </b-card-header>
-                <data_table :data="education_table" :hide_show="true" />
+                <table-component
+                  :data="education_table"
+                  :deleteItem="deleteEducation"
+                  :hide_show="true"
+                />
               </b-card>
             </div>
             <!-- Course -->
@@ -389,7 +412,11 @@
                     </div>
                   </b-card-title>
                 </b-card-header>
-                <data_table :data="course_table" :hide_show="true" />
+                <table-component
+                  :data="course_table"
+                  :deleteItem="deleteCourse"
+                  :hide_show="true"
+                />
               </b-card>
             </div>
             <!-- Employement -->
@@ -398,7 +425,7 @@
                 <b-card-header>
                   <b-card-title class="fs-20">
                     <div class="row">
-                      <div class="col-md-4 col-sm-12 mb-2">Employement</div>
+                      <div class="col-md-4 col-sm-12 mb-2">Employment</div>
                       <div class="col-md-8 col-sm-12">
                         <div class="d-flex align-items-center">
                           <div class="ml-auto">
@@ -407,7 +434,7 @@
                               @click="addEmployement"
                             >
                               <i class="bi bi-plus-lg mr-1"></i>
-                              <span>Add Employement</span>
+                              <span>Add Employment</span>
                             </button>
                           </div>
                           <div class="ml-2">
@@ -427,12 +454,17 @@
                     </div>
                   </b-card-title>
                 </b-card-header>
-                <data_table :data="employement_table" :hide_show="true" />
+                <table-component
+                  :data="employement_table"
+                  :deleteItem="deleteEmployment"
+                  :hide_show="true"
+                />
               </b-card>
             </div>
           </div>
         </div>
       </div>
+      <!-- project experience -->
       <div class="row">
         <div class="col-12">
           <b-card no-body>
@@ -468,25 +500,30 @@
                 </div>
               </b-card-title>
             </b-card-header>
-            <data_table :data="project_table" :hide_show="true" />
+            <table-component
+              :data="project_table"
+              :deleteItem="deleteProject"
+              :hide_show="true"
+            />
           </b-card>
         </div>
       </div>
     </div>
-    <add_education_modal />
-    <add_course_modal />
-    <add_employement_modal />
-    <add_project_modal />
+    <add-education-component />
+    <add-course-component />
+    <add-employment-component />
+    <add-project-component />
   </div>
 </template>
 <script>
+import Swal from "sweetalert2";
 import data_table from "../../components/data_table.vue";
 import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
 import { required } from "vee-validate/dist/rules";
-import add_education_modal from "../../components/talent/addEducationModal.vue";
-import add_course_modal from "../../components/talent/addCourseModal.vue";
-import add_project_modal from "../../components/talent/addProjectModal.vue";
-import add_employement_modal from "../../components/talent/addEmployementModal.vue";
+import add_education_modal from "../../components/talent/add_education_modal.vue";
+import add_course_modal from "../../components/talent/add_course_modal.vue";
+import add_project_modal from "../../components/talent/add_project_modal.vue";
+import add_employment_modal from "../../components/talent/add_employment_modal.vue";
 
 extend("required", {
   ...required,
@@ -494,13 +531,13 @@ extend("required", {
 });
 
 export default {
-  name: "MyProfile",
+  name: "Profile",
   components: {
-    data_table,
-    add_education_modal,
-    add_course_modal,
-    add_project_modal,
-    add_employement_modal,
+    "table-component": data_table,
+    "add-education-component": add_education_modal,
+    "add-course-component": add_course_modal,
+    "add-employment-component": add_employment_modal,
+    "add-project-component": add_project_modal,
     ValidationProvider,
     ValidationObserver,
   },
@@ -515,6 +552,7 @@ export default {
         database: [],
         operating_system: "",
         development_tools: "",
+        work_experience: "",
         place_of_birth: "",
         date_of_birth: "",
         gender: "",
@@ -999,6 +1037,70 @@ export default {
     },
     addProject() {
       this.$bvModal.show("add-project-modal");
+    },
+    deleteEducation() {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You want to delete this education",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Delete it!",
+        reverseButtons: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire("Deleted!", "Education has been deleted.", "success");
+        }
+      });
+    },
+    deleteCourse() {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You want to delete this course",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Delete it!",
+        reverseButtons: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire("Deleted!", "Course has been deleted.", "success");
+        }
+      });
+    },
+    deleteEmployment() {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You want to delete this employment",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Delete it!",
+        reverseButtons: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire("Deleted!", "Employment has been deleted.", "success");
+        }
+      });
+    },
+    deleteProject() {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You want to delete this project",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Delete it!",
+        reverseButtons: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire("Deleted!", "Project has been deleted.", "success");
+        }
+      });
     },
   },
 };

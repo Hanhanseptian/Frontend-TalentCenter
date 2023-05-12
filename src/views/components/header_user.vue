@@ -68,10 +68,10 @@
 </template>
 <script>
 import { BCard, BBadge } from "bootstrap-vue";
-import myAccountModal from "./myAccountModal.vue";
+import myAccountModal from "./my_account_modal.vue";
 
 export default {
-  name: "sidebar",
+  name: "header_user",
   components: {
     BCard,
     BBadge,

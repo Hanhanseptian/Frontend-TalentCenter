@@ -21,13 +21,7 @@
   </div>
 </template>
 <script>
-import { BCard, BBadge } from "bootstrap-vue";
-
 export default {
-  name: "sidebar",
-  components: {
-    BCard,
-    BBadge,
-  },
+  name: "footer_admin",
 };
 </script>

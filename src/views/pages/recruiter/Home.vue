@@ -3,6 +3,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-4 col-sm-12 mb-3">
+          <!-- Requirements -->
           <b-card no-body class="h-100 pt-2">
             <b-card-header>
               <b-card-title class="fs-20">
@@ -113,7 +114,7 @@
                         id="work-experience"
                         placeholder="Input Minimum Work Experience"
                         class="input-talent"
-                        style="height:2.5rem !important"
+                        style="height: 2.5rem !important"
                         v-model="requirements.work_experience.value"
                       />
                       <b-form-input
@@ -152,7 +153,7 @@
                         id="max-age"
                         placeholder="Input Maximum Age"
                         class="input-talent"
-                        style="height:2.5rem !important"
+                        style="height: 2.5rem !important"
                         v-model="requirements.max_age.value"
                       />
                       <b-form-input
@@ -172,7 +173,7 @@
             </b-card-body>
           </b-card>
         </div>
-
+        <!-- Recommendation Talent -->
         <div class="col-md-8 col-sm-12 mb-3">
           <b-card no-body class="pt-2 h-100">
             <b-card-header>
@@ -182,7 +183,7 @@
             </b-card-header>
             <b-card-body class="recommendation-wrapper">
               <div v-for="item in data" :key="item.id">
-                <recommendation_card :data="item" />
+                <recommendation-card-component :data="item" />
               </div>
             </b-card-body>
           </b-card>
@@ -205,7 +206,7 @@ extend("required", {
 export default {
   name: "Home",
   components: {
-    recommendation_card,
+    "recommendation-card-component" : recommendation_card,
     ValidationProvider,
     ValidationObserver,
   },
@@ -271,6 +272,9 @@ export default {
       ],
     };
   },
+  created(){
+    this.getData()
+  },
   computed: {
     totalPercent() {
       let val =
@@ -285,6 +289,17 @@ export default {
     },
   },
   methods: {
+    getData() {
+      let api = process.env.VUE_APP_API_URL + "talent?status=available";
+      this.$url
+        .get(api)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     setRequirements() {
       if (this.totalPercent > 100) {
         Swal.fire({

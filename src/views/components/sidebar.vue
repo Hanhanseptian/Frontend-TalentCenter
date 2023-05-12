@@ -63,23 +63,15 @@
             <div class="menu-name">Talent on Job</div>
           </router-link>
           <router-link
-            to="/admin/terminate-history"
+            to="/admin/contract-history"
             class="sub-menu text-decoration-none"
-            :class="active_route == 'Terminate History' ? 'is-active' : ''"
+            :class="active_route == 'Contract History' ? 'is-active' : ''"
           >
             <i class="bi bi-x-circle menu-name my-1"></i>
-            <div class="menu-name">Terminate History</div>
+            <div class="menu-name">Contract History</div>
           </router-link>
         </div>
       </div>
-      <router-link
-        to="/admin/manage-user"
-        class="menu-item text-talent text-decoration-none"
-        :class="active_route == 'Manage User' ? 'is-active' : ''"
-      >
-        <i class="bi bi-person-fill-lock"></i>
-        <div class="menu-name">Manage Users</div>
-      </router-link>
       <div
         class="menu-item menu-logout text-white"
         style="position: absolute; bottom: 0"
@@ -96,14 +88,8 @@
   </div>
 </template>
 <script>
-import header_admin from "../components/header_admin.vue";
-import footer from "../components/footer.vue";
 export default {
-  name: "admin_layout",
-  components: {
-    header_admin,
-    "footer-admin": footer,
-  },
+  name: "sidebar",
   data() {
     return {
       is_collapse: false,

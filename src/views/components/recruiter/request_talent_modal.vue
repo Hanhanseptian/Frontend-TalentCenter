@@ -106,7 +106,7 @@ extend("required", {
 });
 
 export default {
-  name: "addCartModal",
+  name: "request_talent_modal",
   components: {
     ValidationProvider,
     ValidationObserver,

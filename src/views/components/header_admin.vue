@@ -16,7 +16,7 @@
 import { BCard, BBadge } from "bootstrap-vue";
 
 export default {
-  name: "sidebar",
+  name: "header_admin",
   components: {
     BCard,
     BBadge,

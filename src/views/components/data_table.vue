@@ -167,7 +167,7 @@
       </template>
     </b-table>
 
-    <div class="d-flex align-items-center mt-2 mb-2 mx-3">
+    <div v-if="!no_pagination" class="d-flex align-items-center mt-2 mb-2 mx-3">
       <!-- ROW INFORMATION AND SELECT ROW -->
       <div class="d-flex align-items-center mr-auto fs-12">
         <div>Showing {{ current_page }} to</div>
@@ -220,6 +220,12 @@ export default {
   props: {
     data: Object,
     hide_show: {
+      type: Boolean,
+      default() {
+        return false;
+      },
+    },
+    no_pagination: {
       type: Boolean,
       default() {
         return false;

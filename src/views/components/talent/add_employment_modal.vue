@@ -1,6 +1,6 @@
 <template>
   <b-modal
-    id="add-education-modal"
+    id="add-employement-modal"
     size="md"
     hide-footer
     @hidden="resetModal"
@@ -8,29 +8,29 @@
   >
     <template #modal-title>
       <span class="fs-18">
-        <i class="bi bi bi-mortarboard"></i>
-        Add New Education
+        <i class="bi bi bi-person-square"></i>
+        Add New Employement
       </span>
     </template>
     <b-card no-body class="shadow p-2">
       <ValidationObserver v-slot="{ handleSubmit }">
         <form @submit.prevent="handleSubmit(addToCart)">
           <ValidationProvider rules="required" v-slot="{ errors }">
-            <!-- Education School -->
+            <!-- Company Name -->
             <div class="mb-2">
-              <label for="school" class="fs-12">
-                Education School <span class="text-danger">*</span>
+              <label for="company_name" class="fs-12">
+                Company Name <span class="text-danger">*</span>
               </label>
               <div class="d-flex">
                 <div class="icon-talent d-flex p-0 form-control mr-1">
-                  <i class="bi bi-buildings mx-auto my-auto"></i>
+                  <i class="bi bi-building-check mx-auto my-auto"></i>
                 </div>
                 <b-form-input
                   type="text"
-                  id="school"
+                  id="company_name"
                   class="input-talent ml-auto"
-                  placeholder="Input Your Education School"
-                  v-model="education.school"
+                  placeholder="Input Your Company Name"
+                  v-model="employement.company_name"
                 />
               </div>
             </div>
@@ -39,44 +39,72 @@
             </span>
           </ValidationProvider>
           <ValidationProvider rules="required" v-slot="{ errors }">
-            <!-- Education Degree -->
+            <!-- Work From -->
             <div class="mb-2">
-              <label for="dgree" class="fs-12">
-                Education Degree <span class="text-danger">*</span>
+              <label for="work-from" class="fs-12">
+                Work From <span class="text-danger">*</span>
               </label>
               <div class="d-flex">
                 <div class="icon-talent d-flex p-0 form-control mr-1">
-                  <i class="bi bi-mortarboard mx-auto my-auto"></i>
+                  <i class="bi bi-calendar-fill mx-auto my-auto"></i>
                 </div>
-                <b-form-input
-                  type="text"
-                  id="dgree"
-                  class="input-talent ml-auto"
-                  placeholder="Input Your Education Degree"
-                  v-model="education.degree"
-                />
+                <b-form-datepicker
+                  id="work-from"
+                  class="mb-2 form-date-talent input-talent"
+                  :date-format-options="{
+                    year: 'numeric',
+                    month: 'long',
+                    day: '2-digit',
+                  }"
+                  locale="en"
+                  placeholder="Choose Work From"
+                  v-model="employement.work_from"
+                ></b-form-datepicker>
               </div>
             </div>
-            <span class="text-validation mt-1" v-if="errors[0]">
+            <span class="text-validation" v-if="errors[0]">
               <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
             </span>
           </ValidationProvider>
+          <!-- Work Until -->
+          <div class="mb-2">
+            <label for="work-until" class="fs-12">
+              Work Until <span class="text-danger">*</span>
+            </label>
+            <div class="d-flex">
+              <div class="icon-talent d-flex p-0 form-control mr-1">
+                <i class="bi bi-calendar-fill mx-auto my-auto"></i>
+              </div>
+              <b-form-datepicker
+                id="work-until"
+                class="mb-2 form-date-talent input-talent"
+                :date-format-options="{
+                  year: 'numeric',
+                  month: 'long',
+                  day: '2-digit',
+                }"
+                locale="en"
+                placeholder="Choose Work Until"
+                v-model="employement.work_until"
+              ></b-form-datepicker>
+            </div>
+          </div>
           <ValidationProvider rules="required" v-slot="{ errors }">
-            <!-- Education Subject -->
+            <!-- Role -->
             <div class="mb-2">
-              <label for="subject" class="fs-12">
-                Education Subject <span class="text-danger">*</span>
+              <label for="role" class="fs-12">
+                Role <span class="text-danger">*</span>
               </label>
               <div class="d-flex">
                 <div class="icon-talent d-flex p-0 form-control mr-1">
-                  <i class="bi bi-info-circle mx-auto my-auto"></i>
+                  <i class="bi bi-toggles2 mx-auto my-auto"></i>
                 </div>
                 <b-form-input
                   type="text"
-                  id="subject"
+                  id="role"
                   class="input-talent ml-auto"
-                  placeholder="Input Your Education Subject"
-                  v-model="education.subject"
+                  placeholder="Input Your Role"
+                  v-model="employement.role"
                 />
               </div>
             </div>
@@ -118,17 +146,18 @@ extend("required", {
 });
 
 export default {
-  name: "addCartModal",
+  name: "add_employment_modal",
   components: {
     ValidationProvider,
     ValidationObserver,
   },
   data() {
     return {
-      education: {
-        school: "",
-        degree: "",
-        subject: "",
+      employement: {
+        company_name: "",
+        work_from: "",
+        work_until: "",
+        role: "",
       },
     };
   },
@@ -143,7 +172,7 @@ export default {
     },
     closeModal() {
       this.resetModal();
-      this.$bvModal.hide("add-education-modal");
+      this.$bvModal.hide("add-employement-modal");
     },
   },
 };

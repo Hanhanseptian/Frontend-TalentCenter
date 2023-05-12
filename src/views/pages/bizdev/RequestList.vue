@@ -29,7 +29,7 @@
         <span>Showing All of 082130123922 Talent Hired List</span>
       </b-card-header>
       <b-card-body class="mt-3">
-        <data_table striped hover :data="data_table"></data_table>
+        <table-component :data="data_table"></table-component>
       </b-card-body>
     </b-card>
   </div>
@@ -39,13 +39,9 @@ import { BCard, BCardHeader, BCardBody, BTable } from "bootstrap-vue";
 import data_table from "../../components/data_table.vue";
 
 export default {
-  pic_name: "082130123922HiredList",
+  name: "RequestList",
   components: {
-    BCard,
-    BCardHeader,
-    BCardBody,
-    BTable,
-    data_table,
+    "table-component": data_table,
   },
   data() {
     return {

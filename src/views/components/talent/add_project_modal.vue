@@ -318,7 +318,7 @@ extend("required", {
 });
 
 export default {
-  name: "addCartModal",
+  name: "add_project_modal",
   components: {
     ValidationProvider,
     ValidationObserver,

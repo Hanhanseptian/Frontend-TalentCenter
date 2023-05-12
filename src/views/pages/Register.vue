@@ -271,7 +271,7 @@ extend("numeric", {
 });
 
 export default {
-  name: "Login",
+  name: "Register",
   components: { ValidationProvider, ValidationObserver },
   data() {
     return {

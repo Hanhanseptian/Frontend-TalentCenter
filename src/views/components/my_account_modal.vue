@@ -159,7 +159,7 @@
                 />
               </div>
             </div>
-             <span class="text-validation mt-1" v-if="errors[0]">
+            <span class="text-validation mt-1" v-if="errors[0]">
               <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
             </span>
           </ValidationProvider>
@@ -186,7 +186,7 @@
                 />
               </div>
             </div>
-             <span class="text-validation mt-1" v-if="errors[0]">
+            <span class="text-validation mt-1" v-if="errors[0]">
               <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
             </span>
           </ValidationProvider>
@@ -231,6 +231,7 @@ extend("confirmed", {
 });
 
 export default {
+  name: "my_account_modal",
   components: {
     ValidationProvider,
     ValidationObserver,

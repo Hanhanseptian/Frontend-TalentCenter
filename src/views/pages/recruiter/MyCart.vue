@@ -32,7 +32,7 @@
               class="col-md-6 col-sm-12 mb-4"
             >
               <!-- card container -->
-              <on_cart_card :data="item" />
+              <on-cart-card-component :data="item" />
             </div>
           </div>
           <div class="row">
@@ -48,12 +48,12 @@
   </div>
 </template>
 <script>
-import on_cart_card from "../../components/recruiter/onCartCard.vue";
+import on_cart_card from "../../components/recruiter/on_cart_card.vue";
 
 export default {
   name: "MyCart",
   components: {
-    on_cart_card,
+    "on-cart-card-component": on_cart_card,
   },
   data() {
     return {

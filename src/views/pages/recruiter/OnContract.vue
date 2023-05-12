@@ -17,18 +17,18 @@
         :key="item.id"
         class="col-md-6 col-sm-12 mb-3"
       >
-        <on-contract-card :data="item" />
+        <on-contract-card-component :data="item" />
       </div>
     </div>
   </div>
 </template>
 <script>
-import onContractCardVue from "../../components/recruiter/onContractCard.vue";
+import on_contract_card from "../../components/recruiter/on_contract_card.vue";
 
 export default {
   name: "OnContract",
   components: {
-    "on-contract-card": onContractCardVue,
+    "on-contract-card-component": on_contract_card,
   },
   data() {
     return {

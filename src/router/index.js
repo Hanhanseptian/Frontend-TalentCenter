@@ -1,12 +1,11 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 // bizdev page
-import Dashboard from "../views/pages/admin/Dashboard.vue";
-import TalentList from "../views/pages/admin/TalentList.vue";
-import RequestList from "../views/pages/admin/RequestList.vue";
-import TalentOnJob from "../views/pages/admin/TalentOnJob.vue";
-import TerminateHistory from "../views/pages/admin/TerminateHistory.vue";
-import ManageUser from "../views/pages/admin/ManageUser.vue";
+import Dashboard from "../views/pages/bizdev/Dashboard.vue";
+import TalentList from "../views/pages/bizdev/TalentList.vue";
+import RequestList from "../views/pages/bizdev/RequestList.vue";
+import TalentOnJob from "../views/pages/bizdev/TalentOnJob.vue";
+import ContractHistory from "../views/pages/bizdev/ContractHistory.vue";
 // recruiter page
 import Home from "../views/pages/recruiter/Home.vue";
 import MyTalent from "../views/pages/recruiter/MyTalent.vue";
@@ -64,18 +63,9 @@ const routes = [
     },
   },
   {
-    path: "/admin/terminate-history",
-    name: "Terminate History",
-    component: TerminateHistory,
-    meta: {
-      full: false,
-      access: 1,
-    },
-  },
-  {
-    path: "/admin/manage-user",
-    name: "Manage User",
-    component: ManageUser,
+    path: "/admin/contract-history",
+    name: "Contract History",
+    component: ContractHistory,
     meta: {
       full: false,
       access: 1,

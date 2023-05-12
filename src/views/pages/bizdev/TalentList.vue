@@ -8,7 +8,7 @@
       <small class="fs-14 mt-1">Talent List</small>
     </div>
     <!-- MAIN CONTENT -->
-    <b-card>
+    <b-card no-body>
       <b-card-header>
         <b-card-title class="d-flex align-items-center">
           Talent List
@@ -37,35 +37,28 @@
         </b-card-title>
         <span>Showing All of Available Talents</span>
       </b-card-header>
-      <b-card-body class="mt-3">
-        <data_table
-          striped
-          hover
+      <div class="mt-3">
+        <table-component
           :data="data_table"
           :deleteItem="deleteData"
           :editItem="editData"
           :showDetail="showDetail"
-        ></data_table>
-      </b-card-body>
+        />
+      </div>
     </b-card>
-    <addTalentModalVue />
+    <add-talent-component />
   </div>
 </template>
 <script>
-import { BCard, BCardHeader, BCardBody, BTable } from "bootstrap-vue";
-import data_table from "../../components/data_table.vue";
 import Swal from "sweetalert2";
-import addTalentModalVue from "../../components/admin/addTalentModal.vue";
+import data_table from "../../components/data_table.vue";
+import add_talent_modal from "../../components/bizdev/add_talent_modal.vue";
 
 export default {
   name: "TalentList",
   components: {
-    BCard,
-    BCardHeader,
-    BCardBody,
-    BTable,
-    data_table,
-    addTalentModalVue,
+    "table-component": data_table,
+    "add-talent-component": add_talent_modal,
   },
   data() {
     return {
@@ -218,7 +211,7 @@ export default {
   },
   methods: {
     addData() {
-      this.$bvModal.show("add-talent")
+      this.$bvModal.show("add-talent");
     },
     deleteData(id) {
       console.log(id);

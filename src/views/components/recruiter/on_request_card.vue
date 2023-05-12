@@ -99,17 +99,17 @@
         {{ data.reason ? data.reason : "-" }}
       </div>
     </b-card>
-    <detail_talent_modal :id="data.id" />
+    <detail-talent-component :id="data.id" />
   </div>
 </template>
 <script>
 import Swal from "sweetalert2";
-import detail_talent_modal from "../detailTalentModal.vue";
+import detail_talent_component from "../detail_talent_modal.vue";
 
 export default {
-  name: "MyRequest",
+  name: "on_request_card",
   components: {
-    detail_talent_modal,
+    "detail-talent-component": detail_talent_component,
   },
   props: {
     data: Object,

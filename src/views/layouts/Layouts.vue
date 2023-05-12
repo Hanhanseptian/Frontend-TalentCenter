@@ -19,14 +19,14 @@
 <script>
 import header_admin from "../components/header_admin.vue";
 import header_user from "../components/header_user.vue";
-import footer from "../components/footer.vue";
+import footer_admin from "../components/footer_admin.vue";
 import sidebar from "../components/sidebar.vue";
 export default {
   name: "admin_layout",
   components: {
     header_admin,
     header_user,
-    "footer-admin": footer,
+    "footer-admin": footer_admin,
     "sidebar-component": sidebar,
   },
   data() {

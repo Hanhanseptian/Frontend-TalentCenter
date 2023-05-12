@@ -123,6 +123,7 @@
 </template>
 <script>
 export default {
+  name: "add_talent_modal",
   data() {
     return {
       name: "",

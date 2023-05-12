@@ -18,19 +18,19 @@
         class="col-md-6 col-sm-12 mb-3"
       >
         <!-- talent card -->
-        <on_request_card :data="item" />
+        <on-request-card-component :data="item" />
       </div>
     </div>
   </div>
 </template>
 <script>
-import on_request_card from "../../components/recruiter/onRequestCard.vue";
+import on_request_card from "../../components/recruiter/on_request_card.vue";
 import Swal from "sweetalert2";
 
 export default {
   name: "MyRequest",
   components: {
-    on_request_card,
+    "on-request-card-component": on_request_card,
   },
   data() {
     return {

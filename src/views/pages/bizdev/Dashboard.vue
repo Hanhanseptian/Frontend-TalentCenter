@@ -100,18 +100,8 @@
   </div>
 </template>
 <script>
-import { BCard, BCardHeader, BCardBody, BTable } from "bootstrap-vue";
-import data_table from "../../components/data_table.vue";
-
 export default {
   name: "Dashboard",
-  components: {
-    BCard,
-    BCardHeader,
-    BCardBody,
-    BTable,
-    data_table,
-  },
 };
 </script>
 <style scoped>

@@ -77,19 +77,19 @@
         </b-button>
       </div>
     </b-card>
-    <request-date-modal :id="data.id" />
-    <terminate-modal :id="data.id" />
+    <request-talent-component :id="data.id" />
+    <terminate-component :id="data.id" />
   </div>
 </template>
 <script>
-import requestDateModalVue from "./requestDateModal.vue";
-import terminateModalVue from "./terminateModal.vue";
+import request_talent_modal from "./request_talent_modal.vue";
+import terminate_modal from "./terminate_modal.vue";
 
 export default {
-  name: "onContractCard",
+  name: "on_contract_card",
   components: {
-    "request-date-modal": requestDateModalVue,
-    "terminate-modal": terminateModalVue,
+    "request-talent-component": request_talent_modal,
+    "terminate-component": terminate_modal,
   },
   props: {
     data: Object,
