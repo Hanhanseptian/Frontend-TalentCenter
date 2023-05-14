@@ -182,8 +182,11 @@
               </b-card-title>
             </b-card-header>
             <b-card-body class="recommendation-wrapper">
-              <div v-for="item in data" :key="item.id">
-                <recommendation-card-component :data="item" />
+              <loader v-if="is_loading" />
+              <div v-else>
+                <div v-for="item in data" :key="item._id">
+                  <recommendation-card-component :data="item" />
+                </div>
               </div>
             </b-card-body>
           </b-card>
@@ -197,6 +200,7 @@ import Swal from "sweetalert2";
 import recommendation_card from "../../components/recruiter/recommendation_card.vue";
 import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
 import { required } from "vee-validate/dist/rules";
+import loader from "../../components/loader.vue";
 
 extend("required", {
   ...required,
@@ -206,13 +210,15 @@ extend("required", {
 export default {
   name: "Home",
   components: {
-    "recommendation-card-component" : recommendation_card,
+    "recommendation-card-component": recommendation_card,
+    loader,
     ValidationProvider,
     ValidationObserver,
   },
   data() {
     return {
       is_add_more: false,
+      is_loading: true,
       programming_language_options: ["Javascript", "Go", "PHP", "HTML", "CSS"],
       requirements: {
         programming_language: {
@@ -244,36 +250,11 @@ export default {
           percent: 0,
         },
       },
-      data: [
-        {
-          id: 1,
-          gender: "male",
-        },
-        {
-          id: 2,
-          gender: "female",
-        },
-        {
-          id: 3,
-          gender: "male",
-        },
-        {
-          id: 4,
-          gender: "female",
-        },
-        {
-          id: 5,
-          gender: "male",
-        },
-        {
-          id: 6,
-          gender: "male",
-        },
-      ],
+      data: null,
     };
   },
-  created(){
-    this.getData()
+  created() {
+    this.getData();
   },
   computed: {
     totalPercent() {
@@ -290,14 +271,18 @@ export default {
   },
   methods: {
     getData() {
+      this.is_loading = true;
       let api = process.env.VUE_APP_API_URL + "talent?status=available";
       this.$url
         .get(api)
         .then((res) => {
-          console.log(res);
+          this.data = res.data.talents;
         })
         .catch((err) => {
           console.log(err);
+        })
+        .finally(() => {
+          this.is_loading = false;
         });
     },
     setRequirements() {

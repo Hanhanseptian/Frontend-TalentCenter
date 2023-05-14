@@ -8,7 +8,7 @@
       <small class="fs-14 mt-1">Talent o Job</small>
     </div>
     <!-- MAIN CONTENT -->
-    <b-card>
+    <b-card no-body>
       <b-card-header>
         <b-card-title class="d-flex align-items-center">
           Talent on Job
@@ -26,11 +26,11 @@
             </div>
           </div>
         </b-card-title>
-        <span>Showing All of Talent on Job</span>
+        <span class="text-muted">Showing All of Talent on Job</span>
       </b-card-header>
-      <b-card-body class="mt-3">
+      <div class="mt-3">
         <table-component striped hover :data="data_table" />
-      </b-card-body>
+      </div>
     </b-card>
   </div>
 </template>
@@ -51,37 +51,37 @@ export default {
           {
             key: "no",
             label: "NO",
-            thClass: "text-talent text-center ",
-            tdClass: " text-talent text-center",
+            thClass: "fs-14 text-center bg-talent text-white p-2",
+            tdClass: " fs-14 text-center",
             thStyle: "background-color: #c1dbec;width:5%",
           },
           {
             key: "company_name",
-            label: "COMPANY NAME",
-            thClass: "text-talent text-left ",
-            tdClass: " text-talent text-left",
-            thStyle: "background-color: #c1dbec;width:auto",
+            label: "RECRUITER NAME",
+            thClass: "fs-14 text-left bg-talent text-white p-2",
+            tdClass: " fs-14 text-left",
+            thStyle: "background-color: #c1dbec;width:35%",
           },
           {
             key: "talent_name",
             label: "TALENT NAME",
-            thClass: "text-talent text-left ",
-            tdClass: " text-talent text-left",
+            thClass: "fs-14 text-left bg-talent text-white p-2",
+            tdClass: " fs-14 text-left",
             thStyle: "background-color: #c1dbec;width:30%",
           },
           {
-            key: "start_date",
-            label: "START DATE",
-            thClass: "text-talent text-center ",
-            tdClass: " text-talent text-center",
-            thStyle: "background-color: #c1dbec;width:15%",
+            key: "work_from",
+            label: "WORK FROM",
+            thClass: "fs-14 text-center bg-talent text-white p-2",
+            tdClass: " fs-14 text-center",
+            thStyle: "background-color: #c1dbec",
           },
           {
-            key: "end_date",
-            label: "END DATE",
-            thClass: "text-talent text-center ",
-            tdClass: " text-talent text-center",
-            thStyle: "background-color: #c1dbec;width:15%",
+            key: "work_until",
+            label: "WORK UNTIL",
+            thClass: "fs-14 text-center bg-talent text-white p-2",
+            tdClass: " fs-14 text-center",
+            thStyle: "background-color: #c1dbec",
           },
         ],
         items: [
@@ -89,85 +89,85 @@ export default {
             id: 1,
             company_name: "PT Len Indonesia",
             talent_name: "Muhammad Hafidz",
-            start_date: "31 Januari 2023",
-            end_date: "31 Januari 2024",
+            work_from: "31 Januari 2023",
+            work_until: "31 Januari 2024",
           },
           {
             id: 2,
             company_name: "PT Len Indonesia",
             talent_name: "Muhammad Hafidz",
-            start_date: "31 Januari 2023",
-            end_date: "31 Januari 2024",
+            work_from: "31 Januari 2023",
+            work_until: "31 Januari 2024",
           },
           {
             id: 3,
             company_name: "PT Len Indonesia",
             talent_name: "Muhammad Hafidz",
-            start_date: "31 Januari 2023",
-            end_date: "31 Januari 2024",
+            work_from: "31 Januari 2023",
+            work_until: "31 Januari 2024",
           },
           {
             id: 4,
             company_name: "PT Len Indonesia",
             talent_name: "Muhammad Hafidz",
-            start_date: "31 Januari 2023",
-            end_date: "31 Januari 2024",
+            work_from: "31 Januari 2023",
+            work_until: "31 Januari 2024",
           },
           {
             id: 5,
             company_name: "PT Len Indonesia",
             talent_name: "Muhammad Hafidz",
-            start_date: "31 Januari 2023",
-            end_date: "31 Januari 2024",
+            work_from: "31 Januari 2023",
+            work_until: "31 Januari 2024",
           },
           {
             id: 6,
             company_name: "PT Len Indonesia",
             talent_name: "Muhammad Hafidz",
-            start_date: "31 Januari 2023",
-            end_date: "31 Januari 2024",
+            work_from: "31 Januari 2023",
+            work_until: "31 Januari 2024",
           },
           {
             id: 7,
             company_name: "PT Len Indonesia",
             talent_name: "Muhammad Hafidz",
-            start_date: "31 Januari 2023",
-            end_date: "31 Januari 2024",
+            work_from: "31 Januari 2023",
+            work_until: "31 Januari 2024",
           },
           {
             id: 8,
             company_name: "PT Len Indonesia",
             talent_name: "Muhammad Hafidz",
-            start_date: "31 Januari 2023",
-            end_date: "31 Januari 2024",
+            work_from: "31 Januari 2023",
+            work_until: "31 Januari 2024",
           },
           {
             id: 9,
             company_name: "PT Len Indonesia",
             talent_name: "Muhammad Hafidz",
-            start_date: "31 Januari 2023",
-            end_date: "31 Januari 2024",
+            work_from: "31 Januari 2023",
+            work_until: "31 Januari 2024",
           },
           {
             id: 10,
             company_name: "PT Len Indonesia",
             talent_name: "Muhammad Hafidz",
-            start_date: "31 Januari 2023",
-            end_date: "31 Januari 2024",
+            work_from: "31 Januari 2023",
+            work_until: "31 Januari 2024",
           },
           {
             id: 11,
             company_name: "PT Len Indonesia",
             talent_name: "Muhammad Hafidz",
-            start_date: "31 Januari 2023",
-            end_date: "31 Januari 2024",
+            work_from: "31 Januari 2023",
+            work_until: "31 Januari 2024",
           },
           {
             id: 12,
             company_name: "PT Len Indonesia",
             talent_name: "Muhammad Hafidz",
-            start_date: "31 Januari 2023",
-            end_date: "31 Januari 2024",
+            work_from: "31 Januari 2023",
+            work_until: "31 Januari 2024",
           },
         ],
       },

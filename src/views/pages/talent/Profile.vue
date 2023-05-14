@@ -2,471 +2,505 @@
   <div id="profile-talent">
     <div class="container">
       <div class="row">
-        <div class="col-md-5 col-sm-12 mb-4">
+        <div class="col-md-12 col-sm-12 mb-4">
           <!-- Profile -->
-          <b-card no-body class="h-100 p-2">
+          <b-card no-body class="p-2 mb-4">
             <b-card-header>
               <b-card-title class="fs-20"> Profile </b-card-title>
             </b-card-header>
             <b-card-body class="mt-0 pt-0">
               <ValidationObserver v-slot="{ handleSubmit }">
                 <form @submit.prevent="handleSubmit(updateProfile)">
-                  <ValidationProvider rules="required" v-slot="{ errors }">
-                    <!-- Full Name -->
-                    <div class="mt-2">
-                      <label for="full-name" class="fs-12">
-                        Full Name
-                        <span class="text-danger">*</span>
-                      </label>
-                      <div class="d-flex">
-                        <div class="icon-talent d-flex p-0 form-control mr-1">
-                          <i
-                            class="bi bi-person-lines-fill mx-auto my-auto"
-                          ></i>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <ValidationProvider rules="required" v-slot="{ errors }">
+                        <!-- Full Name -->
+                        <div class="mt-2">
+                          <label for="full-name" class="fs-12">
+                            Full Name
+                            <span class="text-danger">*</span>
+                          </label>
+                          <div class="d-flex">
+                            <div
+                              class="icon-talent d-flex p-0 form-control mr-1"
+                            >
+                              <i
+                                class="bi bi-person-lines-fill mx-auto my-auto"
+                              ></i>
+                            </div>
+                            <b-form-input
+                              type="text"
+                              id="full-name"
+                              placeholder="Input Your Full Name"
+                              class="input-talent ml-auto"
+                              style="height: 2.5rem !important"
+                              v-model="profile.full_name"
+                            />
+                          </div>
                         </div>
-                        <b-form-input
-                          type="text"
-                          id="full-name"
-                          placeholder="Input Your Full Name"
-                          class="input-talent ml-auto"
-                          style="height: 2.5rem !important"
-                          v-model="profile.full_name"
-                        />
-                      </div>
-                    </div>
-                    <span class="text-danger fs-10">{{ errors[0] }}</span>
-                  </ValidationProvider>
-                  <!-- Description -->
-                  <div class="mt-2">
-                    <label for="description" class="fs-12"> Description </label>
-                    <div class="d-flex">
-                      <div class="icon-talent d-flex p-0 form-control mr-1">
-                        <i class="bi bi-info-circle mx-auto my-auto"></i>
-                      </div>
-                      <b-form-textarea
-                        type="text"
-                        id="description"
-                        rows="5"
-                        placeholder="Input Your Descriptions"
-                        class="form-control input-area ml-auto"
-                        v-model="profile.description"
-                      />
-                    </div>
-                  </div>
-                  <ValidationProvider rules="required" v-slot="{ errors }">
-                    <!-- Programming Language -->
-                    <div class="mt-2">
-                      <label for="programming-language" class="fs-12">
-                        Programming Language
-                        <span class="text-danger">*</span>
-                      </label>
-                      <div class="d-flex">
-                        <div class="icon-talent d-flex p-0 form-control mr-1">
-                          <i class="bi bi-motherboard mx-auto my-auto"></i>
+                        <span class="text-danger fs-10">{{ errors[0] }}</span>
+                      </ValidationProvider>
+                      <!-- Description -->
+                      <div class="mt-2">
+                        <label for="description" class="fs-12">
+                          Description
+                        </label>
+                        <div class="d-flex">
+                          <div class="icon-talent d-flex p-0 form-control mr-1">
+                            <i class="bi bi-info-circle mx-auto my-auto"></i>
+                          </div>
+                          <b-form-textarea
+                            type="text"
+                            id="description"
+                            rows="6"
+                            placeholder="Input Your Descriptions"
+                            class="form-control input-area ml-auto"
+                            v-model="profile.description"
+                          />
                         </div>
-                        <v-select
-                          id="programming-language"
-                          :options="['php', 'Javascript']"
-                          multiple
-                          placeholder="Select Your Programming Language Skills"
-                          v-model="profile.programming_language"
-                        ></v-select>
                       </div>
-                    </div>
-                    <span class="text-danger fs-10">{{ errors[0] }}</span>
-                  </ValidationProvider>
-                  <ValidationProvider rules="required" v-slot="{ errors }">
-                    <!-- Framework -->
-                    <div class="mt-2">
-                      <label for="framework" class="fs-12">
-                        Framework
-                        <span class="text-danger">*</span>
-                      </label>
-                      <div class="d-flex">
-                        <div class="icon-talent d-flex p-0 form-control mr-1">
-                          <i
-                            class="bi bi-pc-display-horizontal mx-auto my-auto"
-                          ></i>
+                      <!-- Place of Birth -->
+                      <div class="mt-2">
+                        <label for="place-of-birth" class="fs-12">
+                          Place of Birth
+                        </label>
+                        <div class="d-flex">
+                          <div class="icon-talent d-flex p-0 form-control mr-1">
+                            <i class="bi bi-geo-alt mx-auto my-auto"></i>
+                          </div>
+                          <b-form-input
+                            type="text"
+                            id="place-of-birth"
+                            placeholder="Input Your Place of Birth"
+                            class="input-talent ml-auto"
+                            style="height: 2.5rem !important"
+                            v-model="profile.place_of_birth"
+                          />
                         </div>
-                        <v-select
-                          id="framework"
-                          :options="['php', 'Javascript']"
-                          multiple
-                          placeholder="Select Your Framework Skills"
-                          v-model="profile.framework"
-                        ></v-select>
                       </div>
-                    </div>
-                    <span class="text-danger fs-10">{{ errors[0] }}</span>
-                  </ValidationProvider>
-                  <!-- Application Server -->
-                  <div class="mt-2">
-                    <label for="application-server" class="fs-12">
-                      Application Server
-                    </label>
-                    <div class="d-flex">
-                      <div class="icon-talent d-flex p-0 form-control mr-1">
-                        <i class="bi bi-hdd-rack mx-auto my-auto"></i>
-                      </div>
-                      <b-form-input
-                        type="text"
-                        id="application-server"
-                        placeholder="Input Your Application Server Skills"
-                        class="input-talent ml-auto"
-                        style="height: 2.5rem !important"
-                        v-model="profile.application_server"
-                      />
-                    </div>
-                  </div>
-                  <ValidationProvider rules="required" v-slot="{ errors }">
-                    <!-- Database -->
-                    <div class="mt-2">
-                      <label for="database" class="fs-12">
-                        Database
-                        <span class="text-danger">*</span>
-                      </label>
-                      <div class="d-flex">
-                        <div class="icon-talent d-flex p-0 form-control mr-1">
-                          <i class="bi bi-database mx-auto my-auto"></i>
+                      <ValidationProvider rules="required" v-slot="{ errors }">
+                        <!-- Date of Birth -->
+                        <div class="mt-2">
+                          <label for="date-of-birth" class="fs-12">
+                            Date of Birth
+                            <span class="text-danger">*</span>
+                          </label>
+                          <div class="d-flex">
+                            <div
+                              class="icon-talent d-flex p-0 form-control mr-1"
+                            >
+                              <i class="bi bi-calendar mx-auto my-auto"></i>
+                            </div>
+                            <b-form-datepicker
+                              id="date-of-birth"
+                              class="date-talent"
+                              :date-format-options="{
+                                year: 'numeric',
+                                month: 'long',
+                                day: '2-digit',
+                              }"
+                              placeholder="Select Your Date of Birth"
+                              locale="en"
+                              style="height: 2.5rem !important"
+                              v-model="profile.date_of_birth"
+                            ></b-form-datepicker>
+                          </div>
                         </div>
-                        <v-select
-                          id="database"
-                          :options="['php', 'Javascript']"
-                          multiple
-                          placeholder="Select Your Database Skills"
-                          v-model="profile.database"
-                        ></v-select>
-                      </div>
-                    </div>
-                    <span class="text-danger fs-10">{{ errors[0] }}</span>
-                  </ValidationProvider>
-                  <!-- Operating System -->
-                  <div class="mt-2">
-                    <label for="operating-system" class="fs-12">
-                      Operating System
-                    </label>
-                    <div class="d-flex">
-                      <div class="icon-talent d-flex p-0 form-control mr-1">
-                        <i class="bi bi-cpu mx-auto my-auto"></i>
-                      </div>
-                      <b-form-input
-                        type="text"
-                        id="operating-system"
-                        placeholder="Input Your Operating System Skills"
-                        class="input-talent ml-auto"
-                        style="height: 2.5rem !important"
-                        v-model="profile.operating_system"
-                      />
-                    </div>
-                  </div>
-                  <!-- Development Tools -->
-                  <div class="mt-2">
-                    <label for="development-tools" class="fs-12">
-                      Development Tools
-                    </label>
-                    <div class="d-flex">
-                      <div class="icon-talent d-flex p-0 form-control mr-1">
-                        <i class="bi bi-gear mx-auto my-auto"></i>
-                      </div>
-                      <b-form-input
-                        type="text"
-                        id="development-tools"
-                        placeholder="Input Your Development Tool Skills"
-                        class="input-talent ml-auto"
-                        style="height: 2.5rem !important"
-                        v-model="profile.development_tools"
-                      />
-                    </div>
-                  </div>
-                  <!-- Work Experience  -->
-                  <div class="mt-2">
-                    <label for="work-experience" class="fs-12">
-                      Work Experience (Years)
-                    </label>
-                    <div class="d-flex">
-                      <div class="icon-talent d-flex p-0 form-control mr-1">
-                        <i class="bi bi-person-workspace mx-auto my-auto"></i>
-                      </div>
-                      <b-form-input
-                        type="number"
-                        id="work-experience"
-                        placeholder="Input Your Work Experience"
-                        class="input-talent ml-auto"
-                        style="height: 2.5rem !important"
-                        v-model="profile.work_experience"
-                      />
-                    </div>
-                  </div>
-                  <!-- Place of Birth -->
-                  <div class="mt-2">
-                    <label for="place-of-birth" class="fs-12">
-                      Place of Birth
-                    </label>
-                    <div class="d-flex">
-                      <div class="icon-talent d-flex p-0 form-control mr-1">
-                        <i class="bi bi-geo-alt mx-auto my-auto"></i>
-                      </div>
-                      <b-form-input
-                        type="text"
-                        id="place-of-birth"
-                        placeholder="Input Your Place of Birth"
-                        class="input-talent ml-auto"
-                        style="height: 2.5rem !important"
-                        v-model="profile.place_of_birth"
-                      />
-                    </div>
-                  </div>
-                  <ValidationProvider rules="required" v-slot="{ errors }">
-                    <!-- Date of Birth -->
-                    <div class="mt-2">
-                      <label for="date-of-birth" class="fs-12">
-                        Date of Birth
-                        <span class="text-danger">*</span>
-                      </label>
-                      <div class="d-flex">
-                        <div class="icon-talent d-flex p-0 form-control mr-1">
-                          <i class="bi bi-calendar mx-auto my-auto"></i>
+                        <span class="text-danger fs-10">{{ errors[0] }}</span>
+                      </ValidationProvider>
+                      <ValidationProvider rules="required" v-slot="{ errors }">
+                        <!-- Gender -->
+                        <div class="mt-2">
+                          <label for="gender" class="fs-12">
+                            Gender
+                            <span class="text-danger">*</span>
+                          </label>
+                          <div class="d-flex">
+                            <div
+                              class="icon-talent d-flex p-0 form-control mr-1"
+                            >
+                              <i
+                                class="bi bi-gender-female mx-auto my-auto"
+                              ></i>
+                            </div>
+                            <v-select
+                              id="gender"
+                              :options="['Male', 'Female']"
+                              multiple
+                              placeholder="Select Your Gender"
+                              v-model="profile.gender"
+                            ></v-select>
+                          </div>
                         </div>
-                        <b-form-datepicker
-                          id="date-of-birth"
-                          class="date-talent"
-                          :date-format-options="{
-                            year: 'numeric',
-                            month: 'long',
-                            day: '2-digit',
-                          }"
-                          placeholder="Select Your Date of Birth"
-                          locale="en"
-                          style="height: 2.5rem !important"
-                          v-model="profile.date_of_birth"
-                        ></b-form-datepicker>
-                      </div>
-                    </div>
-                    <span class="text-danger fs-10">{{ errors[0] }}</span>
-                  </ValidationProvider>
-                  <ValidationProvider rules="required" v-slot="{ errors }">
-                    <!-- Gender -->
-                    <div class="mt-2">
-                      <label for="gender" class="fs-12">
-                        Gender
-                        <span class="text-danger">*</span>
-                      </label>
-                      <div class="d-flex">
-                        <div class="icon-talent d-flex p-0 form-control mr-1">
-                          <i class="bi bi-gender-female mx-auto my-auto"></i>
+                        <span class="text-danger fs-10">{{ errors[0] }}</span>
+                      </ValidationProvider>
+                      <!-- Health -->
+                      <div class="mt-2">
+                        <label for="health" class="fs-12"> Health </label>
+                        <div class="d-flex">
+                          <div class="icon-talent d-flex p-0 form-control mr-1">
+                            <i class="bi bi-prescription2 mx-auto my-auto"></i>
+                          </div>
+                          <b-form-input
+                            type="text"
+                            id="health"
+                            placeholder="Input Your Health Status"
+                            class="input-talent ml-auto"
+                            style="height: 2.5rem !important"
+                            v-model="profile.health"
+                          />
                         </div>
-                        <v-select
-                          id="gender"
-                          :options="['Male', 'Female']"
-                          multiple
-                          placeholder="Select Your Gender"
-                          v-model="profile.gender"
-                        ></v-select>
+                      </div>
+                      <!-- Religion -->
+                      <div class="mt-2">
+                        <label for="religion" class="fs-12"> Religion </label>
+                        <div class="d-flex">
+                          <div class="icon-talent d-flex p-0 form-control mr-1">
+                            <i class="bi bi-person-vcard mx-auto my-auto"></i>
+                          </div>
+                          <b-form-input
+                            type="text"
+                            id="religion"
+                            placeholder="Input Your Religion"
+                            class="input-talent ml-auto"
+                            style="height: 2.5rem !important"
+                            v-model="profile.religion"
+                          />
+                        </div>
+                      </div>
+                      <!-- Language -->
+                      <div class="mt-2">
+                        <label for="language" class="fs-12"> Language </label>
+                        <div class="d-flex">
+                          <div class="icon-talent d-flex p-0 form-control mr-1">
+                            <i class="bi bi-translate mx-auto my-auto"></i>
+                          </div>
+                          <b-form-input
+                            type="text"
+                            id="language"
+                            placeholder="Input Your Language Skills"
+                            class="input-talent ml-auto"
+                            style="height: 2.5rem !important"
+                            v-model="profile.language"
+                          />
+                        </div>
                       </div>
                     </div>
-                    <span class="text-danger fs-10">{{ errors[0] }}</span>
-                  </ValidationProvider>
-                  <!-- Health -->
-                  <div class="mt-2">
-                    <label for="health" class="fs-12"> Health </label>
-                    <div class="d-flex">
-                      <div class="icon-talent d-flex p-0 form-control mr-1">
-                        <i class="bi bi-prescription2 mx-auto my-auto"></i>
+                    <div class="col-md-6">
+                      <!-- Programming Language -->
+                      <ValidationProvider rules="required" v-slot="{ errors }">
+                        <div class="mt-2">
+                          <label for="programming-language" class="fs-12">
+                            Programming Language
+                            <span class="text-danger">*</span>
+                          </label>
+                          <div class="d-flex">
+                            <div
+                              class="icon-talent d-flex p-0 form-control mr-1"
+                            >
+                              <i class="bi bi-motherboard mx-auto my-auto"></i>
+                            </div>
+                            <v-select
+                              id="programming-language"
+                              :options="['php', 'Javascript']"
+                              multiple
+                              placeholder="Select Your Programming Language Skills"
+                              v-model="profile.programming_language"
+                            ></v-select>
+                          </div>
+                        </div>
+                        <span class="text-danger fs-10">{{ errors[0] }}</span>
+                      </ValidationProvider>
+                      <ValidationProvider rules="required" v-slot="{ errors }">
+                        <!-- Framework -->
+                        <div class="mt-2">
+                          <label for="framework" class="fs-12">
+                            Framework
+                            <span class="text-danger">*</span>
+                          </label>
+                          <div class="d-flex">
+                            <div
+                              class="icon-talent d-flex p-0 form-control mr-1"
+                            >
+                              <i
+                                class="bi bi-pc-display-horizontal mx-auto my-auto"
+                              ></i>
+                            </div>
+                            <v-select
+                              id="framework"
+                              :options="['php', 'Javascript']"
+                              multiple
+                              placeholder="Select Your Framework Skills"
+                              v-model="profile.framework"
+                            ></v-select>
+                          </div>
+                        </div>
+                        <span class="text-danger fs-10">{{ errors[0] }}</span>
+                      </ValidationProvider>
+                      <!-- Application Server -->
+                      <div class="mt-2">
+                        <label for="application-server" class="fs-12">
+                          Application Server
+                        </label>
+                        <div class="d-flex">
+                          <div class="icon-talent d-flex p-0 form-control mr-1">
+                            <i class="bi bi-hdd-rack mx-auto my-auto"></i>
+                          </div>
+                          <b-form-input
+                            type="text"
+                            id="application-server"
+                            placeholder="Input Your Application Server Skills"
+                            class="input-talent ml-auto"
+                            style="height: 2.5rem !important"
+                            v-model="profile.application_server"
+                          />
+                        </div>
                       </div>
-                      <b-form-input
-                        type="text"
-                        id="health"
-                        placeholder="Input Your Health Status"
-                        class="input-talent ml-auto"
-                        style="height: 2.5rem !important"
-                        v-model="profile.health"
-                      />
+                      <ValidationProvider rules="required" v-slot="{ errors }">
+                        <!-- Database -->
+                        <div class="mt-2">
+                          <label for="database" class="fs-12">
+                            Database
+                            <span class="text-danger">*</span>
+                          </label>
+                          <div class="d-flex">
+                            <div
+                              class="icon-talent d-flex p-0 form-control mr-1"
+                            >
+                              <i class="bi bi-database mx-auto my-auto"></i>
+                            </div>
+                            <v-select
+                              id="database"
+                              :options="['php', 'Javascript']"
+                              multiple
+                              placeholder="Select Your Database Skills"
+                              v-model="profile.database"
+                            ></v-select>
+                          </div>
+                        </div>
+                        <span class="text-danger fs-10">{{ errors[0] }}</span>
+                      </ValidationProvider>
+                      <!-- Operating System -->
+                      <div class="mt-2">
+                        <label for="operating-system" class="fs-12">
+                          Operating System
+                        </label>
+                        <div class="d-flex">
+                          <div class="icon-talent d-flex p-0 form-control mr-1">
+                            <i class="bi bi-cpu mx-auto my-auto"></i>
+                          </div>
+                          <b-form-input
+                            type="text"
+                            id="operating-system"
+                            placeholder="Input Your Operating System Skills"
+                            class="input-talent ml-auto"
+                            style="height: 2.5rem !important"
+                            v-model="profile.operating_system"
+                          />
+                        </div>
+                      </div>
+                      <!-- Development Tools -->
+                      <div class="mt-2">
+                        <label for="development-tools" class="fs-12">
+                          Development Tools
+                        </label>
+                        <div class="d-flex">
+                          <div class="icon-talent d-flex p-0 form-control mr-1">
+                            <i class="bi bi-gear mx-auto my-auto"></i>
+                          </div>
+                          <b-form-input
+                            type="text"
+                            id="development-tools"
+                            placeholder="Input Your Development Tool Skills"
+                            class="input-talent ml-auto"
+                            style="height: 2.5rem !important"
+                            v-model="profile.development_tools"
+                          />
+                        </div>
+                      </div>
+                      <ValidationProvider rules="required" v-slot="{ errors }">
+                        <!-- Role -->
+                        <div class="mt-2">
+                          <label for="role" class="fs-12">
+                            Role
+                            <span class="text-danger">*</span>
+                          </label>
+                          <div class="d-flex">
+                            <div
+                              class="icon-talent d-flex p-0 form-control mr-1"
+                            >
+                              <i class="bi bi-toggles2 mx-auto my-auto"></i>
+                            </div>
+                            <v-select
+                              id="role"
+                              :options="['Frontend', 'Backend', 'Fullstack']"
+                              placeholder="Select Your Role Skills"
+                              v-model="profile.role"
+                            ></v-select>
+                          </div>
+                        </div>
+                        <span class="text-danger fs-10">{{ errors[0] }}</span>
+                      </ValidationProvider>
+                      <!-- Work Experience  -->
+                      <div class="mt-2">
+                        <label for="work-experience" class="fs-12">
+                          Work Experience (Years)
+                        </label>
+                        <div class="d-flex">
+                          <div class="icon-talent d-flex p-0 form-control mr-1">
+                            <i
+                              class="bi bi-person-workspace mx-auto my-auto"
+                            ></i>
+                          </div>
+                          <b-form-input
+                            type="number"
+                            id="work-experience"
+                            placeholder="Input Your Work Experience"
+                            class="input-talent ml-auto"
+                            style="height: 2.5rem !important"
+                            v-model="profile.work_experience"
+                          />
+                        </div>
+                      </div>
+                      <!-- submit button -->
+                      <b-button
+                        size="sm"
+                        type="submit"
+                        class="mt-5 btn-talent float-right"
+                      >
+                        <i class="bi bi-check-circle mr-1"></i>
+                        <span>Save Changes</span>
+                      </b-button>
                     </div>
                   </div>
-                  <!-- Religion -->
-                  <div class="mt-2">
-                    <label for="religion" class="fs-12"> Religion </label>
-                    <div class="d-flex">
-                      <div class="icon-talent d-flex p-0 form-control mr-1">
-                        <i class="bi bi-person-vcard mx-auto my-auto"></i>
-                      </div>
-                      <b-form-input
-                        type="text"
-                        id="religion"
-                        placeholder="Input Your Religion"
-                        class="input-talent ml-auto"
-                        style="height: 2.5rem !important"
-                        v-model="profile.religion"
-                      />
-                    </div>
-                  </div>
-                  <!-- Language -->
-                  <div class="mt-2">
-                    <label for="language" class="fs-12"> Language </label>
-                    <div class="d-flex">
-                      <div class="icon-talent d-flex p-0 form-control mr-1">
-                        <i class="bi bi-translate mx-auto my-auto"></i>
-                      </div>
-                      <b-form-input
-                        type="text"
-                        id="language"
-                        placeholder="Input Your Language Skills"
-                        class="input-talent ml-auto"
-                        style="height: 2.5rem !important"
-                        v-model="profile.language"
-                      />
-                    </div>
-                  </div>
-                  <!-- submit button -->
-                  <b-button
-                    size="sm"
-                    type="submit"
-                    class="mt-3 btn-talent float-right"
-                  >
-                    <i class="bi bi-check-circle mr-1"></i>
-                    <span>Save Changes</span>
-                  </b-button>
                 </form>
               </ValidationObserver>
             </b-card-body>
           </b-card>
-        </div>
-        <div class="col-md-7 col-sm-12">
-          <div class="row">
-            <!-- Education -->
-            <div class="col-md-12 mb-4">
-              <b-card no-body>
-                <b-card-header>
-                  <b-card-title class="fs-20">
-                    <div class="row">
-                      <div class="col-md-4 col-sm-12 mb-2">Education</div>
-                      <div class="col-md-8 col-sm-12">
-                        <div class="d-flex align-items-center">
-                          <div class="ml-auto">
-                            <button
-                              class="btn btn-talent text-white shadow btn-sm rounded-talent"
-                              @click="addEducation"
-                            >
-                              <i class="bi bi-plus-lg mr-1"></i>
-                              <span>Add Education</span>
-                            </button>
-                          </div>
-                          <div class="ml-2">
-                            <div class="input-group input-group-sm">
-                              <span class="input-group-text bg-white">
-                                <i class="bi bi-search fs-12"></i>
-                              </span>
-                              <input
-                                type="text"
-                                class="form-control form-talent form-search"
-                                placeholder="Search..."
-                              />
-                            </div>
-                          </div>
+          <!-- Education -->
+          <b-card no-body class="mb-4">
+            <b-card-header>
+              <b-card-title class="fs-20">
+                <div class="row">
+                  <div class="col-md-4 col-sm-12 mb-2">Education</div>
+                  <div class="col-md-8 col-sm-12">
+                    <div class="d-flex align-items-center">
+                      <div class="ml-auto">
+                        <button
+                          class="btn btn-talent text-white shadow btn-sm rounded-talent"
+                          @click="addEducation"
+                        >
+                          <i class="bi bi-plus-lg mr-1"></i>
+                          <span>Add Education</span>
+                        </button>
+                      </div>
+                      <div class="ml-2">
+                        <div class="input-group input-group-sm">
+                          <span class="input-group-text bg-white">
+                            <i class="bi bi-search fs-12"></i>
+                          </span>
+                          <input
+                            type="text"
+                            class="form-control form-talent form-search"
+                            placeholder="Search..."
+                            v-model="education_table.filter"
+                          />
                         </div>
                       </div>
                     </div>
-                  </b-card-title>
-                </b-card-header>
-                <table-component
-                  :data="education_table"
-                  :deleteItem="deleteEducation"
-                  :hide_show="true"
-                />
-              </b-card>
-            </div>
-            <!-- Course -->
-            <div class="col-md-12 mb-4">
-              <b-card no-body>
-                <b-card-header>
-                  <b-card-title class="fs-20">
-                    <div class="row">
-                      <div class="col-md-4 col-sm-12 mb-2">
-                        Course / Training
+                  </div>
+                </div>
+              </b-card-title>
+            </b-card-header>
+            <table-component
+              :data="education_table"
+              :deleteItem="deleteEducation"
+              :hide_show="true"
+            />
+          </b-card>
+          <!-- Course -->
+          <b-card no-body class="mb-4">
+            <b-card-header>
+              <b-card-title class="fs-20">
+                <div class="row">
+                  <div class="col-md-4 col-sm-12 mb-2">Course / Training</div>
+                  <div class="col-md-8 col-sm-12">
+                    <div class="d-flex align-items-center">
+                      <div class="ml-auto">
+                        <button
+                          class="btn btn-talent text-white shadow btn-sm rounded-talent"
+                          @click="addCourse"
+                        >
+                          <i class="bi bi-plus-lg mr-1"></i>
+                          <span>Add Course</span>
+                        </button>
                       </div>
-                      <div class="col-md-8 col-sm-12">
-                        <div class="d-flex align-items-center">
-                          <div class="ml-auto">
-                            <button
-                              class="btn btn-talent text-white shadow btn-sm rounded-talent"
-                              @click="addCourse"
-                            >
-                              <i class="bi bi-plus-lg mr-1"></i>
-                              <span>Add Course</span>
-                            </button>
-                          </div>
-                          <div class="ml-2">
-                            <div class="input-group input-group-sm">
-                              <span class="input-group-text bg-white">
-                                <i class="bi bi-search fs-12"></i>
-                              </span>
-                              <input
-                                type="text"
-                                class="form-control form-talent form-search"
-                                placeholder="Search..."
-                              />
-                            </div>
-                          </div>
+                      <div class="ml-2">
+                        <div class="input-group input-group-sm">
+                          <span class="input-group-text bg-white">
+                            <i class="bi bi-search fs-12"></i>
+                          </span>
+                          <input
+                            type="text"
+                            class="form-control form-talent form-search"
+                            placeholder="Search..."
+                            v-model="course_table.filter"
+                          />
                         </div>
                       </div>
                     </div>
-                  </b-card-title>
-                </b-card-header>
-                <table-component
-                  :data="course_table"
-                  :deleteItem="deleteCourse"
-                  :hide_show="true"
-                />
-              </b-card>
-            </div>
-            <!-- Employement -->
-            <div class="col-md-12 mb-4">
-              <b-card no-body>
-                <b-card-header>
-                  <b-card-title class="fs-20">
-                    <div class="row">
-                      <div class="col-md-4 col-sm-12 mb-2">Employment</div>
-                      <div class="col-md-8 col-sm-12">
-                        <div class="d-flex align-items-center">
-                          <div class="ml-auto">
-                            <button
-                              class="btn btn-talent text-white shadow btn-sm rounded-talent"
-                              @click="addEmployement"
-                            >
-                              <i class="bi bi-plus-lg mr-1"></i>
-                              <span>Add Employment</span>
-                            </button>
-                          </div>
-                          <div class="ml-2">
-                            <div class="input-group input-group-sm">
-                              <span class="input-group-text bg-white">
-                                <i class="bi bi-search fs-12"></i>
-                              </span>
-                              <input
-                                type="text"
-                                class="form-control form-talent form-search"
-                                placeholder="Search..."
-                              />
-                            </div>
-                          </div>
+                  </div>
+                </div>
+              </b-card-title>
+            </b-card-header>
+            <table-component
+              :data="course_table"
+              :deleteItem="deleteCourse"
+              :hide_show="true"
+            />
+          </b-card>
+          <!-- Employement -->
+          <b-card no-body class="mb-4">
+            <b-card-header>
+              <b-card-title class="fs-20">
+                <div class="row">
+                  <div class="col-md-4 col-sm-12 mb-2">Employment</div>
+                  <div class="col-md-8 col-sm-12">
+                    <div class="d-flex align-items-center">
+                      <div class="ml-auto">
+                        <button
+                          class="btn btn-talent text-white shadow btn-sm rounded-talent"
+                          @click="addEmployement"
+                        >
+                          <i class="bi bi-plus-lg mr-1"></i>
+                          <span>Add Employment</span>
+                        </button>
+                      </div>
+                      <div class="ml-2">
+                        <div class="input-group input-group-sm">
+                          <span class="input-group-text bg-white">
+                            <i class="bi bi-search fs-12"></i>
+                          </span>
+                          <input
+                            type="text"
+                            class="form-control form-talent form-search"
+                            placeholder="Search..."
+                            v-model="employment_table.filter"
+                          />
                         </div>
                       </div>
                     </div>
-                  </b-card-title>
-                </b-card-header>
-                <table-component
-                  :data="employement_table"
-                  :deleteItem="deleteEmployment"
-                  :hide_show="true"
-                />
-              </b-card>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- project experience -->
-      <div class="row">
-        <div class="col-12">
+                  </div>
+                </div>
+              </b-card-title>
+            </b-card-header>
+            <table-component
+              :data="employment_table"
+              :deleteItem="deleteEmployment"
+              :hide_show="true"
+            />
+          </b-card>
+          <!-- Project Experience -->
           <b-card no-body>
             <b-card-header>
               <b-card-title class="fs-20">
@@ -492,6 +526,7 @@
                             type="text"
                             class="form-control form-talent form-search"
                             placeholder="Search..."
+                            v-model="project_table.filter"
                           />
                         </div>
                       </div>
@@ -559,6 +594,7 @@ export default {
         health: "",
         religion: "",
         language: "",
+        role: "",
       },
       education_table: {
         row: 5,
@@ -567,37 +603,36 @@ export default {
           {
             key: "no",
             label: "NO",
-            thClass: "text-talent text-center fs-12",
-            tdClass: " text-talent text-center fs-12",
-            thStyle: "background-color: #c1dbec;width:5%",
+            thClass: "fs-12 text-center bg-talent text-white p-2",
+            tdClass: "text-center fs-12",
+            thStyle: "width:5%",
           },
           {
             key: "school",
             label: "SCHOOL NAME",
-            thClass: "text-talent text-left fs-12",
-            tdClass: " text-talent text-left fs-12",
-            thStyle: "background-color: #c1dbec;width:auto",
+            thClass: "fs-12 text-left bg-talent text-white p-2",
+            tdClass: "text-left fs-12",
+            thStyle: "width:auto",
           },
           {
             key: "degree",
             label: "DEGREE",
-            thClass: "text-talent text-left fs-12",
-            tdClass: " text-talent text-left fs-12",
-            thStyle: "background-color: #c1dbec;width:25%",
+            thClass: "fs-12 text-left bg-talent text-white p-2",
+            tdClass: "text-left fs-12",
+            thStyle: "width:25%",
           },
           {
             key: "subject",
             label: "SUBJECT",
-            thClass: "text-talent text-left fs-12",
-            tdClass: " text-talent text-left fs-12",
-            thStyle: "background-color: #c1dbec;width:30%",
+            thClass: "fs-12 text-left bg-talent text-white p-2",
+            tdClass: "text-left fs-12",
+            thStyle: "width:30%",
           },
           {
             key: "action",
             label: "ACTION",
-            thClass: "text-talent text-center fs-12",
-            tdClass: " text-talent text-center fs-12",
-            thStyle: "background-color: #c1dbec;width:10%",
+            thClass: "fs-12 text-center bg-talent text-white p-2",
+            tdClass: "text-center fs-12 d-flex",
           },
         ],
         items: [
@@ -640,44 +675,44 @@ export default {
           {
             key: "no",
             label: "NO",
-            thClass: "text-talent text-center fs-12",
-            tdClass: " text-talent text-center fs-12",
-            thStyle: "background-color: #c1dbec;width:2%",
+            thClass: "fs-12 text-center bg-talent text-white p-2",
+            tdClass: "text-center fs-12",
+            thStyle: "width:2%",
           },
           {
             key: "title",
             label: "TITLE",
-            thClass: "text-talent text-left fs-12",
-            tdClass: " text-talent text-left fs-12",
-            thStyle: "background-color: #c1dbec;width:30%",
+            thClass: "fs-12 text-left bg-talent text-white p-2",
+            tdClass: "text-left fs-12",
+            thStyle: "width:30%",
           },
           {
             key: "provider",
             label: "PROVIDER",
-            thClass: "text-talent text-left fs-12",
-            tdClass: " text-talent text-left fs-12",
-            thStyle: "background-color: #c1dbec;width:20%",
+            thClass: "fs-12 text-left bg-talent text-white p-2",
+            tdClass: "text-left fs-12",
+            thStyle: "width:20%",
           },
           {
             key: "date",
             label: "DATE",
-            thClass: "text-talent text-center fs-12",
-            tdClass: " text-talent text-center fs-12",
-            thStyle: "background-color: #c1dbec;width:25%",
+            thClass: "fs-12 text-center bg-talent text-white p-2",
+            tdClass: "text-center fs-12",
+            thStyle: "width:25%",
           },
           {
             key: "duration",
             label: "DURATION",
-            thClass: "text-talent text-center fs-12",
-            tdClass: " text-talent text-center fs-12",
-            thStyle: "background-color: #c1dbec;width:10%",
+            thClass: "fs-12 text-center bg-talent text-white p-2",
+            tdClass: "text-center fs-12",
+            thStyle: "width:10%",
           },
           {
             key: "action",
             label: "ACTION",
-            thClass: "text-talent text-center fs-12",
-            tdClass: " text-talent text-center fs-12",
-            thStyle: "background-color: #c1dbec;width:10%",
+            thClass: "fs-12 text-center bg-talent text-white p-2",
+            tdClass: "text-center fs-12",
+            thStyle: "width:10%",
           },
         ],
         items: [
@@ -718,51 +753,51 @@ export default {
           },
         ],
       },
-      employement_table: {
+      employment_table: {
         row: 5,
         filter: "",
         fields: [
           {
             key: "no",
             label: "NO",
-            thClass: "text-talent text-center fs-12",
-            tdClass: " text-talent text-center fs-12",
-            thStyle: "background-color: #c1dbec;width:2%",
+            thClass: "fs-12 text-left bg-talent text-white p-2",
+            tdClass: "text-center fs-12",
+            thStyle: "width:2%",
           },
           {
             key: "company",
             label: "COMPANY",
-            thClass: "text-talent text-left fs-12",
-            tdClass: " text-talent text-left fs-12",
-            thStyle: "background-color: #c1dbec;width:auto",
+            thClass: "fs-12 text-left bg-talent text-white p-2",
+            tdClass: "text-left fs-12",
+            thStyle: "width:auto",
           },
           {
             key: "work_from",
             label: "WORK FROM",
-            thClass: "text-talent text-center fs-12",
-            tdClass: " text-talent text-center fs-12",
-            thStyle: "background-color: #c1dbec;width:20%",
+            thClass: "fs-12 text-center bg-talent text-white p-2",
+            tdClass: "text-center fs-12",
+            thStyle: "width:20%",
           },
           {
             key: "work_until",
             label: "WORK UNTIL",
-            thClass: "text-talent text-center fs-12",
-            tdClass: " text-talent text-center fs-12",
-            thStyle: "background-color: #c1dbec;width:20%",
+            thClass: "fs-12 text-center bg-talent text-white p-2",
+            tdClass: "text-center fs-12",
+            thStyle: "width:20%",
           },
           {
             key: "role",
             label: "ROLE",
-            thClass: "text-talent text-left fs-12",
-            tdClass: " text-talent text-left fs-12",
-            thStyle: "background-color: #c1dbec;width:25%",
+            thClass: "fs-12 text-left bg-talent text-white p-2",
+            tdClass: "text-left fs-12",
+            thStyle: "width:25%",
           },
           {
             key: "action",
             label: "ACTION",
-            thClass: "text-talent text-center fs-12",
-            tdClass: " text-talent text-center fs-12",
-            thStyle: "background-color: #c1dbec;width:10%",
+            thClass: "fs-12 text-center bg-talent text-white p-2",
+            tdClass: "text-center fs-12",
+            thStyle: "width:10%",
           },
         ],
         items: [
@@ -810,121 +845,121 @@ export default {
           {
             key: "no",
             label: "NO",
-            thClass: "text-talent text-center fs-12",
-            tdClass: " text-talent text-center fs-12",
-            thStyle: "background-color: #c1dbec;width:2%",
+            thClass: "fs-12 text-left bg-talent text-white p-2",
+            tdClass: "text-center fs-12",
+            thStyle: "width:2%",
           },
           {
             key: "name",
             label: "NAME",
-            thClass: "text-talent text-left fs-12",
-            tdClass: " text-talent text-left fs-12",
+            thClass: "fs-12 text-left bg-talent text-white p-2",
+            tdClass: "text-left fs-12",
             thStyle: "background-color: #c1dbec",
           },
           {
             key: "site",
             label: "SITE",
-            thClass: "text-talent text-center fs-12",
-            tdClass: " text-talent text-center fs-12",
+            thClass: "fs-12 text-left bg-talent text-white p-2",
+            tdClass: "text-center fs-12",
             thStyle: "background-color: #c1dbec",
           },
           {
-            key: "from",
+            key: "project_start",
             label: "FROM",
-            thClass: "text-talent text-center fs-12",
-            tdClass: " text-talent text-center fs-12",
+            thClass: "fs-12 text-center bg-talent text-white p-2",
+            tdClass: "text-center fs-12",
             thStyle: "background-color: #c1dbec",
           },
           {
-            key: "to",
+            key: "project_end",
             label: "TO",
-            thClass: "text-talent text-center fs-12",
-            tdClass: " text-talent text-center fs-12",
+            thClass: "fs-12 text-center bg-talent text-white p-2",
+            tdClass: "text-center fs-12",
             thStyle: "background-color: #c1dbec",
           },
           {
             key: "client",
             label: "CLIENT",
-            thClass: "text-talent text-left fs-12",
-            tdClass: " text-talent text-left fs-12",
+            thClass: "fs-12 text-left bg-talent text-white p-2",
+            tdClass: "text-left fs-12",
             thStyle: "background-color: #c1dbec",
           },
           {
             key: "descriptions",
             label: "DESCRIPTIONS",
-            thClass: "text-talent text-left fs-12",
-            tdClass: " text-talent text-left fs-12",
+            thClass: "fs-12 text-left bg-talent text-white p-2",
+            tdClass: "text-left fs-12",
             thStyle: "background-color: #c1dbec",
           },
           {
             key: "app_type",
             label: "APP TYPE",
-            thClass: "text-talent text-left fs-12",
-            tdClass: " text-talent text-left fs-12",
+            thClass: "fs-12 text-left bg-talent text-white p-2",
+            tdClass: "text-left fs-12",
             thStyle: "background-color: #c1dbec",
           },
           {
             key: "dev_language",
             label: "DEV LANGUAGE",
-            thClass: "text-talent text-left fs-12",
-            tdClass: " text-talent text-left fs-12",
+            thClass: "fs-12 text-left bg-talent text-white p-2",
+            tdClass: "text-left fs-12",
             thStyle: "background-color: #c1dbec",
           },
           {
             key: "role",
             label: "ROLE",
-            thClass: "text-talent text-left fs-12",
-            tdClass: " text-talent text-left fs-12",
+            thClass: "fs-12 text-left bg-talent text-white p-2",
+            tdClass: "text-left fs-12",
             thStyle: "background-color: #c1dbec",
           },
           {
             key: "framework",
             label: "FRAMEWORK",
-            thClass: "text-talent text-left fs-12",
-            tdClass: " text-talent text-left fs-12",
+            thClass: "fs-12 text-left bg-talent text-white p-2",
+            tdClass: "text-left fs-12",
             thStyle: "background-color: #c1dbec",
           },
           {
             key: "dev_tools",
             label: "DEV TOOLS",
-            thClass: "text-talent text-left fs-12",
-            tdClass: " text-talent text-left fs-12",
+            thClass: "fs-12 text-left bg-talent text-white p-2",
+            tdClass: "text-left fs-12",
             thStyle: "background-color: #c1dbec",
           },
           {
             key: "server_os",
             label: "SERVER OS",
-            thClass: "text-talent text-left fs-12",
-            tdClass: " text-talent text-left fs-12",
+            thClass: "fs-12 text-left bg-talent text-white p-2",
+            tdClass: "text-left fs-12",
             thStyle: "background-color: #c1dbec",
           },
           {
             key: "database",
             label: "DATABASE",
-            thClass: "text-talent text-left fs-12",
-            tdClass: " text-talent text-left fs-12",
+            thClass: "fs-12 text-left bg-talent text-white p-2",
+            tdClass: "text-left fs-12",
             thStyle: "background-color: #c1dbec",
           },
           {
             key: "app_server",
             label: "APP SERVER",
-            thClass: "text-talent text-left fs-12",
-            tdClass: " text-talent text-left fs-12",
+            thClass: "fs-12 text-left bg-talent text-white p-2",
+            tdClass: "text-left fs-12",
             thStyle: "background-color: #c1dbec",
           },
           {
             key: "other_info",
             label: "OTHER INFO",
-            thClass: "text-talent text-left fs-12",
-            tdClass: " text-talent text-left fs-12",
+            thClass: "fs-12 text-left bg-talent text-white p-2",
+            tdClass: "text-left fs-12",
             thStyle: "background-color: #c1dbec",
           },
           {
             key: "action",
             label: "ACTION",
-            thClass: "text-talent text-center fs-12",
-            tdClass: " text-talent text-center fs-12",
-            thStyle: "background-color: #c1dbec;width:10%",
+            thClass: "fs-12 text-center bg-talent text-white p-2",
+            tdClass: "text-center fs-12",
+            thStyle: "width:10%",
           },
         ],
         items: [
@@ -932,90 +967,90 @@ export default {
             id: 1,
             name: "Monitoring Maps",
             site: "Bandung",
-            from: "02 December 2022",
-            to: "03 Januari 2023",
+            project_start: "02 December 2022",
+            project_end: "03 Januari 2023",
             client: "Leslar Metaverse",
             descriptions: "Sistem NLP",
             app_type: "Website",
-            dev_language: "Javascript, Go",
+            dev_language: ["Javascript", "Go"],
             role: "Backend",
-            framework: "VueJS, Gogin",
-            dev_tools: "VS Code",
-            server_os: "Linux",
-            database: "MongoDB",
-            app_server: "Web Server",
+            framework: ["VueJS", "Gogin"],
+            dev_tools: ["VS Code"],
+            server_os: ["Linux"],
+            database: ["MongoDB"],
+            app_server: ["Web Server"],
             other_info: "Info Lainnya",
           },
           {
             id: 2,
             name: "Monitoring Maps",
             site: "Bandung",
-            from: "02 December 2022",
-            to: "03 Januari 2023",
+            project_start: "02 December 2022",
+            project_end: "03 Januari 2023",
             client: "Leslar Metaverse",
             descriptions: "Sistem NLP",
             app_type: "Website",
-            dev_language: "Javascript, Go",
+            dev_language: ["Javascript", "Go"],
             role: "Backend",
-            framework: "VueJS, Gogin",
-            dev_tools: "VS Code",
-            server_os: "Linux",
-            database: "MongoDB",
-            app_server: "Web Server",
+            framework: ["VueJS", "Gogin"],
+            dev_tools: ["VS Code"],
+            server_os: ["Linux"],
+            database: ["MongoDB"],
+            app_server: ["Web Server"],
             other_info: "Info Lainnya",
           },
           {
             id: 3,
             name: "Monitoring Maps",
             site: "Bandung",
-            from: "02 December 2022",
-            to: "03 Januari 2023",
+            project_start: "02 December 2022",
+            project_end: "03 Januari 2023",
             client: "Leslar Metaverse",
             descriptions: "Sistem NLP",
             app_type: "Website",
-            dev_language: "Javascript, Go",
+            dev_language: ["Javascript", "Go"],
             role: "Backend",
-            framework: "VueJS, Gogin",
-            dev_tools: "VS Code",
-            server_os: "Linux",
-            database: "MongoDB",
-            app_server: "Web Server",
+            framework: ["VueJS", "Gogin"],
+            dev_tools: ["VS Code"],
+            server_os: ["Linux"],
+            database: ["MongoDB"],
+            app_server: ["Web Server"],
             other_info: "Info Lainnya",
           },
           {
             id: 4,
             name: "Monitoring Maps",
             site: "Bandung",
-            from: "02 December 2022",
-            to: "03 Januari 2023",
+            project_start: "02 December 2022",
+            project_end: "03 Januari 2023",
             client: "Leslar Metaverse",
             descriptions: "Sistem NLP",
             app_type: "Website",
-            dev_language: "Javascript, Go",
+            dev_language: ["Javascript", "Go"],
             role: "Backend",
-            framework: "VueJS, Gogin",
-            dev_tools: "VS Code",
-            server_os: "Linux",
-            database: "MongoDB",
-            app_server: "Web Server",
+            framework: ["VueJS", "Gogin"],
+            dev_tools: ["VS Code"],
+            server_os: ["Linux"],
+            database: ["MongoDB"],
+            app_server: ["Web Server"],
             other_info: "Info Lainnya",
           },
           {
             id: 5,
             name: "Monitoring Maps",
             site: "Bandung",
-            from: "02 December 2022",
-            to: "03 Januari 2023",
+            project_start: "02 December 2022",
+            project_end: "03 Januari 2023",
             client: "Leslar Metaverse",
             descriptions: "Sistem NLP",
             app_type: "Website",
-            dev_language: "Javascript, Go",
+            dev_language: ["Javascript", "Go"],
             role: "Backend",
-            framework: "VueJS, Gogin",
-            dev_tools: "VS Code",
-            server_os: "Linux",
-            database: "MongoDB",
-            app_server: "Web Server",
+            framework: ["VueJS", "Gogin"],
+            dev_tools: ["VS Code"],
+            server_os: ["Linux"],
+            database: ["MongoDB"],
+            app_server: ["Web Server"],
             other_info: "Info Lainnya",
           },
         ],

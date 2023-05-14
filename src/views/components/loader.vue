@@ -1,39 +1,78 @@
 <template>
-  <div id="loader">
-    <div class="loader"></div>
+  <div class="w-100">
+    <center>
+      <div id="preloader">
+        <div id="loader"></div>
+      </div>
+      Loading...
+    </center>
   </div>
 </template>
-<style>
-#loader{
-    position:relative;
-	width:30px;
-	height:30px;
-	background:#3498db;
-	border-radius:50px;
-	animation: preloader_5 1.5s infinite linear;
+<script>
+export default {
+  name: "loader",
+};
+</script>
+<style lang="css" scoped>
+#preloader {
+  width: 100%;
+  height: 100%;
 }
-#loader:after{
-	position:absolute;
-	width:50px;
-	height:50px;
-	border-top:10px solid #9b59b6;
-	border-bottom:10px solid #9b59b6;
-	border-left:10px solid transparent;
-	border-right:10px solid transparent;
-	border-radius:50px;
-	content:'';
-	top:-20px;
-	left:-20px;
-	animation: preloader_5_after 1.5s infinite linear;
+#loader {
+  display: flex;
+  width: 75px;
+  height: 75px;
+  margin: 0 0 0 0;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: #0173a7;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
 }
-@keyframes preloader_5 {
-    0% {transform: rotate(0deg);}
-    50% {transform: rotate(180deg);background:#2ecc71;}
-    100% {transform: rotate(360deg);}
+#loader:before {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: #73aadd;
+  -webkit-animation: spin 3s linear infinite;
+  animation: spin 3s linear infinite;
 }
-@keyframes preloader_5_after {
-    0% {border-top:10px solid #9b59b6;border-bottom:10px solid #9b59b6;}
-    50% {border-top:10px solid #3498db;border-bottom:10px solid #3498db;}
-    100% {border-top:10px solid #9b59b6;border-bottom:10px solid #9b59b6;}
+#loader:after {
+  content: "";
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: #73aadd;
+  -webkit-animation: spin 1.5s linear infinite;
+  animation: spin 1.5s linear infinite;
+}
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }
 </style>

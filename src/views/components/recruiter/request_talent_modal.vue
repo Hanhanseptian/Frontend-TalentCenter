@@ -1,6 +1,6 @@
 <template>
   <b-modal
-    :id="'set-date-modal-' + id.toString()"
+    :id="'set-date-modal-' + id"
     size="sm"
     hide-footer
     @hidden="resetModal"
@@ -112,7 +112,7 @@ export default {
     ValidationObserver,
   },
   props: {
-    id: Number,
+    id: String,
   },
   data() {
     return {

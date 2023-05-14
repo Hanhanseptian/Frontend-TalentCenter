@@ -4,6 +4,7 @@ import VueRouter from "vue-router";
 import Dashboard from "../views/pages/bizdev/Dashboard.vue";
 import TalentList from "../views/pages/bizdev/TalentList.vue";
 import RequestList from "../views/pages/bizdev/RequestList.vue";
+import DetailRequestList from "../views/pages/bizdev/DetailRequestList.vue";
 import TalentOnJob from "../views/pages/bizdev/TalentOnJob.vue";
 import ContractHistory from "../views/pages/bizdev/ContractHistory.vue";
 // recruiter page
@@ -48,6 +49,15 @@ const routes = [
     path: "/admin/request-list",
     name: "Request List",
     component: RequestList,
+    meta: {
+      full: false,
+      access: 1,
+    },
+  },
+  {
+    path: "/admin/detail-request-list",
+    name: "Request List",
+    component: DetailRequestList,
     meta: {
       full: false,
       access: 1,

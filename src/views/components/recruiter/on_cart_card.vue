@@ -17,10 +17,10 @@
           :value="data.checked"
         ></b-form-checkbox>
       </div>
-      <!-- start date -->
+      <!-- Work From -->
       <div class="d-flex align-items-center">
         <div class="mr-2 w-50">
-          <label for="start-date" class="fs-12">Start Date</label>
+          <label for="start-date" class="fs-12">Work From</label>
           <b-form-datepicker
             size="sm"
             class="mb-2 form-date-talent"
@@ -31,12 +31,12 @@
               day: '2-digit',
             }"
             locale="en"
-            placeholder="Start Date"
+            placeholder="Work From"
           ></b-form-datepicker>
         </div>
-        <!-- end date -->
+        <!-- Work Until -->
         <div class="w-50">
-          <label for="start-date" class="fs-12">End Date</label>
+          <label for="start-date" class="fs-12">Work Until</label>
           <b-form-datepicker
             size="sm"
             class="mb-2 form-date-talent"
@@ -47,7 +47,7 @@
               day: '2-digit',
             }"
             locale="en"
-            placeholder="End Date"
+            placeholder="Work Until"
           ></b-form-datepicker>
         </div>
       </div>

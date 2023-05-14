@@ -8,7 +8,7 @@
             <div class="d-flex align-items-center">
               <i class="bi bi-person-circle mr-1" style="font-size: 50px"></i>
               <div>
-                <span class="fs-14"> Muhammad Afzaki </span>
+                <span class="fs-14"> {{ data.full_name }} </span>
                 <span class="fs-12 ml-1">
                   <b-badge
                     :class="data.gender == 'male' ? 'bg-talent' : 'bg-pink'"
@@ -22,18 +22,19 @@
                           : 'bi-gender-female'
                       "
                     ></i>
-                    {{ data.gender }}
+                    {{ data.gender == "male" ? "Male" : "Female" }}
                   </b-badge>
                 </span>
                 <br />
                 <div class="fs-12">
                   <i class="bi bi-toggles2"></i>
-                  Frontend Developer
+                  {{ data.role }} Developer
                 </div>
                 <div class="d-flex align-items-center fs-10">
-                  <i class="bi bi-person-fill mr-1"></i> 22 Years Old
-                  <i class="bi bi-person-workspace mr-1 ml-3"></i> 4 Years Work
-                  Experience
+                  <i class="bi bi-person-fill mr-1"></i>
+                  {{ calculateAge(data.date_of_birth) }} Years Old
+                  <i class="bi bi-person-workspace mr-1 ml-3"></i>
+                  {{ data.work_experience }} Years Work Experience
                 </div>
               </div>
             </div>
@@ -48,10 +49,7 @@
               style="border-color: #0173a7 !important; height: 4rem"
             >
               <p class="text-justify">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Possimus eveniet doloremque accusantium deleniti rerum. Et
-                laudantium impedit inventore doloribus placeat excepturi
-                commodi, velit laborum? Iure officia omnis neque. Facere, ullam.
+                {{ data.description }}
               </p>
             </div>
           </b-card>
@@ -67,65 +65,14 @@
               style="height: 9rem"
             >
               <li
+                v-for="item in data.projectexperience"
+                :key="item._id"
                 class="list-group-item p-1"
                 style="border-color: #0173a7 !important"
               >
                 <div class="d-flex">
                   <i class="bi bi-kanban fs-14 mr-1"></i>
-                  <span class="text-justify"> Leslar Productions </span>
-                </div>
-              </li>
-              <li
-                class="list-group-item p-1"
-                style="border-color: #0173a7 !important"
-              >
-                <div class="d-flex">
-                  <i class="bi bi-kanban fs-14 mr-1"></i>
-                  <span class="text-justify"> Machine Learning </span>
-                </div>
-              </li>
-              <li
-                class="list-group-item p-1"
-                style="border-color: #0173a7 !important"
-              >
-                <div class="d-flex">
-                  <i class="bi bi-kanban fs-14 mr-1"></i>
-                  <span class="text-justify" style="word-break: break-all">
-                    NLP Machine Learning untuk Gojek Company
-                  </span>
-                </div>
-              </li>
-              <li
-                class="list-group-item p-1"
-                style="border-color: #0173a7 !important"
-              >
-                <div class="d-flex">
-                  <i class="bi bi-kanban fs-14 mr-1"></i>
-                  <span class="text-justify" style="word-break: break-all">
-                    NLP Machine Learning untuk Gojek Company
-                  </span>
-                </div>
-              </li>
-              <li
-                class="list-group-item p-1"
-                style="border-color: #0173a7 !important"
-              >
-                <div class="d-flex">
-                  <i class="bi bi-kanban fs-14 mr-1"></i>
-                  <span class="text-justify" style="word-break: break-all">
-                    NLP Machine Learning untuk Gojek Company
-                  </span>
-                </div>
-              </li>
-              <li
-                class="list-group-item p-1"
-                style="border-color: #0173a7 !important"
-              >
-                <div class="d-flex">
-                  <i class="bi bi-kanban fs-14 mr-1"></i>
-                  <span class="text-justify" style="word-break: break-all">
-                    NLP Machine Learning untuk Gojek Company
-                  </span>
+                  <span class="text-justify"> {{ item.name }} </span>
                 </div>
               </li>
             </ul>
@@ -140,35 +87,15 @@
               style="height: 9.5rem"
             >
               <li
+                v-for="item in data.education"
+                :key="item._id"
                 class="list-group-item p-1"
                 style="border-color: #0173a7 !important"
               >
                 <div class="d-flex">
                   <i class="bi bi-mortarboard fs-18 mr-1"></i>
                   <span class="text-justify">
-                    S2 Informatics Engineering in Institut Teknologi Bandung
-                  </span>
-                </div>
-              </li>
-              <li
-                class="list-group-item p-1"
-                style="border-color: #0173a7 !important"
-              >
-                <div class="d-flex">
-                  <i class="bi bi-mortarboard fs-18 mr-1"></i>
-                  <span class="text-justify">
-                    D4 Informatics Engineering in Politeknik Negeri Bandung
-                  </span>
-                </div>
-              </li>
-              <li
-                class="list-group-item p-1"
-                style="border-color: #0173a7 !important"
-              >
-                <div class="d-flex">
-                  <i class="bi bi-mortarboard fs-18 mr-1"></i>
-                  <span class="text-justify">
-                    D3 Informatics Engineering in Politeknik Negeri Bandung
+                    {{ item.degree }} {{ item.subject }} in {{ item.school }}
                   </span>
                 </div>
               </li>
@@ -182,44 +109,41 @@
             <b-card no-body class="shadow-sm p-1 border mb-1 mt-1">
               <div class="fs-10 mb-1">Programming Language :</div>
               <div class="d-flex align-center fs-12 skill-wrapper pb-1">
-                <b-badge variant="info" class="ml-1 bg-talent"
-                  >Javascript</b-badge
+                <b-badge
+                  variant="info"
+                  class="ml-1 bg-talent"
+                  v-for="item in data.hardskill[0].programming_language"
+                  :key="item"
                 >
-                <b-badge variant="info" class="ml-1 bg-talent">Go</b-badge>
-                <b-badge variant="info" class="ml-1 bg-talent">PHP</b-badge>
-                <b-badge variant="info" class="ml-1 bg-talent">HTML</b-badge>
-                <b-badge variant="info" class="ml-1 bg-talent">CSS</b-badge>
-                <b-badge variant="info" class="ml-1 bg-talent">Java</b-badge>
-                <b-badge variant="info" class="ml-1 bg-talent"
-                  >Typescript</b-badge
-                >
-                <b-badge variant="info" class="ml-1 bg-talent">Kotlin</b-badge>
+                  {{ item }}
+                </b-badge>
               </div>
             </b-card>
 
             <b-card no-body class="shadow-sm p-1 border mb-1">
               <div class="fs-10 mb-1">Framework Skills :</div>
               <div class="d-flex align-center fs-12 skill-wrapper pb-1">
-                <b-badge variant="info" class="ml-1 bg-talent">Laravel</b-badge>
-                <b-badge variant="info" class="ml-1 bg-talent"
-                  >Code Igniter</b-badge
+                <b-badge
+                  variant="info"
+                  class="ml-1 bg-talent"
+                  v-for="item in data.hardskill[0].framework"
+                  :key="item"
                 >
-                <b-badge variant="info" class="ml-1 bg-talent">ReactJS</b-badge>
-                <b-badge variant="info" class="ml-1 bg-talent">VueJS</b-badge>
-                <b-badge variant="info" class="ml-1 bg-talent">Flask</b-badge>
+                  {{ item }}
+                </b-badge>
               </div>
             </b-card>
             <b-card no-body class="shadow-sm p-1 border mb-1">
               <div class="fs-10 mb-1">Database Skills :</div>
               <div class="d-flex align-center fs-12 skill-wrapper pb-1">
-                <b-badge variant="info" class="ml-1 bg-talent">MySQL</b-badge>
-                <b-badge variant="info" class="ml-1 bg-talent"
-                  >SQL Server</b-badge
+                <b-badge
+                  variant="info"
+                  class="ml-1 bg-talent"
+                  v-for="item in data.hardskill[0].database"
+                  :key="item"
                 >
-                <b-badge variant="info" class="ml-1 bg-talent">MongoDB</b-badge>
-                <b-badge variant="info" class="ml-1 bg-talent"
-                  >Graph Database</b-badge
-                >
+                  {{ item }}
+                </b-badge>
               </div>
             </b-card>
           </b-card>
@@ -241,8 +165,8 @@
           </b-button>
         </div>
       </div>
-      <request-talent-component :id="data.id" />
-      <detail-talent-component :id="data.id" />
+      <request-talent-component :id="data._id" />
+      <detail-talent-component :id="data._id" ref="detail_talent" />
     </b-card>
   </div>
 </template>
@@ -264,12 +188,30 @@ export default {
       },
     },
   },
+  // created() {
+  //   console.log(this.data);
+  // },
   methods: {
     addToCart() {
-      this.$bvModal.show("set-date-modal-" + this.data.id.toString());
+      this.$bvModal.show("set-date-modal-" + this.data._id);
     },
     viewDetail() {
-      this.$bvModal.show("detail-talent-" + this.data.id.toString());
+      this.$refs.detail_talent.getData(this.data._id);
+      this.$bvModal.show("detail-talent-" + this.data._id);
+    },
+    calculateAge(date_of_birth) {
+      const dob = new Date(date_of_birth);
+      const today = new Date();
+      let age = today.getFullYear() - dob.getFullYear();
+      const isBirthdayPassed =
+        today.getMonth() > dob.getMonth() ||
+        (today.getMonth() === dob.getMonth() &&
+          today.getDate() >= dob.getDate());
+      if (!isBirthdayPassed) {
+        age--;
+      }
+
+      return age;
     },
   },
 };

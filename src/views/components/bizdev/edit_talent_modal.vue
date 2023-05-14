@@ -1,8 +1,8 @@
 <template>
-  <b-modal id="add-talent" size="md" hide-footer>
+  <b-modal id="edit-talent" size="md" hide-footer>
     <template #modal-title>
-      <i class="bi bi bi-person-fill-add"></i>
-      Add New Talent
+      <i class="bi bi bi-pencil-square"></i>
+      Edit Talent
     </template>
     <b-card no-body class="shadow p-2">
       <ValidationObserver v-slot="{ handleSubmit }">
@@ -99,6 +99,29 @@
               <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
             </span>
           </ValidationProvider>
+          <ValidationProvider rules="required" v-slot="{ errors }">
+            <!-- Status -->
+            <div class="mb-2">
+              <label for="status" class="fs-12">
+                Status <span class="text-danger">*</span>
+              </label>
+              <div class="d-flex">
+                <div class="icon-talent d-flex p-0 form-control mr-1">
+                  <i class="bi bi-info-circle mx-auto my-auto"></i>
+                </div>
+                <b-form-select
+                  id="status"
+                  class="input-talent ml-auto"
+                  placeholder="Input Your Status"
+                  :options="status_options"
+                  v-model="talent.status"
+                />
+              </div>
+            </div>
+            <span class="text-validation mt-1" v-if="errors[0]">
+              <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
+            </span>
+          </ValidationProvider>
           <!-- Action Button -->
           <div class="d-flex mt-3">
             <b-button
@@ -137,7 +160,7 @@ extend("email", {
 });
 
 export default {
-  name: "add_talent_modal",
+  name: "edit_talent_modal",
   components: {
     ValidationProvider,
     ValidationObserver,
@@ -149,6 +172,7 @@ export default {
         email: "",
         phone_number: "",
         company: "PT Jayandra",
+        status: "available",
       },
       company_options: [
         { value: "PT Jayandra", text: "PT Jayandra" },
@@ -176,7 +200,7 @@ export default {
     },
     closeModal() {
       this.resetModal();
-      this.$bvModal.hide("add-talent");
+      this.$bvModal.hide("edit-talent");
     },
   },
 };

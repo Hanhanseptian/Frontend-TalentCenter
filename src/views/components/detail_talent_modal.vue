@@ -1,6 +1,6 @@
 <template>
   <b-modal
-    :id="'detail-talent-' + id.toString()"
+    :id="'detail-talent-' + id"
     size="lg"
     hide-footer
     no-close-on-backdrop
@@ -11,82 +11,139 @@
         Talent Detail
       </span>
     </template>
-    <div class="row scroller">
-      <div class="col-md-6 mb-4">
-        <b-card no-body class="shadow p-2 h-100">
-          <span>Profile</span>
-          <div class="fs-12 mt-3">
-            <span>Full Name :</span>
-            <div class="mb-2 border shadow-sm p-2 rounded-lg">
-              Hanhan Septian
-            </div>
-            <span>Descriptions :</span>
-            <div class="mb-2 border shadow-sm p-2 rounded-lg">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus
-              eveniet doloremque accusantium deleniti rerum. Et laudantium
-              impedit inventore doloribus placeat excepturi commodi
-            </div>
-            <span>Programming Language Skills:</span>
-            <div class="mb-2 border shadow-sm p-2 rounded-lg">
-              <b-badge class="mr-1 bg-talent p-1">Javascript</b-badge>
-              <b-badge class="mr-1 bg-talent p-1">Go</b-badge>
-              <b-badge class="mr-1 bg-talent p-1">PHP</b-badge>
-              <b-badge class="mr-1 bg-talent p-1">HTML</b-badge>
-              <b-badge class="mr-1 bg-talent p-1">CSS</b-badge>
-              <b-badge class="mr-1 bg-talent p-1">Java</b-badge>
-            </div>
-            <span>Framework Skills :</span>
-            <div class="mb-2 border shadow-sm p-2 rounded-lg">
-              <b-badge class="mr-1 bg-talent p-1">VueJS</b-badge>
-              <b-badge class="mr-1 bg-talent p-1">Laravel</b-badge>
-              <b-badge class="mr-1 bg-talent p-1">CodeIgniter</b-badge>
-            </div>
-            <span>Application Server Skills :</span>
-            <div class="mb-2 border shadow-sm p-2 rounded-lg">
-              <b-badge class="mr-1 bg-talent p-1">Windows</b-badge>
-              <b-badge class="mr-1 bg-talent p-1">Linux Debian</b-badge>
-              <b-badge class="mr-1 bg-talent p-1">Linux Ubuntu</b-badge>
-            </div>
-            <span>Database Skills :</span>
-            <div class="mb-2 border shadow-sm p-2 rounded-lg">
-              <b-badge class="mr-1 bg-talent p-1">MySQL</b-badge>
-              <b-badge class="mr-1 bg-talent p-1">MongoDB</b-badge>
-              <b-badge class="mr-1 bg-talent p-1">PostgreeSQL</b-badge>
-            </div>
-            <span>Operating System Skills :</span>
-            <div class="mb-2 border shadow-sm p-2 rounded-lg">
-              <b-badge class="mr-1 bg-talent p-1">Windows</b-badge>
-              <b-badge class="mr-1 bg-talent p-1">Linux</b-badge>
-              <b-badge class="mr-1 bg-talent p-1">MacOS</b-badge>
-            </div>
-            <span>Development Tool Skills :</span>
-            <div class="mb-2 border shadow-sm p-2 rounded-lg">
-              <b-badge class="mr-1 bg-talent p-1">Visual Studio Code</b-badge>
-              <b-badge class="mr-1 bg-talent p-1">Intelij</b-badge>
-              <b-badge class="mr-1 bg-talent p-1">Microsoft Project</b-badge>
-            </div>
-            <span>Place of Birth :</span>
-            <div class="mb-2 border shadow-sm p-2 rounded-lg">Bandung</div>
-            <span>Date of Birth :</span>
-            <div class="mb-2 border shadow-sm p-2 rounded-lg">
-              09 September 2001
-            </div>
-            <span>Gender :</span>
-            <div class="mb-2 border shadow-sm p-2 rounded-lg">Male</div>
-            <span>Health :</span>
-            <div class="mb-2 border shadow-sm p-2 rounded-lg">Excellent</div>
-            <span>Religion :</span>
-            <div class="mb-2 border shadow-sm p-2 rounded-lg">Islam</div>
-            <span>Language Skill :</span>
-            <div class="mb-2 border shadow-sm p-2 rounded-lg">
-              <b-badge class="mr-1 bg-talent p-1">English</b-badge>
-              <b-badge class="mr-1 bg-talent p-1">Indonesian</b-badge>
-              <b-badge class="mr-1 bg-talent p-1">Sundanese</b-badge>
-            </div>
+    <loader v-if="is_loading" />
+    <div v-else class="row scroller">
+      <div class="col-md-12 mb-4">
+        <div class="row">
+          <!-- Profile -->
+          <div class="col-md-6">
+            <b-card no-body class="shadow p-2 h-100">
+              <span>Profile</span>
+              <div class="fs-12 mt-3">
+                <span>Full Name :</span>
+                <div class="mb-2 border shadow-sm p-2 rounded-lg">
+                  {{ talent_data.full_name }}
+                </div>
+                <span>Descriptions :</span>
+                <div class="mb-2 border shadow-sm p-2 rounded-lg text-justify">
+                  {{ talent_data.description }}
+                </div>
+                <span>Place of Birth :</span>
+                <div class="mb-2 border shadow-sm p-2 rounded-lg">
+                  {{ talent_data.place_of_birth }}
+                </div>
+                <span>Date of Birth :</span>
+                <div class="mb-2 border shadow-sm p-2 rounded-lg">
+                  {{ parseDate(talent_data.date_of_birth) }}
+                </div>
+                <span>Gender :</span>
+                <div class="mb-2 border shadow-sm p-2 rounded-lg">
+                  {{ talent_data.gender == "male" ? "Male" : "Female" }}
+                </div>
+                <span>Health :</span>
+                <div class="mb-2 border shadow-sm p-2 rounded-lg">
+                  {{ talent_data.health }}
+                </div>
+                <span>Religion :</span>
+                <div class="mb-2 border shadow-sm p-2 rounded-lg">
+                  {{ talent_data.religion }}
+                </div>
+              </div>
+            </b-card>
           </div>
-        </b-card>
+          <!-- Skills -->
+          <div class="col-md-6">
+            <b-card no-body class="shadow p-2 h-100">
+              <span>Skills</span>
+              <div class="fs-12 mt-3">
+                <span>Programming Language Skills:</span>
+                <div class="mb-2 border shadow-sm p-2 rounded-lg">
+                  <b-badge
+                    v-for="pro_lang in talent_data.hardskill[0]
+                      .programming_language"
+                    :key="pro_lang"
+                    class="mr-1 bg-talent p-1"
+                  >
+                    {{ pro_lang }}
+                  </b-badge>
+                </div>
+                <span>Framework Skills :</span>
+                <div class="mb-2 border shadow-sm p-2 rounded-lg">
+                  <b-badge
+                    v-for="framework in talent_data.hardskill[0].framework"
+                    :key="framework"
+                    class="mr-1 bg-talent p-1"
+                  >
+                    {{ framework }}
+                  </b-badge>
+                </div>
+                <span>Application Server Skills :</span>
+                <div class="mb-2 border shadow-sm p-2 rounded-lg">
+                  <b-badge
+                    v-for="app_server in talent_data.hardskill[0]
+                      .application_server"
+                    :key="app_server"
+                    class="mr-1 bg-talent p-1"
+                  >
+                    {{ app_server }}
+                  </b-badge>
+                </div>
+                <span>Database Skills :</span>
+                <div class="mb-2 border shadow-sm p-2 rounded-lg">
+                  <b-badge
+                    v-for="database in talent_data.hardskill[0].database"
+                    :key="database"
+                    class="mr-1 bg-talent p-1"
+                  >
+                    {{ database }}
+                  </b-badge>
+                </div>
+                <span>Operating System Skills :</span>
+                <div class="mb-2 border shadow-sm p-2 rounded-lg">
+                  <b-badge
+                    v-for="os in talent_data.hardskill[0].operating_system"
+                    :key="os"
+                    class="mr-1 bg-talent p-1"
+                  >
+                    {{ os }}
+                  </b-badge>
+                </div>
+                <span>Development Tool Skills :</span>
+                <div class="mb-2 border shadow-sm p-2 rounded-lg">
+                  <b-badge
+                    v-for="dev_tools in talent_data.hardskill[0]
+                      .development_tools"
+                    :key="dev_tools"
+                    class="mr-1 bg-talent p-1"
+                  >
+                    {{ dev_tools }}
+                  </b-badge>
+                </div>
+                <span>Language Skills :</span>
+                <div class="mb-2 border shadow-sm p-2 rounded-lg">
+                  <b-badge
+                    v-for="lang in talent_data.language"
+                    :key="lang"
+                    class="mr-1 bg-talent p-1"
+                  >
+                    {{ lang }}
+                  </b-badge>
+                </div>
+                <span>Role :</span>
+                <div class="mb-2 border shadow-sm p-2 rounded-lg">
+                  {{ talent_data.role }} Developer
+                </div>
+                <span>Work Experience :</span>
+                <div class="mb-2 border shadow-sm p-2 rounded-lg">
+                  {{ talent_data.work_experience }} Years
+                </div>
+              </div>
+            </b-card>
+          </div>
+        </div>
       </div>
-      <div class="col-md-6 mb-4">
+      <div class="col-md-12 mb-4">
+        <!-- Education -->
         <b-card no-body class="shadow p-2 mb-4">
           <span>Education</span>
           <div class="mt-3 fs-12">
@@ -95,7 +152,8 @@
             </div>
           </div>
         </b-card>
-        <b-card no-body class="shadow p-2 mb-2">
+        <!-- Course / Training -->
+        <b-card no-body class="shadow p-2 mb-4">
           <span>Course / Training</span>
           <div class="mt-3 fs-12">
             <div class="mb-2 border shadow-sm p-2 rounded-lg">
@@ -103,19 +161,20 @@
             </div>
           </div>
         </b-card>
-        <b-card no-body class="shadow p-2">
+        <!-- Employment -->
+        <b-card no-body class="shadow p-2 mb-4">
           <span>Employment</span>
           <div class="mt-3 fs-12">
             <div class="mb-2 border shadow-sm p-2 rounded-lg">
               <table-component
-                :data="employement_table"
+                :data="employment_table"
                 :no_pagination="true"
+                :is_detail="true"
               />
             </div>
           </div>
         </b-card>
-      </div>
-      <div class="col-md-12">
+        <!-- Project Experience -->
         <b-card no-body class="shadow p-2">
           <span>Project Experience</span>
           <div class="mt-3 fs-12">
@@ -130,406 +189,249 @@
 </template>
 <script>
 import table_component from "./data_table.vue";
+import loader from "./loader.vue";
 
 export default {
   name: "detailTalentModal",
   components: {
     "table-component": table_component,
+    loader,
   },
   props: {
-    id: Number,
+    id: {
+      type: String,
+      default() {
+        return "idtalent";
+      },
+    },
   },
   data() {
     return {
+      is_loading: true,
+      talent_data: null,
       education_table: {
-        row: 5,
-        filter: "",
+        row: 100,
         fields: [
           {
             key: "school",
             label: "SCHOOL NAME",
-            thClass: "text-talent text-left fs-10",
-            tdClass: " text-talent text-left fs-10",
-            thStyle: "background-color: #c1dbec;width:auto",
+            thClass: "fs-10 text-left bg-talent text-white p-2",
+            tdClass: "text-left fs-10",
+            thStyle: "width:auto",
           },
           {
             key: "degree",
             label: "DEGREE",
-            thClass: "text-talent text-left fs-10",
-            tdClass: " text-talent text-left fs-10",
-            thStyle: "background-color: #c1dbec;width:25%",
+            thClass: "fs-10 text-left bg-talent text-white p-2",
+            tdClass: "text-left fs-10",
+            thStyle: "width:25%",
           },
           {
             key: "subject",
             label: "SUBJECT",
-            thClass: "text-talent text-left fs-10",
-            tdClass: " text-talent text-left fs-10",
-            thStyle: "background-color: #c1dbec;width:30%",
+            thClass: "fs-10 text-left bg-talent text-white p-2",
+            tdClass: "text-left fs-10",
+            thStyle: "width:30%",
           },
         ],
-        items: [
-          {
-            id: 1,
-            school: "Insititut Teknologi Bandung",
-            degree: "Doctor",
-            subject: "Informatics Engineering",
-          },
-          {
-            id: 2,
-            school: "Telkom University",
-            degree: "Master",
-            subject: "Informatics Engineering",
-          },
-          {
-            id: 3,
-            school: "Politeknik Negeri Bandung",
-            degree: "Bachelor",
-            subject: "Informatics Engineering",
-          },
-          {
-            id: 4,
-            school: "Politeknik Negeri Bandung",
-            degree: "Associate Degree",
-            subject: "Informatics Engineering",
-          },
-        ],
+        items: null,
       },
       course_table: {
-        row: 5,
-        filter: "",
+        row: 100,
         fields: [
           {
             key: "title",
             label: "TITLE",
-            thClass: "text-talent text-left fs-10",
-            tdClass: " text-talent text-left fs-10",
-            thStyle: "background-color: #c1dbec;width:30%",
+            thClass: "fs-10 text-left bg-talent text-white p-2",
+            tdClass: "text-left fs-10",
+            thStyle: "width:35%",
           },
           {
             key: "provider",
             label: "PROVIDER",
-            thClass: "text-talent text-left fs-10",
-            tdClass: " text-talent text-left fs-10",
-            thStyle: "background-color: #c1dbec;width:20%",
+            thClass: "fs-10 text-left bg-talent text-white p-2",
+            tdClass: "text-left fs-10",
+            thStyle: "width:35%",
           },
           {
             key: "date",
             label: "DATE",
-            thClass: "text-talent text-center fs-10",
-            tdClass: " text-talent text-center fs-10",
-            thStyle: "background-color: #c1dbec;width:25%",
+            thClass: "fs-10 text-center bg-talent text-white p-2",
+            tdClass: "text-center fs-10",
           },
           {
             key: "duration",
             label: "DURATION",
-            thClass: "text-talent text-center fs-10",
-            tdClass: " text-talent text-center fs-10",
-            thStyle: "background-color: #c1dbec;width:10%",
+            thClass: "fs-10 text-center bg-talent text-white p-2",
+            tdClass: "text-center fs-10",
+            thStyle: "width:15%",
           },
         ],
-        items: [
-          {
-            id: 1,
-            title: "Machine Learning for Beginners",
-            provider: "Dicoding",
-            date: "02 December 2022",
-            duration: "2 Month",
-          },
-          {
-            id: 2,
-            title: "Machine Learning for Beginners",
-            provider: "Dicoding",
-            date: "02 December 2022",
-            duration: "2 Month",
-          },
-          {
-            id: 3,
-            title: "Machine Learning for Beginners",
-            provider: "Dicoding",
-            date: "02 December 2022",
-            duration: "2 Month",
-          },
-        ],
+        items: null,
       },
-      employement_table: {
-        row: 5,
-        filter: "",
+      employment_table: {
+        row: 100,
         fields: [
           {
-            key: "company",
+            key: "company_name",
             label: "COMPANY",
-            thClass: "text-talent text-left fs-10",
-            tdClass: " text-talent text-left fs-10",
-            thStyle: "background-color: #c1dbec;width:auto",
+            thClass: "fs-10 text-left bg-talent text-white p-2",
+            tdClass: "text-left fs-10",
+            thStyle: "width:35%",
           },
           {
             key: "work_from",
             label: "WORK FROM",
-            thClass: "text-talent text-center fs-10",
-            tdClass: " text-talent text-center fs-10",
-            thStyle: "background-color: #c1dbec;width:20%",
+            thClass: "fs-10 text-center bg-talent text-white p-2",
+            tdClass: "text-center fs-10",
+            thStyle: "width:20%",
           },
           {
             key: "work_until",
             label: "WORK UNTIL",
-            thClass: "text-talent text-center fs-10",
-            tdClass: " text-talent text-center fs-10",
-            thStyle: "background-color: #c1dbec;width:20%",
+            thClass: "fs-10 text-center bg-talent text-white p-2",
+            tdClass: "text-center fs-10",
+            thStyle: "width:20%",
           },
           {
             key: "role",
             label: "ROLE",
-            thClass: "text-talent text-left fs-10",
-            tdClass: " text-talent text-left fs-10",
-            thStyle: "background-color: #c1dbec;width:25%",
+            thClass: "fs-10 text-left bg-talent text-white p-2",
+            tdClass: "text-left fs-10",
+            thStyle: "width:25%",
           },
         ],
-        items: [
-          {
-            id: 1,
-            company: "PT Jayandra",
-            work_from: "03 January 2020",
-            work_until: "02 December 2022",
-            role: "Junior Programmer",
-          },
-          {
-            id: 2,
-            company: "PT Jayandra",
-            work_from: "03 January 2020",
-            work_until: "02 December 2022",
-            role: "Junior Programmer",
-          },
-          {
-            id: 3,
-            company: "PT Jayandra",
-            work_from: "03 January 2020",
-            work_until: "02 December 2022",
-            role: "Junior Programmer",
-          },
-          {
-            id: 4,
-            company: "PT Jayandra",
-            work_from: "03 January 2020",
-            work_until: "02 December 2022",
-            role: "Junior Programmer",
-          },
-          {
-            id: 5,
-            company: "PT Jayandra",
-            work_from: "03 January 2020",
-            work_until: "02 December 2022",
-            role: "Junior Programmer",
-          },
-        ],
+        items: null,
       },
       project_table: {
-        row: 5,
-        filter: "",
+        row: 100,
         fields: [
           {
             key: "name",
             label: "NAME",
-            thClass: "text-talent text-left fs-10",
+            thClass: "fs-10 text-left bg-talent text-white p-2",
             tdClass: " text-talent text-left fs-10",
-            thStyle: "background-color: #c1dbec",
           },
           {
             key: "site",
             label: "SITE",
-            thClass: "text-talent text-center fs-10",
+            thClass: "fs-10 text-left bg-talent text-white p-2",
             tdClass: " text-talent text-center fs-10",
-            thStyle: "background-color: #c1dbec",
           },
           {
-            key: "from",
+            key: "project_start",
             label: "FROM",
-            thClass: "text-talent text-center fs-10",
+            thClass: "fs-10 text-left bg-talent text-white p-2",
             tdClass: " text-talent text-center fs-10",
-            thStyle: "background-color: #c1dbec",
           },
           {
-            key: "to",
+            key: "project_end",
             label: "TO",
-            thClass: "text-talent text-center fs-10",
+            thClass: "fs-10 text-left bg-talent text-white p-2",
             tdClass: " text-talent text-center fs-10",
-            thStyle: "background-color: #c1dbec",
           },
           {
             key: "client",
             label: "CLIENT",
-            thClass: "text-talent text-left fs-10",
+            thClass: "fs-10 text-left bg-talent text-white p-2",
             tdClass: " text-talent text-left fs-10",
-            thStyle: "background-color: #c1dbec",
+            thStyle: "width:20rem !important",
           },
           {
-            key: "descriptions",
+            key: "description",
             label: "DESCRIPTIONS",
-            thClass: "text-talent text-left fs-10",
+            thClass: "fs-10 text-left bg-talent text-white p-2",
             tdClass: " text-talent text-left fs-10",
-            thStyle: "background-color: #c1dbec",
           },
           {
             key: "app_type",
             label: "APP TYPE",
-            thClass: "text-talent text-left fs-10",
+            thClass: "fs-10 text-left bg-talent text-white p-2",
             tdClass: " text-talent text-left fs-10",
-            thStyle: "background-color: #c1dbec",
           },
           {
             key: "dev_language",
             label: "DEV LANGUAGE",
-            thClass: "text-talent text-left fs-10",
+            thClass: "fs-10 text-left bg-talent text-white p-2",
             tdClass: " text-talent text-left fs-10",
-            thStyle: "background-color: #c1dbec",
           },
           {
             key: "role",
             label: "ROLE",
-            thClass: "text-talent text-left fs-10",
+            thClass: "fs-10 text-left bg-talent text-white p-2",
             tdClass: " text-talent text-left fs-10",
-            thStyle: "background-color: #c1dbec",
           },
           {
             key: "framework",
             label: "FRAMEWORK",
-            thClass: "text-talent text-left fs-10",
+            thClass: "fs-10 text-left bg-talent text-white p-2",
             tdClass: " text-talent text-left fs-10",
-            thStyle: "background-color: #c1dbec",
           },
           {
             key: "dev_tools",
             label: "DEV TOOLS",
-            thClass: "text-talent text-left fs-10",
+            thClass: "fs-10 text-left bg-talent text-white p-2",
             tdClass: " text-talent text-left fs-10",
-            thStyle: "background-color: #c1dbec",
           },
           {
             key: "server_os",
             label: "SERVER OS",
-            thClass: "text-talent text-left fs-10",
+            thClass: "fs-10 text-left bg-talent text-white p-2",
             tdClass: " text-talent text-left fs-10",
-            thStyle: "background-color: #c1dbec",
           },
           {
             key: "database",
             label: "DATABASE",
-            thClass: "text-talent text-left fs-10",
+            thClass: "fs-10 text-left bg-talent text-white p-2",
             tdClass: " text-talent text-left fs-10",
-            thStyle: "background-color: #c1dbec",
           },
           {
             key: "app_server",
             label: "APP SERVER",
-            thClass: "text-talent text-left fs-10",
+            thClass: "fs-10 text-left bg-talent text-white p-2",
             tdClass: " text-talent text-left fs-10",
-            thStyle: "background-color: #c1dbec",
           },
           {
             key: "other_info",
             label: "OTHER INFO",
-            thClass: "text-talent text-left fs-10",
+            thClass: "fs-10 text-left bg-talent text-white p-2",
             tdClass: " text-talent text-left fs-10",
-            thStyle: "background-color: #c1dbec",
           },
         ],
-        items: [
-          {
-            id: 1,
-            name: "Monitoring Maps",
-            site: "Bandung",
-            from: "02 December 2022",
-            to: "03 Januari 2023",
-            client: "Leslar Metaverse",
-            descriptions: "Sistem NLP",
-            app_type: "Website",
-            dev_language: "Javascript, Go",
-            role: "Backend",
-            framework: "VueJS, Gogin",
-            dev_tools: "VS Code",
-            server_os: "Linux",
-            database: "MongoDB",
-            app_server: "Web Server",
-            other_info: "Info Lainnya",
-          },
-          {
-            id: 2,
-            name: "Monitoring Maps",
-            site: "Bandung",
-            from: "02 December 2022",
-            to: "03 Januari 2023",
-            client: "Leslar Metaverse",
-            descriptions: "Sistem NLP",
-            app_type: "Website",
-            dev_language: "Javascript, Go",
-            role: "Backend",
-            framework: "VueJS, Gogin",
-            dev_tools: "VS Code",
-            server_os: "Linux",
-            database: "MongoDB",
-            app_server: "Web Server",
-            other_info: "Info Lainnya",
-          },
-          {
-            id: 3,
-            name: "Monitoring Maps",
-            site: "Bandung",
-            from: "02 December 2022",
-            to: "03 Januari 2023",
-            client: "Leslar Metaverse",
-            descriptions: "Sistem NLP",
-            app_type: "Website",
-            dev_language: "Javascript, Go",
-            role: "Backend",
-            framework: "VueJS, Gogin",
-            dev_tools: "VS Code",
-            server_os: "Linux",
-            database: "MongoDB",
-            app_server: "Web Server",
-            other_info: "Info Lainnya",
-          },
-          {
-            id: 4,
-            name: "Monitoring Maps",
-            site: "Bandung",
-            from: "02 December 2022",
-            to: "03 Januari 2023",
-            client: "Leslar Metaverse",
-            descriptions: "Sistem NLP",
-            app_type: "Website",
-            dev_language: "Javascript, Go",
-            role: "Backend",
-            framework: "VueJS, Gogin",
-            dev_tools: "VS Code",
-            server_os: "Linux",
-            database: "MongoDB",
-            app_server: "Web Server",
-            other_info: "Info Lainnya",
-          },
-          {
-            id: 5,
-            name: "Monitoring Maps",
-            site: "Bandung",
-            from: "02 December 2022",
-            to: "03 Januari 2023",
-            client: "Leslar Metaverse",
-            descriptions: "Sistem NLP",
-            app_type: "Website",
-            dev_language: "Javascript, Go",
-            role: "Backend",
-            framework: "VueJS, Gogin",
-            dev_tools: "VS Code",
-            server_os: "Linux",
-            database: "MongoDB",
-            app_server: "Web Server",
-            other_info: "Info Lainnya",
-          },
-        ],
+        items: null,
       },
     };
   },
   methods: {
+    getData(id) {
+      this.is_loading = true;
+      let api = process.env.VUE_APP_API_URL + "talent/" + id;
+      this.$url
+        .get(api)
+        .then((res) => {
+          this.talent_data = res.data.data.talent;
+          this.education_table.items = res.data.data.talent.education;
+          this.course_table.items = res.data.data.talent.courses;
+          this.employment_table.items = res.data.data.talent.employment;
+          this.project_table.items = res.data.data.talent.projectexperience;
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          this.is_loading = false;
+        });
+    },
     closeModal() {
-      this.$bvModal.hide("detail-talent-" + this.id.toString());
+      this.$bvModal.hide("detail-talent-" + this.id);
+    },
+    parseDate(date) {
+      let val = new Date(date);
+      return val.toLocaleDateString(undefined, {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
     },
   },
 };

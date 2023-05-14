@@ -50,12 +50,12 @@
               </b-button>
             </span>
           </div>
-          <!-- start date -->
+          <!-- Work From -->
           <div class="d-flex align-items-center mt-2">
             <div class="mr-2 w-50">
-              <label for="start-date" class="fs-12">Start Date</label>
+              <label for="work-from" class="fs-12">Work From</label>
               <b-form-datepicker
-                id="start-date"
+                id="work-from"
                 size="sm"
                 class="mb-2 form-date-talent"
                 v-model="item.start_date"
@@ -68,31 +68,13 @@
                 disabled
               ></b-form-datepicker>
             </div>
-            <!-- end date -->
+            <!-- Work Until -->
             <div
               class="mr-auto w-50"
-              v-if="item.type == 'discontinue'"
             >
-              <label for="start-date" class="fs-12">End Date</label>
+              <label for="work-until" class="fs-12">Work Until</label>
               <b-form-datepicker
-                id="start-date"
-                size="sm"
-                class="mb-2 form-date-talent"
-                v-model="item.end_date"
-                :date-format-options="{
-                  year: 'numeric',
-                  month: 'long',
-                  day: '2-digit',
-                }"
-                locale="en"
-                disabled
-              ></b-form-datepicker>
-            </div>
-            <!-- terminate date -->
-            <div class="mr-auto w-50" v-else>
-              <label for="start-date" class="fs-12">Terminate Date</label>
-              <b-form-datepicker
-                id="start-date"
+                id="work-until"
                 size="sm"
                 class="mb-2 form-date-talent"
                 v-model="item.end_date"

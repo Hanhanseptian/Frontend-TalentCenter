@@ -13,7 +13,7 @@
       <!-- SHOW EMPTY DATA -->
       <template #empty="scope">
         <center>
-          <span class="text-talent">{{ scope.emptyText }}</span>
+          <span>{{ scope.emptyText }}</span>
         </center>
       </template>
 
@@ -48,86 +48,220 @@
 
       <!-- CELL STATUS -->
       <template #cell(status)="data">
-        <b-badge
+        <div
           v-if="data.value == 'on_job'"
-          variant="success"
-          style="width: 100%"
-          class="p-1"
+          class="p-1 shadow rounded-lg fs-12 border border-success text-success"
         >
           On Job
-        </b-badge>
-        <b-badge
+        </div>
+        <div
           v-if="data.value == 'on_request'"
-          variant="warning"
-          style="width: 100%"
-          class="p-1"
+          class="p-1 shadow rounded-lg fs-12 border border-warning text-warning"
         >
           On request
-        </b-badge>
-        <b-badge
+        </div>
+        <div
           v-if="data.value == 'available'"
-          class="bg-talent text-white p-1"
-          style="width: 100%"
+          class="p-1 shadow rounded-lg fs-12 border border-info text-talent"
         >
           Available
-        </b-badge>
-      </template>
-
-      <!-- CELL DATE -->
-      <template #cell(date)="data">
-        <b-badge variant="success" style="width: 6rem" class="p-1">
-          {{ data.value }}
-        </b-badge>
+        </div>
       </template>
 
       <!-- CELL WORK FROM -->
       <template #cell(work_from)="data">
-        <b-badge variant="success" style="width: 6rem" class="p-1">
-          {{ data.value }}
-        </b-badge>
+        <center>
+          <div
+            class="p-1 shadow rounded-lg border border-success text-success"
+            :class="is_detail ? 'fs-10' : ' fs-12'"
+            style="width: 10rem"
+          >
+            {{ parseDate(data.value) }}
+          </div>
+        </center>
       </template>
 
       <!-- CELL WORK UNTIL -->
       <template #cell(work_until)="data">
-        <b-badge variant="warning" style="width: 6rem" class="p-1">
-          {{ data.value }}
-        </b-badge>
+        <center>
+          <div
+            class="p-1 shadow rounded-lg border border-danger text-danger"
+            :class="is_detail ? 'fs-10' : ' fs-12'"
+            style="width: 10rem"
+          >
+            {{ parseDate(data.value) }}
+          </div>
+        </center>
       </template>
 
-      <!-- CELL FROM -->
-      <template #cell(from)="data">
-        <b-badge variant="success" style="width: 100%" class="p-1">
-          {{ data.value }}
-        </b-badge>
-      </template>
-
-      <!-- CELL TO -->
-      <template #cell(to)="data">
-        <b-badge variant="warning" style="width: 6rem" class="p-1">
-          {{ data.value }}
-        </b-badge>
-      </template>
-
-      <!-- CELL START DATE -->
-      <template #cell(terminate_date)="data">
-        <b-badge variant="danger" style="width: 6rem" class="p-1">
-          {{ data.value }}
-        </b-badge>
-      </template>
-
-      <!-- CELL REQUEST TYPE -->
-      <template #cell(request_type)="data">
-        <b-badge
-          v-if="data.value == 'recruite'"
-          variant="success"
-          style="width: 85%"
-          class="p-1"
+      <!-- CELL TYPE -->
+      <template #cell(type)="data">
+        <div
+          v-if="data.value == 'discontinue'"
+          class="p-1 shadow rounded-lg border border-info text-talent fs-12"
         >
-          Recruite
-        </b-badge>
-        <b-badge v-else variant="warning" style="width: 85%" class="p-1">
-          Extend Contract
-        </b-badge>
+          Discontinue
+        </div>
+        <div
+          v-else
+          class="p-1 shadow rounded-lg border border-danger text-danger fs-12"
+        >
+          Terminating
+        </div>
+      </template>
+
+      <!-- CELL EMAIL -->
+      <template #cell(email)="data">
+        <div
+          class="p-1 shadow rounded-lg border border-info fs-12"
+          style="word-break: break-all"
+        >
+          <i class="bi bi-envelope-at-fill"></i>
+          {{ data.value }}
+        </div>
+      </template>
+
+      <!-- CELL PHONE NUMBER -->
+      <template #cell(phone_number)="data">
+        <div class="p-1 shadow rounded-lg border border-info fs-12">
+          <i class="bi bi-telephone-fill"></i>
+          {{ data.value }}
+        </div>
+      </template>
+
+      <!-- CELL PROJECT START -->
+      <template #cell(project_start)="data">
+        <center>
+          <div
+            class="p-1 shadow rounded-lg border border-success text-success fs-10"
+            style="width: 8rem"
+          >
+            {{ parseDate(data.value) }}
+          </div>
+        </center>
+      </template>
+
+      <!-- CELL PROJECT END -->
+      <template #cell(project_end)="data">
+        <center>
+          <div
+            class="p-1 shadow rounded-lg border border-danger text-danger fs-10"
+            style="width: 8rem"
+          >
+            {{ parseDate(data.value) }}
+          </div>
+        </center>
+      </template>
+
+      <!-- CELL DATE -->
+      <template #cell(date)="data">
+        <center>
+          <div
+            class="p-1 shadow rounded-lg border border-success text-success fs-10"
+            style="width: 8rem"
+          >
+            {{ parseDate(data.value) }}
+          </div>
+        </center>
+      </template>
+
+      <!-- CELL DEV LANGUAGE -->
+      <template #cell(dev_language)="data">
+        <div style="width: 10rem" class="d-flex align-items-center">
+          <div
+            v-for="item in data.value"
+            :key="item"
+            class="p-1 shadow rounded-lg border border-info text-talent fs-10 mb-1 mr-1"
+          >
+            {{ item }}
+          </div>
+        </div>
+      </template>
+
+      <!-- CELL FRAMEWORK -->
+      <template #cell(framework)="data">
+        <div style="width: 10rem" class="d-flex align-items-center">
+          <div
+            v-for="item in data.value"
+            :key="item"
+            class="p-1 shadow rounded-lg border border-info text-talent fs-10 mb-1 mr-1"
+          >
+            {{ item }}
+          </div>
+        </div>
+      </template>
+
+      <!-- CELL DEV TOOLS -->
+      <template #cell(dev_tools)="data">
+        <div style="width: 10rem" class="d-flex align-items-center">
+          <div
+            v-for="item in data.value"
+            :key="item"
+            class="p-1 shadow rounded-lg border border-info text-talent fs-10 mb-1 mr-1"
+          >
+            {{ item }}
+          </div>
+        </div>
+      </template>
+
+      <!-- CELL SERVER OS -->
+      <template #cell(server_os)="data">
+        <div style="width: 7rem" class="d-flex align-items-center">
+          <div
+            v-for="item in data.value"
+            :key="item"
+            class="p-1 shadow rounded-lg border border-info text-talent fs-10 mb-1 mr-1"
+          >
+            {{ item }}
+          </div>
+        </div>
+      </template>
+
+      <!-- CELL DATABASE -->
+      <template #cell(database)="data">
+        <div style="width: 7rem" class="d-flex align-items-center">
+          <div
+            v-for="item in data.value"
+            :key="item"
+            class="p-1 shadow rounded-lg border border-info text-talent fs-10 mb-1 mr-1"
+          >
+            {{ item }}
+          </div>
+        </div>
+      </template>
+
+      <!-- CELL APP SERVER -->
+      <template #cell(app_server)="data">
+        <div style="width: 7rem" class="d-flex align-items-center">
+          <div
+            v-for="item in data.value"
+            :key="item"
+            class="p-1 shadow rounded-lg border border-info text-talent fs-10 mb-1 mr-1"
+          >
+            {{ item }}
+          </div>
+        </div>
+      </template>
+
+      <!-- CELL DESCTIPTIONS -->
+      <template #cell(description)="data">
+        <div style="width: 10rem !important">
+          <span>{{ data.value }}</span>
+        </div>
+      </template>
+
+      <!-- CELL OTHER INFO -->
+      <template #cell(other_info)="data">
+        <div style="width: 10rem !important">
+          <span>{{ data.value }}</span>
+        </div>
+      </template>
+
+      <!-- CELL APP TYPE -->
+      <template #cell(app_type)="data">
+        <div style="width: 5rem !important">
+          <span>{{ data.value }}</span>
+        </div>
       </template>
 
       <!-- CELL ACTION -->
@@ -138,15 +272,16 @@
             class="btn btn-outline-success btn-xs ml-auto"
             v-b-tooltip.hover="{ variant: 'info' }"
             title="Lihat Detail"
-            @click="showDetail(data.item.id)"
+            @click="showDetail(data.item._id)"
           >
             <i class="bi bi-eye"></i>
           </button>
           <button
-            class="btn btn-outline-info btn-xs mx-1"
+            class="btn btn-outline-info btn-xs"
+            :class="hide_show ? 'ml-auto mr-1' : 'mx-1'"
             v-b-tooltip.hover="{ variant: 'info' }"
             title="Edit"
-            @click="editItem(data.item.id)"
+            @click="editItem(data.item._id)"
           >
             <i class="bi bi-pencil-square"></i>
           </button>
@@ -154,7 +289,7 @@
             class="btn btn-outline-danger btn-xs mr-auto"
             v-b-tooltip.hover="{ variant: 'info' }"
             title="Delete"
-            @click="deleteItem(data.item.id)"
+            @click="deleteItem(data.item._id, data.item.full_name)"
           >
             <i class="bi bi-trash"></i>
           </button>
@@ -162,11 +297,18 @@
       </template>
 
       <!-- CELL ACTION REQUEST -->
-      <template #cell(action_hired)>
-        <b-button size="sm" variant="outline-info"> View Detail </b-button>
+      <template #cell(action_hired)="data">
+        <b-button
+          size="sm"
+          variant="outline-info"
+          @click="showDetail(data.item.id)"
+        >
+          View Detail
+        </b-button>
       </template>
     </b-table>
 
+    <!-- PAGINATION -->
     <div v-if="!no_pagination" class="d-flex align-items-center mt-2 mb-2 mx-3">
       <!-- ROW INFORMATION AND SELECT ROW -->
       <div class="d-flex align-items-center mr-auto fs-12">
@@ -198,25 +340,10 @@
 </template>
 
 <script>
-import {
-  BTable,
-  BFormSelect,
-  BAvatar,
-  BPagination,
-  BButton,
-  VBTooltip,
-} from "bootstrap-vue";
+import { VBTooltip } from "bootstrap-vue";
 
 export default {
   name: "data_table",
-  components: {
-    BTable,
-    BFormSelect,
-    BPagination,
-    BAvatar,
-    BButton,
-  },
-
   props: {
     data: Object,
     hide_show: {
@@ -226,6 +353,12 @@ export default {
       },
     },
     no_pagination: {
+      type: Boolean,
+      default() {
+        return false;
+      },
+    },
+    is_detail: {
       type: Boolean,
       default() {
         return false;
@@ -242,6 +375,16 @@ export default {
       page_options: [3, 5, 10],
       current_page: 1,
     };
+  },
+  methods: {
+    parseDate(date) {
+      let val = new Date(date);
+      return val.toLocaleDateString(undefined, {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+    },
   },
   directives: {
     "b-tooltip": VBTooltip,

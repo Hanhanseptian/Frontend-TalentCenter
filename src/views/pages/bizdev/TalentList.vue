@@ -38,7 +38,9 @@
         <span>Showing All of Available Talents</span>
       </b-card-header>
       <div class="mt-3">
+        <loader-component v-if="is_loading" class="mb-5" />
         <table-component
+          v-else
           :data="data_table"
           :deleteItem="deleteData"
           :editItem="editData"
@@ -47,21 +49,30 @@
       </div>
     </b-card>
     <add-talent-component />
+    <edit-talent-component />
+    <detail-talent-component ref="detail_talent" />
   </div>
 </template>
 <script>
 import Swal from "sweetalert2";
 import data_table from "../../components/data_table.vue";
 import add_talent_modal from "../../components/bizdev/add_talent_modal.vue";
+import edit_talent_modal from "../../components/bizdev/edit_talent_modal.vue";
+import detail_talent_modal from "../../components/detail_talent_modal.vue";
+import loader from "../../components/loader.vue";
 
 export default {
   name: "TalentList",
   components: {
     "table-component": data_table,
     "add-talent-component": add_talent_modal,
+    "edit-talent-component": edit_talent_modal,
+    "detail-talent-component": detail_talent_modal,
+    "loader-component": loader,
   },
   data() {
     return {
+      is_loading: true,
       data_table: {
         row: 10,
         filter: "",
@@ -69,155 +80,83 @@ export default {
           {
             key: "no",
             label: "NO",
-            thClass: "text-talent text-center ",
-            tdClass: " text-talent text-center",
-            thStyle: "background-color: #c1dbec;width:5%",
+            thClass: "fs-14 text-center bg-talent text-white p-2",
+            tdClass: " fs-14 text-center",
+            thStyle: "width:5%",
           },
           {
-            key: "name",
+            key: "full_name",
             label: "NAME",
-            thClass: "text-talent text-left ",
-            tdClass: " text-talent text-left",
-            thStyle: "background-color: #c1dbec;width:auto",
-          },
-          {
-            key: "gender",
-            label: "GENDER",
-            thClass: "text-talent text-center ",
-            tdClass: " text-talent text-center",
-            thStyle: "background-color: #c1dbec;width:10%",
-          },
-          {
-            key: "email",
-            label: "EMAIL",
-            thClass: "text-talent text-left ",
-            tdClass: " text-talent text-left",
-            thStyle: "background-color: #c1dbec;width:20%",
+            thClass: "fs-14 text-left bg-talent text-white p-2",
+            tdClass: " fs-14 text-left",
+            thStyle: "width:auto",
           },
           {
             key: "company",
             label: "COMPANY",
-            thClass: "text-talent text-center ",
-            tdClass: " text-talent text-center",
-            thStyle: "background-color: #c1dbec;width:15%",
+            thClass: "fs-14 text-left bg-talent text-white p-2",
+            tdClass: " fs-14 text-left",
+            thStyle: "width:20%",
+          },
+          {
+            key: "email",
+            label: "EMAIL",
+            thClass: "fs-14 text-left bg-talent text-white p-2",
+            tdClass: " fs-14 text-left",
+            thStyle: "width:25%",
+          },
+          {
+            key: "phone_number",
+            label: "PHONE NUMBER",
+            thClass: "fs-14 text-center bg-talent text-white p-2",
+            tdClass: " fs-14 text-center",
+            thStyle: "width:12%",
           },
           {
             key: "status",
             label: "STATUS",
-            thClass: "text-talent text-center ",
-            tdClass: " text-talent text-center",
-            thStyle: "background-color: #c1dbec;width:10%",
+            thClass: "fs-14 text-center bg-talent text-white p-2",
+            tdClass: " fs-14 text-center",
+            thStyle: "width:10%",
           },
           {
             key: "action",
             label: "ACTION",
-            thClass: "text-talent text-center ",
-            tdClass: " text-talent text-center",
-            thStyle: "background-color: #c1dbec;width:10%",
+            thClass: "fs-14 text-center bg-talent text-white p-2",
+            tdClass: " fs-14 text-center",
+            thStyle: "width:10%",
           },
         ],
-        items: [
-          {
-            id: 1,
-            name: "Dickerson",
-            gender: "Male",
-            email: "Macdonald@gmail.com",
-            company: "PT Jayandra",
-            status: "on_job",
-          },
-          {
-            id: 2,
-            name: "Larsen",
-            gender: "Male",
-            email: "Shaw@gmail.com",
-            company: "PT Jayandra",
-            status: "on_request",
-          },
-          {
-            gender: "Male",
-            id: 3,
-            name: "Geneva",
-            email: "Wilson@gmail.com",
-            company: "PT Jayandra",
-            status: "on_request",
-          },
-          {
-            id: 4,
-            name: "Jami",
-            gender: "Female",
-            email: "Carney@gmail.com",
-            company: "PT Jayandra",
-            status: "on_job",
-          },
-          {
-            id: 5,
-            name: "Jami",
-            gender: "Female",
-            email: "Carney@gmail.com",
-            company: "PT Jayandra",
-            status: "available",
-          },
-          {
-            id: 6,
-            name: "Jami",
-            gender: "Male",
-            email: "Carney@gmail.com",
-            company: "PT Jayandra",
-            status: "available",
-          },
-          {
-            id: 7,
-            name: "Jami",
-            gender: "Female",
-            email: "Carney@gmail.com",
-            company: "PT Jayandra",
-            status: "on_job",
-          },
-          {
-            id: 8,
-            name: "Jami",
-            gender: "Male",
-            email: "Carney@gmail.com",
-            company: "PT Jayandra",
-            status: "on_job",
-          },
-          {
-            id: 9,
-            name: "Jami",
-            gender: "Male",
-            email: "Carney@gmail.com",
-            company: "PT Jayandra",
-            status: "available",
-          },
-          {
-            id: 10,
-            name: "Jami",
-            gender: "Male",
-            email: "Carney@gmail.com",
-            company: "PT Jayandra",
-            status: "on_job",
-          },
-          {
-            id: 11,
-            name: "Jami",
-            gender: "Male",
-            email: "Carney@gmail.com",
-            company: "PT Jayandra",
-            status: "on_job",
-          },
-        ],
+        items: [],
       },
     };
   },
+  created() {
+    this.getData();
+  },
   methods: {
+    getData() {
+      this.is_loading = true;
+      this.$url
+        .get("talent/all")
+        .then((res) => {
+          this.data_table.items = res.data.talents;
+        })
+        .catch(() => {
+          this.data_table.items = [];
+        })
+        .finally(() => {
+          this.is_loading = false;
+        });
+    },
     addData() {
       this.$bvModal.show("add-talent");
     },
-    deleteData(id) {
+    deleteData(id, name) {
       console.log(id);
       Swal.fire({
         title: "Are you sure?",
-        text: "You to delete this Talent",
+        text: `You to delete "${name}" from Talent List.`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -226,15 +165,16 @@ export default {
         reverseButtons: true,
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire("Deleted!", "Talent has been deleted.", "success");
+          Swal.fire("Deleted!", `${name} has been deleted.`, "success");
         }
       });
     },
     editData(id) {
-      console.log(id);
+      this.$bvModal.show("edit-talent");
     },
     showDetail(id) {
-      console.log(id);
+      this.$refs.detail_talent.getData(id);
+      this.$bvModal.show("detail-talent-idtalent");
     },
   },
 };

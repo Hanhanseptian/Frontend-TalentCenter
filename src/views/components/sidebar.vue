@@ -9,6 +9,7 @@
         id="toggle-sidebar"
         @click="toggleCollapse()"
         class="text-talent text-center clickable"
+        :class="is_collapse?'':'border border-info'"
       >
         <i class="bi bi-chevron-double-right icon-toggle"></i>
       </span>
