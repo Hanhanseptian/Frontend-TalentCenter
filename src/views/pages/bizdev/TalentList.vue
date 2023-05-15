@@ -49,7 +49,7 @@
       </div>
     </b-card>
     <add-talent-component />
-    <edit-talent-component />
+    <edit-talent-component ref="edit_talent" />
     <detail-talent-component ref="detail_talent" />
   </div>
 </template>
@@ -170,6 +170,13 @@ export default {
       });
     },
     editData(id) {
+      let talent = this.data_table.items.filter((el) => el._id == id);
+      this.$refs.edit_talent.talent._id = talent[0]._id;
+      this.$refs.edit_talent.talent.full_name = talent[0].full_name;
+      this.$refs.edit_talent.talent.email = talent[0].email;
+      this.$refs.edit_talent.talent.phone_number = talent[0].phone_number;
+      this.$refs.edit_talent.talent.company = talent[0].company;
+      this.$refs.edit_talent.talent.status = talent[0].status;
       this.$bvModal.show("edit-talent");
     },
     showDetail(id) {

@@ -60,7 +60,7 @@ export default {
       is_all_selected: false,
       cart_data: [
         {
-          id: 1,
+          id: "1",
           talent_name: "Elon Musk",
           role: "Frontend Developer",
           start_date: "2023-10-01",
@@ -68,7 +68,7 @@ export default {
           checked: false,
         },
         {
-          id: 2,
+          id: "2",
           talent_name: "Elon Musk Junior",
           role: "Backend Developer",
           start_date: "2023-10-01",
@@ -76,7 +76,7 @@ export default {
           checked: false,
         },
         {
-          id: 3,
+          id: "3",
           talent_name: "Ayah Elon Musk",
           role: "Frontend Developer",
           start_date: "2023-11-01",
@@ -84,7 +84,7 @@ export default {
           checked: false,
         },
         {
-          id: 4,
+          id: "4",
           talent_name: "Kakak Elon Musk",
           role: "Backend Developer",
           start_date: "2023-09-01",
@@ -92,7 +92,7 @@ export default {
           checked: false,
         },
         {
-          id: 5,
+          id: "5",
           talent_name: "Keponakan Elon Musk",
           role: "Fullstack Developer",
           start_date: "2023-12-01",
@@ -100,7 +100,7 @@ export default {
           checked: false,
         },
         {
-          id: 6,
+          id: "6",
           talent_name: "Ibu Elon Musk",
           role: "Frontend Developer",
           start_date: "2023-11-01",

@@ -20,7 +20,7 @@
                       <label for="programming-language" class="fs-12 d-flex">
                         Programming Language
                         <span class="text-danger ml-1">*</span>
-                        <span class="ml-auto">Value %</span>
+                        <span class="ml-auto">Priority(%)</span>
                       </label>
                       <div class="d-flex">
                         <v-select
@@ -306,7 +306,7 @@ export default {
   border-color: #0173a7 !important;
   font-size: 12px !important;
   height: 2.5rem !important;
-  width: 3rem !important;
+  width: 4rem !important;
   background-color: #ffffff;
   padding: 5px !important;
 }

@@ -1,6 +1,6 @@
 <template>
   <b-modal
-    :id="'terminate-modal-' + id.toString()"
+    :id="'terminate-modal-' + id"
     size="sm"
     hide-footer
     @hidden="resetModal"
@@ -24,7 +24,12 @@
               <label for="start-date" class="fs-12 font-weight-bolder">
                 Reason of Terminating <span class="text-danger">*</span>
               </label>
-              <b-form-textarea class="input-area-talent" rows="5" v-model="reason" style="font-size: 12px !important;"></b-form-textarea>
+              <b-form-textarea
+                class="input-area-talent"
+                rows="5"
+                v-model="reason"
+                style="font-size: 12px !important"
+              ></b-form-textarea>
             </div>
             <span class="text-validation mt-1" v-if="errors[0]">
               <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
@@ -69,7 +74,7 @@ export default {
     ValidationObserver,
   },
   props: {
-    id: Number,
+    id: String,
   },
   data() {
     return {
@@ -86,7 +91,7 @@ export default {
     },
     closeModal() {
       this.resetModal();
-      this.$bvModal.hide("terminate-modal-" + this.id.toString());
+      this.$bvModal.hide("terminate-modal-" + this.id);
     },
   },
 };

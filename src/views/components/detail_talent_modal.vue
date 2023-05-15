@@ -321,13 +321,13 @@ export default {
           {
             key: "project_start",
             label: "FROM",
-            thClass: "fs-10 text-left bg-talent text-white p-2",
+            thClass: "fs-10 text-center bg-talent text-white p-2",
             tdClass: " text-talent text-center fs-10",
           },
           {
             key: "project_end",
             label: "TO",
-            thClass: "fs-10 text-left bg-talent text-white p-2",
+            thClass: "fs-10 text-center bg-talent text-white p-2",
             tdClass: " text-talent text-center fs-10",
           },
           {

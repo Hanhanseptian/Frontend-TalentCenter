@@ -1,12 +1,16 @@
 <template>
-  <b-modal id="add-talent" size="md" hide-footer>
+  <b-modal id="add-talent" size="md" hide-footer @hidden="closeModal">
     <template #modal-title>
       <i class="bi bi bi-person-fill-add"></i>
       Add New Talent
     </template>
-    <b-card no-body class="shadow p-2">
+    <b-card no-body class="shadow p-3">
       <ValidationObserver v-slot="{ handleSubmit }">
-        <form @submit.prevent="handleSubmit()">
+        <form @submit.prevent="handleSubmit(addTalent)">
+          <b-alert :show="is_already_exist" variant="danger" class="p-2 fs-12">
+            <i class="bi bi-exclamation-circle fs-14"></i>
+            This Email is Already Exists!
+          </b-alert>
           <ValidationProvider rules="required" v-slot="{ errors }">
             <!-- Full Name -->
             <div class="mb-2">
@@ -30,7 +34,7 @@
               <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
             </span>
           </ValidationProvider>
-          <ValidationProvider rules="required" v-slot="{ errors }">
+          <ValidationProvider rules="required|email" v-slot="{ errors }">
             <!-- Email -->
             <div class="mb-2">
               <label for="dgree" class="fs-12">
@@ -64,7 +68,7 @@
                   <i class="bi bi-telephone-fill mx-auto my-auto"></i>
                 </div>
                 <b-form-input
-                  type="text"
+                  type="number"
                   id="subject"
                   class="input-talent ml-auto"
                   placeholder="Input Your Phone Number"
@@ -91,7 +95,7 @@
                   class="input-talent ml-auto"
                   placeholder="Input Your Status"
                   :options="company_options"
-                  v-model="talent.company"
+                  v-model="talent.company_name"
                 />
               </div>
             </div>
@@ -144,11 +148,12 @@ export default {
   },
   data() {
     return {
+      is_already_exist: false,
       talent: {
         full_name: "",
         email: "",
         phone_number: "",
-        company: "PT Jayandra",
+        company_name: "PT Jayandra",
       },
       company_options: [
         { value: "PT Jayandra", text: "PT Jayandra" },
@@ -171,12 +176,24 @@ export default {
         email: "",
         phone_number: "",
         company: "PT Jayandra",
-        status: "available",
       };
+      this.is_already_exist = false;
     },
     closeModal() {
       this.resetModal();
       this.$bvModal.hide("add-talent");
+    },
+    addTalent() {
+      this.is_already_exist = false;
+      this.$url
+        .post("account/newtalent", this.talent)
+        .then(() => {
+          this.$toast.success("Success! Talent has been added.");
+          this.closeModal();
+        })
+        .catch(() => {
+          this.is_already_exist = true;
+        });
     },
   },
 };

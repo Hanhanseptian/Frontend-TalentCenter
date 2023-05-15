@@ -1,12 +1,16 @@
 <template>
-  <b-modal id="edit-talent" size="md" hide-footer>
+  <b-modal id="edit-talent" size="md" hide-footer @hidden="closeModal">
     <template #modal-title>
       <i class="bi bi bi-pencil-square"></i>
       Edit Talent
     </template>
-    <b-card no-body class="shadow p-2">
+    <b-card no-body class="shadow p-3">
       <ValidationObserver v-slot="{ handleSubmit }">
-        <form @submit.prevent="handleSubmit()">
+        <form @submit.prevent="handleSubmit(updateData)">
+          <b-alert :show="is_already_exist" variant="danger" class="p-2 fs-12">
+            <i class="bi bi-exclamation-circle fs-14"></i>
+            This Email is Already Exists!
+          </b-alert>
           <ValidationProvider rules="required" v-slot="{ errors }">
             <!-- Full Name -->
             <div class="mb-2">
@@ -64,7 +68,7 @@
                   <i class="bi bi-telephone-fill mx-auto my-auto"></i>
                 </div>
                 <b-form-input
-                  type="text"
+                  type="number"
                   id="subject"
                   class="input-talent ml-auto"
                   placeholder="Input Your Phone Number"
@@ -167,7 +171,9 @@ export default {
   },
   data() {
     return {
+      is_already_exist: false,
       talent: {
+        _id: "",
         full_name: "",
         email: "",
         phone_number: "",
@@ -197,10 +203,15 @@ export default {
         company: "PT Jayandra",
         status: "available",
       };
+      this.is_already_exist = false;
     },
     closeModal() {
       this.resetModal();
       this.$bvModal.hide("edit-talent");
+    },
+    updateData() {
+      this.$toast.success("Success! Talent has been updated.");
+      this.closeModal();
     },
   },
 };

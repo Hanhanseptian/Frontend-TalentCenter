@@ -415,6 +415,7 @@
             <table-component
               :data="education_table"
               :deleteItem="deleteEducation"
+              :editItem="editEducation"
               :hide_show="true"
             />
           </b-card>
@@ -456,6 +457,7 @@
             <table-component
               :data="course_table"
               :deleteItem="deleteCourse"
+              :editItem="editCourse"
               :hide_show="true"
             />
           </b-card>
@@ -497,6 +499,8 @@
             <table-component
               :data="employment_table"
               :deleteItem="deleteEmployment"
+              :editItem="editEmployement"
+              :is_detail="true"
               :hide_show="true"
             />
           </b-card>
@@ -538,6 +542,7 @@
             <table-component
               :data="project_table"
               :deleteItem="deleteProject"
+              :editItem="editProject"
               :hide_show="true"
             />
           </b-card>
@@ -545,9 +550,13 @@
       </div>
     </div>
     <add-education-component />
+    <edit-education-component />
     <add-course-component />
+    <edit-course-component />
     <add-employment-component />
+    <edit-employment-component />
     <add-project-component />
+    <edit-project-component />
   </div>
 </template>
 <script>
@@ -556,9 +565,13 @@ import data_table from "../../components/data_table.vue";
 import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
 import { required } from "vee-validate/dist/rules";
 import add_education_modal from "../../components/talent/add_education_modal.vue";
+import edit_education_modal from "../../components/talent/edit_education_modal.vue";
 import add_course_modal from "../../components/talent/add_course_modal.vue";
+import edit_course_modal from "../../components/talent/edit_course_modal.vue";
 import add_project_modal from "../../components/talent/add_project_modal.vue";
+import edit_project_modal from "../../components/talent/edit_project_modal.vue";
 import add_employment_modal from "../../components/talent/add_employment_modal.vue";
+import edit_employment_modal from "../../components/talent/edit_employment_modal.vue";
 
 extend("required", {
   ...required,
@@ -570,9 +583,13 @@ export default {
   components: {
     "table-component": data_table,
     "add-education-component": add_education_modal,
+    "edit-education-component": edit_education_modal,
     "add-course-component": add_course_modal,
+    "edit-course-component": edit_course_modal,
     "add-employment-component": add_employment_modal,
+    "edit-employment-component": edit_employment_modal,
     "add-project-component": add_project_modal,
+    "edit-project-component": edit_project_modal,
     ValidationProvider,
     ValidationObserver,
   },
@@ -1072,6 +1089,18 @@ export default {
     },
     addProject() {
       this.$bvModal.show("add-project-modal");
+    },
+    editEducation() {
+      this.$bvModal.show("edit-education-modal");
+    },
+    editCourse() {
+      this.$bvModal.show("edit-course-modal");
+    },
+    editEmployement() {
+      this.$bvModal.show("edit-employement-modal");
+    },
+    editProject() {
+      this.$bvModal.show("edit-project-modal");
     },
     deleteEducation() {
       Swal.fire({

@@ -36,7 +36,7 @@ export default {
     return {
       request_data: [
         {
-          id: 1,
+          id: "1",
           talent_name: "Elon Musk",
           role: "Frontend Developer",
           type: "new_contract",
@@ -46,7 +46,7 @@ export default {
           reason: "",
         },
         {
-          id: 2,
+          id: "2",
           talent_name: "Elon Musk Junior",
           role: "Backend Developer",
           type: "extend_contract",
@@ -56,7 +56,7 @@ export default {
           reason: "Talent has been recruited",
         },
         {
-          id: 3,
+          id: "3",
           talent_name: "Ayah Elon Musk",
           role: "Frontend Developer",
           type: "extend_contract",
@@ -66,7 +66,7 @@ export default {
           reason: "",
         },
         {
-          id: 4,
+          id: "4",
           talent_name: "Kakak Elon Musk",
           role: "Backend Developer",
           type: "new_contract",
@@ -76,7 +76,7 @@ export default {
           reason: "Talent has been recruited",
         },
         {
-          id: 5,
+          id: "5",
           talent_name: "Keponakan Elon Musk",
           role: "Fullstack Developer",
           type: "extend_contract",
@@ -86,7 +86,7 @@ export default {
           reason: "Talent has been recruited",
         },
         {
-          id: 6,
+          id: "6",
           talent_name: "Ibu Elon Musk",
           role: "Frontend Developer",
           type: "new_contract",

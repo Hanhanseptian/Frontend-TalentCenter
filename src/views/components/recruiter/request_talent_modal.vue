@@ -132,7 +132,7 @@ export default {
     },
     closeModal() {
       this.resetModal();
-      this.$bvModal.hide("set-date-modal-" + this.id.toString());
+      this.$bvModal.hide("set-date-modal-" + this.id);
     },
   },
 };
