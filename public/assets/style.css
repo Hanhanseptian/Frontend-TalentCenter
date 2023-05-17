@@ -158,7 +158,6 @@
   font-size: 12px !important;
   height: 2rem !important;
   margin-left: -5px !important;
-  width: 15rem !important;
 }
 .form-talent:focus {
   box-shadow: none !important;
@@ -172,7 +171,6 @@
   font-size: 14px !important;
   height: 2.5rem !important;
   margin-left: -5px !important;
-  width: 15rem !important;
 }
 .form-talent-md:focus {
   box-shadow: none !important;

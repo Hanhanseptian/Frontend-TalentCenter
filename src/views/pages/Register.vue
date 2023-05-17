@@ -113,7 +113,7 @@
           <ValidationProvider rules="required|numeric" v-slot="{ errors }">
             <!-- telephone number -->
             <div class="mt-2">
-              <label for="telephone_number" class="fs-12">
+              <label for="phone_number" class="fs-12">
                 Phone Number <span class="text-danger">*</span>
               </label>
               <div class="d-flex">
@@ -121,10 +121,10 @@
                   <i class="bi bi-telephone-fill mx-auto my-auto"></i>
                 </div>
                 <input
-                  v-model="register.telephone_number"
+                  v-model="register.phone_number"
                   type="text"
                   maxLength="12"
-                  id="telephone_number"
+                  id="phone_number"
                   placeholder="Input Telephone Number"
                   class="form-control input-talent ml-auto"
                 />
@@ -192,7 +192,7 @@
             <label for="company_address" class="fs-12">Company Address</label>
             <div class="d-flex">
               <div class="icon-talent d-flex p-0 form-control mr-1">
-                <i class="bi bi-geo-alt mx-auto my-auto"></i>
+                <i class="bi bi-geo-alt-fill mx-auto my-auto"></i>
               </div>
               <input
                 v-model="register.company_address"
@@ -208,7 +208,7 @@
             <label for="company_subject" class="fs-12">Company Subject</label>
             <div class="d-flex">
               <div class="icon-talent d-flex p-0 form-control mr-1">
-                <i class="bi bi-info-circle mx-auto my-auto"></i>
+                <i class="bi bi-info-circle-fill mx-auto my-auto"></i>
               </div>
               <input
                 v-model="register.company_subject"
@@ -233,7 +233,7 @@
             class="form-control mt-3 mb-1 text-center btn-login"
             type="submit"
           >
-            Sign Up
+            Sign Up <b-spinner v-if="is_loading" small></b-spinner>
           </button>
           <!-- to sign in link -->
           <center>
@@ -277,13 +277,13 @@ export default {
     return {
       show_password: false,
       is_next_step: false,
+      is_loading: false,
       register: {
         name: "",
-        username: "",
-        pasword: "",
         email: "",
+        pasword: "",
+        phone_number: "",
         company_name: "",
-        telephone_number: "",
         company_address: "",
         company_subject: "",
       },
@@ -291,7 +291,27 @@ export default {
   },
   methods: {
     setRegister() {
-      this.$router.push("/login");
+      this.is_loading = true;
+      this.$url
+        .post("account/register", {
+          full_name: this.register.name,
+          email: this.register.email,
+          password: this.register.password,
+          phone_number: this.register.phone_number,
+          company_name: this.register.company_name,
+          company_address: this.register.company_address,
+          company_subject: this.register.company_subject,
+        })
+        .then(() => {
+          this.$toast.success("Success! Account has been created.");
+          this.$router.push("/login");
+        })
+        .catch(() => {
+          this.$toast.error("Failed! This Email is already exists.");
+        })
+        .finally(() => {
+          this.is_loading = false;
+        });
     },
     nextStep() {
       this.is_next_step = true;

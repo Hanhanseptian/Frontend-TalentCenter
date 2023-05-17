@@ -124,11 +124,21 @@
                 <request-card :data="item" />
               </div>
               <div class="d-flex align-items-center">
-                <b-button size="sm" variant="danger" class="ml-auto mr-2" @click="rejectAll">
+                <b-button
+                  size="sm"
+                  variant="danger"
+                  class="ml-auto mr-2"
+                  @click="rejectAll"
+                >
                   <i class="bi bi-x-circle"></i>
                   Reject All
                 </b-button>
-                <b-button size="sm" variant="info" class="btn-talent" @click="approveAll">
+                <b-button
+                  size="sm"
+                  variant="info"
+                  class="btn-talent"
+                  @click="approveAll"
+                >
                   <i class="bi bi-check-circle"></i>
                   Approve All
                 </b-button>
@@ -141,7 +151,7 @@
   </div>
 </template>
 <script>
-import Swal from "sweetalert2"
+import Swal from "sweetalert2";
 import request_list_card from "../../components/bizdev/request_list_card.vue";
 
 export default {
@@ -203,7 +213,7 @@ export default {
       ],
     };
   },
-  methods:{
+  methods: {
     approveAll() {
       Swal.fire({
         title: "Are you sure?",
@@ -216,7 +226,7 @@ export default {
         reverseButtons: true,
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire("Success!", "Request has been approved.", "success");
+          this.$toast.success("Success! Request has been approved.");
         }
       });
     },
@@ -232,18 +242,18 @@ export default {
         reverseButtons: true,
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire("Success!", "Request has been rejected.", "success");
+          this.$toast.success("Success! Request has been rejected.");
         }
       });
     },
-  }
+  },
 };
 </script>
 <style scoped>
 .scroller {
   max-height: 50vh;
   overflow: auto;
-  padding-right:0.5rem;
+  padding-right: 0.5rem;
 }
 .scroller::-webkit-scrollbar {
   width: 10px;

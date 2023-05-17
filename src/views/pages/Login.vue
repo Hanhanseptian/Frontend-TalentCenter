@@ -7,10 +7,18 @@
       </div>
       <!-- login form -->
       <ValidationObserver v-slot="{ handleSubmit }">
-        <form class="px-5" @submit.prevent="handleSubmit(login)">
+        <form class="px-5 mt-3" @submit.prevent="handleSubmit(login)">
+          <b-alert
+            :show="is_invalid"
+            variant="danger"
+            class="p-2 fs-12 d-flex align-items-center"
+          >
+            <i class="bi bi-exclamation-circle fs-14 mr-1"></i>
+            Invalid Email or Password !
+          </b-alert>
           <!-- usename -->
           <ValidationProvider rules="required|email" v-slot="{ errors }">
-            <div class="mt-3">
+            <div>
               <label for="email" class="fs-12">Email</label>
               <div class="d-flex">
                 <div class="icon-talent d-flex p-0 form-control mr-1">
@@ -82,7 +90,7 @@
             class="form-control mt-4 mb-1 text-center btn-login"
             type="submit"
           >
-            Sign In
+            Sign In <b-spinner v-if="is_loading" small></b-spinner>
           </button>
           <!-- to sign up link -->
           <center>
@@ -105,6 +113,7 @@
 import { VBTooltip } from "bootstrap-vue";
 import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
 import { required, email } from "vee-validate/dist/rules";
+import cookie from "js-cookie";
 
 extend("email", {
   ...email,
@@ -121,19 +130,38 @@ export default {
   data() {
     return {
       show_password: false,
+      is_invalid: false,
+      is_loading: false,
       email: "",
       password: "",
     };
   },
   methods: {
     login() {
-      if (this.email.includes("bizdev")) {
-        this.$router.push("/admin/dashboard");
-      } else if (this.email.includes("recruiter")) {
-        this.$router.push("/home");
-      } else {
-        this.$router.push("/talent-profile");
-      }
+      this.is_invalid = false;
+      this.is_loading = true;
+      this.$url
+        .post("account/login", {
+          email: this.email,
+          password: this.password,
+        })
+        .then((res) => {
+          this.$store.commit("SET_USER", res.data.user);
+          cookie.set("user_data", JSON.stringify(res.data.user));
+          if (res.data.user.role == "bizdev") {
+            this.$router.push("/admin/dashboard");
+          } else if (res.data.user.role == "recruiter") {
+            this.$router.push("/home");
+          } else {
+            this.$router.push("/talent-profile");
+          }
+        })
+        .catch(() => {
+          this.is_invalid = true;
+        })
+        .finally(() => {
+          this.is_loading = false;
+        });
     },
   },
   directives: {

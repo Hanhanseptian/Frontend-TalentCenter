@@ -116,10 +116,10 @@
             <b-button
               size="xs"
               variant="secondary"
-              class="btn-talent"
+              class="btn-talent d-flex align-items-center"
               type="submit"
             >
-              <span>Save</span>
+              Save <b-spinner class="ml-1" v-if="is_loading" small></b-spinner>
             </b-button>
           </div>
         </form>
@@ -149,6 +149,7 @@ export default {
   data() {
     return {
       is_already_exist: false,
+      is_loading: false,
       talent: {
         full_name: "",
         email: "",
@@ -175,7 +176,7 @@ export default {
         full_name: "",
         email: "",
         phone_number: "",
-        company: "PT Jayandra",
+        company_name: "PT Jayandra",
       };
       this.is_already_exist = false;
     },
@@ -185,14 +186,19 @@ export default {
     },
     addTalent() {
       this.is_already_exist = false;
+      this.is_loading = true;
       this.$url
         .post("account/newtalent", this.talent)
-        .then(() => {
+        .then((res) => {
           this.$toast.success("Success! Talent has been added.");
           this.closeModal();
         })
         .catch(() => {
           this.is_already_exist = true;
+        })
+        .finally(() => {
+          this.is_loading = false;
+          this.$parent.getData();
         });
     },
   },

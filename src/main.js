@@ -2,6 +2,7 @@ import Vue from "vue";
 
 import App from "./App.vue";
 import router from "./router";
+import store from "./store";
 
 // Plugin 3rd Party
 import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
@@ -17,6 +18,10 @@ import "bootstrap-vue/dist/bootstrap-vue.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "vue-select/dist/vue-select.css";
 import "vue-toastification/dist/index.css";
+
+// Globaly Prototype
+Vue.prototype.$store = store;
+Vue.prototype.$url = Axios;
 
 // Globaly Using Plugin
 Vue.use(BootstrapVue);
@@ -39,7 +44,6 @@ Vue.use(Toast, {
 // Globaly Component Plugin
 Vue.component("v-select", vSelect);
 Vue.component("loader", Loader);
-Vue.prototype.$url = Axios;
 
 new Vue({
   router,

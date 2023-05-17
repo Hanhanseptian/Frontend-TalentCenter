@@ -142,7 +142,7 @@
               class="btn-talent"
               type="submit"
             >
-              <span>Save</span>
+              <span>Update</span>
             </b-button>
           </div>
         </form>

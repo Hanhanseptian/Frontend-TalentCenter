@@ -1,7 +1,7 @@
 <template>
   <b-modal
     :id="'set-date-modal-' + id"
-    size="sm"
+    size="md"
     hide-footer
     @hidden="resetModal"
     no-close-on-backdrop
@@ -12,7 +12,7 @@
         Request Talent
       </span>
     </template>
-    <b-card no-body class="shadow p-2">
+    <b-card no-body class="shadow p-3">
       <ValidationObserver v-slot="{ handleSubmit }">
         <form @submit.prevent="handleSubmit(addToCart)">
           <!-- Talent Name -->
@@ -43,7 +43,7 @@
                 }"
                 locale="en"
                 placeholder="Select Talent Work From"
-                v-model="start_date"
+                v-model="work_from"
               ></b-form-datepicker>
             </div>
             <span class="text-validation" v-if="errors[0]">
@@ -65,7 +65,7 @@
                 }"
                 locale="en"
                 placeholder="Select Talent Work Until"
-                v-model="end_date"
+                v-model="work_until"
               ></b-form-datepicker>
             </div>
             <span class="text-validation" v-if="errors[0]">
@@ -85,10 +85,11 @@
             <b-button
               size="xs"
               variant="secondary"
-              class="btn-talent"
+              class="btn-talent d-flex align-items-center"
               type="submit"
             >
-              <span>Add to Cart</span>
+              Add to Cart
+              <b-spinner class="ml-1" v-if="is_loading" small></b-spinner>
             </b-button>
           </div>
         </form>
@@ -116,19 +117,39 @@ export default {
   },
   data() {
     return {
-      name: "Hanhan Septian",
-      start_date: null,
-      end_date: null,
+      is_loading: false,
+      account_id: this.$store.getters.user.user_id,
+      name: "",
+      work_from: null,
+      work_until: null,
     };
   },
   methods: {
     addToCart() {
-      alert("submitted");
-      this.closeModal();
+      this.is_loading = true;
+      this.$url
+        .post("cart/add", {
+          recruiter_id: this.account_id,
+          talent_id: this.id,
+          work_from: this.work_from,
+          work_until: this.work_until,
+        })
+        .then(() => {
+          this.$toast.success("Success! Talent has been added to cart.");
+          this.closeModal();
+        })
+        .catch(() => {
+          this.$toast.error("Failed! Talent is already in cart.");
+          this.closeModal();
+        })
+        .finally(() => {
+          this.is_loading = false;
+        });
     },
     resetModal() {
-      this.start_date = null;
-      this.end_date = null;
+      this.name = "";
+      this.work_from = null;
+      this.work_until = null;
     },
     closeModal() {
       this.resetModal();

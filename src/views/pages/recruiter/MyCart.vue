@@ -8,14 +8,15 @@
           </b-card-title>
           <span class="fs-14 text-muted">Show Talent List on Cart</span>
         </b-card-header>
-        <b-card-body>
+        <loader-component v-if="is_loading" />
+        <b-card-body v-else>
           <b-input-group class="form-search ml-auto">
             <b-input-group-text class="bg-white">
               <i class="bi bi-search fs-12"></i>
             </b-input-group-text>
             <b-form-input
               type="text"
-              class="form-talent-md"
+              class="form-talent"
               placeholder="Search..."
             />
           </b-input-group>
@@ -48,66 +49,22 @@
   </div>
 </template>
 <script>
+import loader from "../../components/loader.vue";
 import on_cart_card from "../../components/recruiter/on_cart_card.vue";
+import cookie from "js-cookie";
 
 export default {
   name: "MyCart",
   components: {
     "on-cart-card-component": on_cart_card,
+    "loader-component": loader,
   },
   data() {
     return {
+      account_id: this.$store.getters.user.user_id,
       is_all_selected: false,
-      cart_data: [
-        {
-          id: "1",
-          talent_name: "Elon Musk",
-          role: "Frontend Developer",
-          start_date: "2023-10-01",
-          end_date: "2024-10-01",
-          checked: false,
-        },
-        {
-          id: "2",
-          talent_name: "Elon Musk Junior",
-          role: "Backend Developer",
-          start_date: "2023-10-01",
-          end_date: "2024-10-01",
-          checked: false,
-        },
-        {
-          id: "3",
-          talent_name: "Ayah Elon Musk",
-          role: "Frontend Developer",
-          start_date: "2023-11-01",
-          end_date: "2024-08-01",
-          checked: false,
-        },
-        {
-          id: "4",
-          talent_name: "Kakak Elon Musk",
-          role: "Backend Developer",
-          start_date: "2023-09-01",
-          end_date: "2024-10-01",
-          checked: false,
-        },
-        {
-          id: "5",
-          talent_name: "Keponakan Elon Musk",
-          role: "Fullstack Developer",
-          start_date: "2023-12-01",
-          end_date: "2024-12-01",
-          checked: false,
-        },
-        {
-          id: "6",
-          talent_name: "Ibu Elon Musk",
-          role: "Frontend Developer",
-          start_date: "2023-11-01",
-          end_date: "2024-11-01",
-          checked: false,
-        },
-      ],
+      is_loading: true,
+      cart_data: [],
       selected_items: [],
     };
   },
@@ -120,7 +77,25 @@ export default {
       }
     },
   },
+  created() {
+    this.getCart();
+  },
   methods: {
+    getCart() {
+      this.is_loading = true;
+      let api = process.env.VUE_APP_API_URL + "cart/" + this.account_id;
+      this.$url
+        .get(api)
+        .then((res) => {
+          this.cart_data = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          this.is_loading = false;
+        });
+    },
     selectAll() {
       if (this.is_all_selected) {
         this.selected_items = this.cart_data;

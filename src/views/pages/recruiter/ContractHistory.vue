@@ -174,7 +174,7 @@ export default {
     deleteItem(id) {
       Swal.fire({
         title: "Are you sure?",
-        text: "You want to delete this terminate history",
+        text: "You want to delete this contract history",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -183,11 +183,7 @@ export default {
         reverseButtons: true,
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire(
-            "Deleted!",
-            "Terminate history has been deleted.",
-            "success"
-          );
+          this.$toast.success("Success! Contract history has been deleted.");
         }
       });
     },

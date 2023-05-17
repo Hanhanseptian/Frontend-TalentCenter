@@ -1,7 +1,7 @@
 <template>
   <b-modal
     id="my-account-talent"
-    size="sm"
+    size="md"
     ref="modal"
     ok-title="Back"
     ok-only
@@ -16,9 +16,9 @@
       </span>
     </template>
     <!-- account information -->
-    <b-card no-body v-if="!is_change_password" class="shadow p-2">
+    <b-card no-body v-if="!is_change_password" class="shadow p-3">
       <span class="mb-3 fs-14">
-        <i class="bi bi-person-fill-gear"></i>
+        <i class="bi bi-person-check-fill"></i>
         Account Information
       </span>
       <ValidationObserver v-slot="{ handleSubmit }">
@@ -85,6 +85,54 @@
                 />
               </div>
             </div>
+            <div class="mb-1">
+              <label for="company_name" class="fs-12">
+                Company Name <span class="text-danger">*</span>
+              </label>
+              <div class="d-flex">
+                <div class="icon-talent d-flex p-0 form-control mr-1">
+                  <i class="bi bi-building-check mx-auto my-auto"></i>
+                </div>
+                <input
+                  type="text"
+                  id="company_name"
+                  maxlength="12"
+                  class="form-control input-talent ml-auto"
+                />
+              </div>
+            </div>
+            <div class="mb-1">
+              <label for="company_address" class="fs-12">
+                Company Address <span class="text-danger">*</span>
+              </label>
+              <div class="d-flex">
+                <div class="icon-talent d-flex p-0 form-control mr-1">
+                  <i class="bi bi-geo-alt-fill mx-auto my-auto"></i>
+                </div>
+                <input
+                  type="text"
+                  id="company_address"
+                  maxlength="12"
+                  class="form-control input-talent ml-auto"
+                />
+              </div>
+            </div>
+            <div class="mb-1">
+              <label for="company-subject" class="fs-12">
+                Company Subject <span class="text-danger">*</span>
+              </label>
+              <div class="d-flex">
+                <div class="icon-talent d-flex p-0 form-control mr-1">
+                  <i class="bi bi-info-circle-fill mx-auto my-auto"></i>
+                </div>
+                <input
+                  type="text"
+                  id="company-subject"
+                  maxlength="12"
+                  class="form-control input-talent ml-auto"
+                />
+              </div>
+            </div>
             <span class="text-validation mt-1" v-if="errors[0]">
               <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
             </span>
@@ -97,14 +145,14 @@
             Change Password?
           </div>
           <br />
-          <b-button size="xs" class="btn-talent mt-3 float-right" type="submit">
+          <b-button size="xs" class="btn-talent mt-3 float-right mb-2" type="submit">
             Save Changes
           </b-button>
         </form>
       </ValidationObserver>
     </b-card>
     <!-- change password -->
-    <b-card no-body v-else class="shadow p-2">
+    <b-card no-body v-else class="shadow p-3">
       <span class="mb-3 fs-14">
         <i class="bi bi-person-fill-lock"></i>
         Change Password
@@ -191,7 +239,7 @@
             </span>
           </ValidationProvider>
           <!-- action button -->
-          <div class="d-flex align-items-center mt-3">
+          <div class="d-flex align-items-center mt-3 mb-2">
             <b-button
               size="xs"
               variant="danger"

@@ -130,7 +130,7 @@ export default {
         reverseButtons: true,
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire("Deleted!", "Talent has been deleted.", "success");
+          this.$toast.success("Success! Request has been canceled.");
         }
       });
     },
@@ -146,7 +146,7 @@ export default {
         reverseButtons: true,
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire("Deleted!", "Talent has been deleted.", "success");
+          this.$toast.success("Success! Request has been deleted.");
         }
       });
     },

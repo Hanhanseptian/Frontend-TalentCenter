@@ -69,6 +69,7 @@
 <script>
 import { BCard, BBadge } from "bootstrap-vue";
 import myAccountModal from "./my_account_modal.vue";
+import cookie from "js-cookie";
 
 export default {
   name: "header_user",
@@ -79,6 +80,7 @@ export default {
   },
   methods: {
     signOut() {
+      cookie.remove("user_data");
       this.$router.push("/");
     },
     showMyAccountModal(tipe) {

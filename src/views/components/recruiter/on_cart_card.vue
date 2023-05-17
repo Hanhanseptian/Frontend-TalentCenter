@@ -6,10 +6,10 @@
       <div class="d-flex">
         <i class="bi bi-person-circle fs-30"></i>
         <div class="ml-2">
-          <span class="fs-14">Muhammad Afzaki</span> <br />
+          <span class="fs-14"> {{ data.full_name }} </span> <br />
           <div class="fs-12">
             <i class="bi bi-toggles2"></i>
-            Frontend Developer
+            {{ data.role }}
           </div>
         </div>
         <b-form-checkbox
@@ -24,7 +24,7 @@
           <b-form-datepicker
             size="sm"
             class="mb-2 form-date-talent"
-            v-model="data.start_date"
+            v-model="data.work_from"
             :date-format-options="{
               year: 'numeric',
               month: 'long',
@@ -40,7 +40,7 @@
           <b-form-datepicker
             size="sm"
             class="mb-2 form-date-talent"
-            v-model="data.end_date"
+            v-model="data.work_until"
             :date-format-options="{
               year: 'numeric',
               month: 'long',
@@ -65,7 +65,7 @@
           size="xs"
           variant="danger"
           class="d-flex align-items-center"
-          @click="deleteCart(data.talent_name)"
+          @click="deleteCart(data.full_name)"
         >
           <i class="bi bi-trash"></i>
           <small>Delete</small>
@@ -103,7 +103,7 @@ export default {
         reverseButtons: true,
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire("Deleted!", "Talent has been deleted.", "success");
+          this.$toast.success("Success! Talent has been deleted.");
         }
       });
     },

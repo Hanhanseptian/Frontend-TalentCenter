@@ -55,10 +55,10 @@
           On Job
         </div>
         <div
-          v-if="data.value == 'on_request'"
+          v-if="data.value == 'not_available'"
           class="p-1 shadow rounded-lg fs-12 border border-warning text-warning"
         >
-          On request
+          Not Available
         </div>
         <div
           v-if="data.value == 'available'"

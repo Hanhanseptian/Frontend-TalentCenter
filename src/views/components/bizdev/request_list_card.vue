@@ -113,7 +113,7 @@ export default {
         reverseButtons: true,
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire("Success!", "Request has been rejected.", "success");
+          this.$toast.success("Success! Request has been rejected.");
         }
       });
     },
@@ -129,7 +129,7 @@ export default {
         reverseButtons: true,
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire("Success!", "Request has been approved.", "success");
+          this.$toast.success("Success! Request has been approved.");
         }
       });
     },

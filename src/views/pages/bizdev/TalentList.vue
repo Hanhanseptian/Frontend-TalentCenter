@@ -153,7 +153,6 @@ export default {
       this.$bvModal.show("add-talent");
     },
     deleteData(id, name) {
-      console.log(id);
       Swal.fire({
         title: "Are you sure?",
         text: `You to delete "${name}" from Talent List.`,
@@ -165,7 +164,16 @@ export default {
         reverseButtons: true,
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire("Deleted!", `${name} has been deleted.`, "success");
+          let api = process.env.VUE_APP_API_URL + "talent/delete/" + id;
+          this.$url
+            .delete(api)
+            .then(() => {
+              this.getData();
+              this.$toast.success(`Success! ${name} has been deleted.`);
+            })
+            .catch(() => {
+              this.$toast.error(`Error! An Error occured while deleting data.`);
+            });
         }
       });
     },

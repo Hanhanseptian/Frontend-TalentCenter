@@ -1,23 +1,23 @@
 <template>
   <b-modal
     :id="'terminate-modal-' + id"
-    size="sm"
+    size="md"
     hide-footer
     @hidden="resetModal"
     no-close-on-backdrop
   >
     <template #modal-title>
       <span class="fs-18">
-        <i class="bi bi-info-circle"></i>
+        <i class="bi bi-x-circle"></i>
         Terminate Reason
       </span>
     </template>
     <template #modal-footer>
       <span class="display-none"></span>
     </template>
-    <b-card no-body class="shadow p-2">
+    <b-card no-body class="shadow p-3">
       <ValidationObserver v-slot="{ handleSubmit }">
-        <form @submit.prevent="handleSubmit(addToCart)">
+        <form @submit.prevent="handleSubmit(terminateContract)">
           <ValidationProvider rules="required" v-slot="{ errors }">
             <!-- Reason -->
             <div class="mr-2 w-100">
@@ -82,8 +82,8 @@ export default {
     };
   },
   methods: {
-    addToCart() {
-      alert("submitted");
+    terminateContract() {
+      this.$toast.success("Success! Talent has been terminated.");
       this.closeModal();
     },
     resetModal() {

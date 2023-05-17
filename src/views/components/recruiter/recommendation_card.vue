@@ -165,7 +165,7 @@
           </b-button>
         </div>
       </div>
-      <request-talent-component :id="data._id" />
+      <request-talent-component :id="data._id" ref="request_modal" />
       <detail-talent-component :id="data._id" ref="detail_talent" />
     </b-card>
   </div>
@@ -193,6 +193,7 @@ export default {
   // },
   methods: {
     addToCart() {
+      this.$refs.request_modal.name = this.data.full_name;
       this.$bvModal.show("set-date-modal-" + this.data._id);
     },
     viewDetail() {
