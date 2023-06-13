@@ -2,8 +2,12 @@
   <b-card no-body class="shadow sticky-top">
     <div class="container py-1">
       <div class="d-flex align-items-center">
+        <!-- APPS LOGO -->
         <img src="../../../public/logo.png" class="nav-logo" />
+
+        <!-- RECRUITER MENU -->
         <div class="navbar" v-if="$route.meta.access == 2">
+          <!-- HOME MENU -->
           <router-link
             to="/home"
             class="mr-2 btn btn-sm"
@@ -12,14 +16,16 @@
             <i class="bi bi-house-fill"></i>
             Home
           </router-link>
+          <!-- MARKED TALENT MENU -->
           <router-link
-            to="/my-cart"
+            to="/marked-talent"
             class="mr-2 btn btn-sm"
-            :class="$route.name == 'My Cart' ? 'btn-talent' : 'btn-hover'"
+            :class="$route.name == 'Marked Talent' ? 'btn-talent' : 'btn-hover'"
           >
-            <i class="bi bi-cart-fill"></i>
-            My Cart
+            <i class="bi bi-bookmark-check-fill"></i>
+            Marked Talent
           </router-link>
+          <!-- MY TALENT MENU -->
           <router-link
             to="/my-talent"
             class="btn btn-sm"
@@ -29,7 +35,10 @@
             My Talent
           </router-link>
         </div>
+
+        <!-- TALENT MEU=NU -->
         <div class="navbar" v-if="$route.meta.access == 3">
+          <!-- MY PROFILE MENU -->
           <router-link
             to="/talent-profile"
             class="mr-2 btn btn-sm"
@@ -41,22 +50,30 @@
             My Profile
           </router-link>
         </div>
+
+        <!-- USER LOGGED IN -->
         <b-dropdown
           id="profile"
           class="ml-auto text-decoration-none"
           no-caret
           variant="link"
         >
+          <!-- USER PROFILE -->
           <template #button-content>
             <div class="d-flex align-items-center btn-hover">
-              <span class="ml-auto mr-2 fs-14">User</span>
+              <span class="ml-auto mr-2 fs-14">
+                {{ $store.getters.user.full_name }}
+              </span>
               <i class="bi bi-person-circle fs-30"></i>
             </div>
           </template>
+          <!-- MY ACCOUNT BUTTON -->
           <b-dropdown-item @click="showMyAccountModal('talent')">
             <span class="fs-14">My Account</span>
           </b-dropdown-item>
+          <!-- DIVIDER -->
           <b-dropdown-divider></b-dropdown-divider>
+          <!-- SIGN OUT BUTTON -->
           <b-dropdown-item @click="signOut">
             <span class="fs-14">Sign Out</span>
           </b-dropdown-item>
@@ -78,6 +95,12 @@ export default {
     BBadge,
     "my-account-talent-modal": myAccountModal,
   },
+  data() {
+    return {
+      account_name: this.$store.getters.user.full_name,
+      account_id: this.$store.getters.user._id,
+    };
+  },
   methods: {
     signOut() {
       cookie.remove("user_data");
@@ -92,14 +115,6 @@ export default {
 };
 </script>
 <style scoped>
-.nav-item {
-  color: #0173a7;
-  padding-left: 5px;
-  padding-right: 5px;
-  text-decoration: none;
-  border-radius: 5px;
-  border: #0173a7 !important;
-}
 .nav-logo {
   width: 150px;
 }

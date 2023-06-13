@@ -1,22 +1,24 @@
 <template>
   <div class="login">
     <div class="login-form">
-      <!-- logo -->
+      <!-- APPS LOGO -->
       <div class="text-center">
         <img src="../../../public/logo.png" width="50%" class="my-4" />
       </div>
-      <!-- login form -->
+
+      <!-- LOGIN FORM -->
       <ValidationObserver v-slot="{ handleSubmit }">
         <form class="px-5 mt-3" @submit.prevent="handleSubmit(login)">
+          <!-- ALERT WRONG EMAIL OR PASSWORD -->
           <b-alert
             :show="is_invalid"
             variant="danger"
-            class="p-2 fs-12 d-flex align-items-center"
+            class="p-2 fs-12 d-flex align-items-center border border-danger rounded-lg"
           >
             <i class="bi bi-exclamation-circle fs-14 mr-1"></i>
-            Invalid Email or Password !
+            Email or Password is Not valid !
           </b-alert>
-          <!-- usename -->
+          <!-- USERNAME -->
           <ValidationProvider rules="required|email" v-slot="{ errors }">
             <div>
               <label for="email" class="fs-12">Email</label>
@@ -38,7 +40,7 @@
               <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
             </span>
           </ValidationProvider>
-          <!-- password -->
+          <!-- PASSWORD -->
           <ValidationProvider rules="required" v-slot="{ errors }">
             <div class="mt-2">
               <label for="password" class="fs-12">Password</label>
@@ -85,25 +87,23 @@
               <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
             </span>
           </ValidationProvider>
-          <!-- sign in button -->
+          <!-- SIGN IN BUTTON -->
           <button
             class="form-control mt-4 mb-1 text-center btn-login"
             type="submit"
           >
             Sign In <b-spinner v-if="is_loading" small></b-spinner>
           </button>
-          <!-- to sign up link -->
-          <center>
-            <span class="fs-12">
-              Don't have an Account?
-              <u
-                class="clickable link text-talent"
-                @click="$router.push('register')"
-              >
-                Sign Up
-              </u>
-            </span>
-          </center>
+          <!-- TO SIGN UP LINK -->
+          <div class="fs-12 text-center">
+            Don't have an Account?
+            <u
+              class="clickable link text-talent"
+              @click="$router.push('register')"
+            >
+              Sign Up
+            </u>
+          </div>
         </form>
       </ValidationObserver>
     </div>
@@ -149,7 +149,7 @@ export default {
           this.$store.commit("SET_USER", res.data.user);
           cookie.set("user_data", JSON.stringify(res.data.user));
           if (res.data.user.role == "bizdev") {
-            this.$router.push("/admin/dashboard");
+            this.$router.push("/bizdev/dashboard");
           } else if (res.data.user.role == "recruiter") {
             this.$router.push("/home");
           } else {
@@ -227,8 +227,8 @@ export default {
 }
 @media only screen and (max-width: 600px) {
   .login-form {
-    height: 50%;
-    width: 70%;
+    height: 60%;
+    width: 80%;
   }
 }
 </style>

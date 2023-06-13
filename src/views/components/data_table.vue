@@ -12,16 +12,12 @@
     >
       <!-- SHOW EMPTY DATA -->
       <template #empty="scope">
-        <center>
-          <span>{{ scope.emptyText }}</span>
-        </center>
+        <div class="text-center">{{ scope.emptyText }}</div>
       </template>
 
       <!-- SHOW EMPTY FILTERED -->
       <template #emptyfiltered="scope">
-        <center>
-          <span class="text-talent">{{ scope.emptyFilteredText }}</span>
-        </center>
+        <div class="text-center">{{ scope.emptyFilteredText }}</div>
       </template>
 
       <!-- CELL NO -->
@@ -48,23 +44,40 @@
 
       <!-- CELL STATUS -->
       <template #cell(status)="data">
+        <!-- ON JOB -->
         <div
           v-if="data.value == 'on_job'"
           class="p-1 shadow rounded-lg fs-12 border border-success text-success"
         >
           On Job
         </div>
+        <!-- NOT AVAILABLE -->
         <div
           v-if="data.value == 'not_available'"
           class="p-1 shadow rounded-lg fs-12 border border-warning text-warning"
         >
           Not Available
         </div>
+        <!-- AVAILABLE -->
         <div
           v-if="data.value == 'available'"
           class="p-1 shadow rounded-lg fs-12 border border-info text-talent"
         >
           Available
+        </div>
+        <!-- DISCONTINUE -->
+        <div
+          v-if="data.value == 'discontinue'"
+          class="p-1 shadow rounded-lg border border-info text-talent fs-12"
+        >
+          Discontinue
+        </div>
+        <!-- TERMINATED -->
+        <div
+          v-if="data.value == 'terminated'"
+          class="p-1 shadow rounded-lg border border-danger text-danger fs-12"
+        >
+          Terminated
         </div>
       </template>
 
@@ -89,25 +102,10 @@
             :class="is_detail ? 'fs-10' : ' fs-12'"
             style="width: 10rem"
           >
-            {{ parseDate(data.value) }}
+            <span v-if="data.value">{{ parseDate(data.value) }}</span>
+            <span v-else>Until Now</span>
           </div>
         </center>
-      </template>
-
-      <!-- CELL TYPE -->
-      <template #cell(type)="data">
-        <div
-          v-if="data.value == 'discontinue'"
-          class="p-1 shadow rounded-lg border border-info text-talent fs-12"
-        >
-          Discontinue
-        </div>
-        <div
-          v-else
-          class="p-1 shadow rounded-lg border border-danger text-danger fs-12"
-        >
-          Terminating
-        </div>
       </template>
 
       <!-- CELL EMAIL -->
@@ -136,7 +134,7 @@
             class="p-1 shadow rounded-lg border border-success text-success fs-10"
             style="width: 8rem"
           >
-            {{ parseDate(data.value) }}
+            {{ data.value ? parseDate(data.value) : "-- Not Set --" }}
           </div>
         </center>
       </template>
@@ -148,7 +146,7 @@
             class="p-1 shadow rounded-lg border border-danger text-danger fs-10"
             style="width: 8rem"
           >
-            {{ parseDate(data.value) }}
+            {{ data.value ? parseDate(data.value) : "-- Not Set --" }}
           </div>
         </center>
       </template>
@@ -171,9 +169,14 @@
           <div
             v-for="item in data.value"
             :key="item"
-            class="p-1 shadow rounded-lg border border-info text-talent fs-10 mb-1 mr-1"
+            class="p-1 shadow rounded-lg border fs-10 mb-1 mr-1"
+            :class="
+              item && item != '-'
+                ? 'border-info text-talent'
+                : 'border-warning text-warning'
+            "
           >
-            {{ item }}
+            {{ item && item != "-" ? item : "-- Not Set --" }}
           </div>
         </div>
       </template>
@@ -184,9 +187,14 @@
           <div
             v-for="item in data.value"
             :key="item"
-            class="p-1 shadow rounded-lg border border-info text-talent fs-10 mb-1 mr-1"
+            class="p-1 shadow rounded-lg border fs-10 mb-1 mr-1"
+            :class="
+              item && item != '-'
+                ? 'border-info text-talent'
+                : 'border-warning text-warning'
+            "
           >
-            {{ item }}
+            {{ item && item != "-" ? item : "-- Not Set --" }}
           </div>
         </div>
       </template>
@@ -197,9 +205,14 @@
           <div
             v-for="item in data.value"
             :key="item"
-            class="p-1 shadow rounded-lg border border-info text-talent fs-10 mb-1 mr-1"
+            class="p-1 shadow rounded-lg border fs-10 mb-1 mr-1"
+            :class="
+              item && item != '-'
+                ? 'border-info text-talent'
+                : 'border-warning text-warning'
+            "
           >
-            {{ item }}
+            {{ item && item != "-" ? item : "-- Not Set --" }}
           </div>
         </div>
       </template>
@@ -210,9 +223,14 @@
           <div
             v-for="item in data.value"
             :key="item"
-            class="p-1 shadow rounded-lg border border-info text-talent fs-10 mb-1 mr-1"
+            class="p-1 shadow rounded-lg border fs-10 mb-1 mr-1"
+            :class="
+              item && item != '-'
+                ? 'border-info text-talent'
+                : 'border-warning text-warning'
+            "
           >
-            {{ item }}
+            {{ item && item != "-" ? item : "-- Not Set --" }}
           </div>
         </div>
       </template>
@@ -223,9 +241,14 @@
           <div
             v-for="item in data.value"
             :key="item"
-            class="p-1 shadow rounded-lg border border-info text-talent fs-10 mb-1 mr-1"
+            class="p-1 shadow rounded-lg border fs-10 mb-1 mr-1"
+            :class="
+              item && item != '-'
+                ? 'border-info text-talent'
+                : 'border-warning text-warning'
+            "
           >
-            {{ item }}
+            {{ item && item != "-" ? item : "-- Not Set --" }}
           </div>
         </div>
       </template>
@@ -236,9 +259,14 @@
           <div
             v-for="item in data.value"
             :key="item"
-            class="p-1 shadow rounded-lg border border-info text-talent fs-10 mb-1 mr-1"
+            class="p-1 shadow rounded-lg border fs-10 mb-1 mr-1"
+            :class="
+              item && item != '-'
+                ? 'border-info text-talent'
+                : 'border-warning text-warning'
+            "
           >
-            {{ item }}
+            {{ item && item != "-" ? item : "-- Not Set --" }}
           </div>
         </div>
       </template>

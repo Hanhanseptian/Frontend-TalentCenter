@@ -6,16 +6,20 @@
     @hidden="resetModal"
     no-close-on-backdrop
   >
+    <!-- MODAL TITLE -->
     <template #modal-title>
       <span class="fs-18">
-        <i class="bi bi bi-cart-plus"></i>
-        Request Talent
+        <i class="bi bi bi-bookmark-check-fill"></i>
+        Mark Talent
       </span>
     </template>
+
+    <!-- MODAL ITEM -->
     <b-card no-body class="shadow p-3">
+      <!-- REQUEST FORM -->
       <ValidationObserver v-slot="{ handleSubmit }">
-        <form @submit.prevent="handleSubmit(addToCart)">
-          <!-- Talent Name -->
+        <form @submit.prevent="handleSubmit(saveMarkedTalent)">
+          <!-- TALENT NAME -->
           <div>
             <label for="name" class="fs-12"> Talent Name </label>
             <div class="d-flex">
@@ -28,8 +32,8 @@
               />
             </div>
           </div>
+          <!-- WORK FROM -->
           <ValidationProvider rules="required" v-slot="{ errors }">
-            <!-- Work From -->
             <div class="mt-2 mr-2 w-100">
               <label for="start-date" class="fs-12">
                 Work From <span class="text-danger">*</span>
@@ -50,8 +54,8 @@
               <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
             </span>
           </ValidationProvider>
+          <!-- WORK UNTIL -->
           <ValidationProvider rules="required" v-slot="{ errors }">
-            <!-- Work Until -->
             <div class="mr-auto w-100 mt-2">
               <label for="start-date" class="fs-12">
                 Work Until <span class="text-danger">*</span>
@@ -72,8 +76,10 @@
               <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
             </span>
           </ValidationProvider>
-          <!-- Action Button -->
+
+          <!-- ACTION BUTTON -->
           <div class="d-flex mt-3">
+            <!-- CANCEL BUTTON -->
             <b-button
               size="xs"
               variant="danger"
@@ -82,13 +88,14 @@
             >
               <span>Cancel</span>
             </b-button>
+            <!-- MARK BUTTON -->
             <b-button
               size="xs"
               variant="secondary"
               class="btn-talent d-flex align-items-center"
               type="submit"
             >
-              Add to Cart
+              Mark
               <b-spinner class="ml-1" v-if="is_loading" small></b-spinner>
             </b-button>
           </div>
@@ -125,21 +132,23 @@ export default {
     };
   },
   methods: {
-    addToCart() {
+    saveMarkedTalent() {
       this.is_loading = true;
       this.$url
-        .post("cart/add", {
+        .post("request/add", {
           recruiter_id: this.account_id,
           talent_id: this.id,
           work_from: this.work_from,
           work_until: this.work_until,
         })
         .then(() => {
-          this.$toast.success("Success! Talent has been added to cart.");
+          this.$toast.success("Success! Talent has been marked.");
           this.closeModal();
         })
         .catch(() => {
-          this.$toast.error("Failed! Talent is already in cart.");
+          this.$toast.error(
+            "Error! Talent is already in your marked Talent or your Request."
+          );
           this.closeModal();
         })
         .finally(() => {

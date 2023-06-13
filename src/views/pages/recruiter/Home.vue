@@ -2,20 +2,42 @@
   <div id="recruiter-home">
     <div class="container">
       <div class="row">
+        <!-- REQUIREMENTS -->
         <div class="col-md-4 col-sm-12 mb-3">
-          <!-- Requirements -->
           <b-card no-body class="h-100 pt-2">
             <b-card-header>
+              <!-- CARD TITLE -->
               <b-card-title class="fs-20">
-                <i class="bi bi-list-ul"></i> Requirements
+                Requirements
+                <i class="bi bi-question-circle" id="help"></i>
+                <b-tooltip target="help" triggers="hover">
+                  <div>INSTRUCTIONS</div>
+                  <ul class="fs-12 pl-3 mt-3">
+                    <li class="text-decoration-none text-left ml-0 pl-0">
+                      Programming Language is Required to Filled
+                    </li>
+                    <li class="text-decoration-none text-left ml-0 pl-0">
+                      The total priority percentage cannot be more than 100 and
+                      less than 0
+                    </li>
+                    <li class="text-decoration-none text-left ml-0 pl-0">
+                      Press the "Set Requirements" button to start the search
+                    </li>
+                  </ul>
+                </b-tooltip>
               </b-card-title>
             </b-card-header>
-            <b-card-body>
+
+            <!-- LOADER COMPONENT -->
+            <loader-component v-if="is_req_loading" />
+
+            <!-- REQUIREMENTS ITEM -->
+            <b-card-body v-else>
+              <!-- REQUIREMENTS FORM -->
               <ValidationObserver v-slot="{ handleSubmit }">
-                <!-- form requirements -->
-                <form @submit.prevent="handleSubmit(setRequirements)">
+                <form @submit.prevent="handleSubmit(getRecommendationTalent)">
+                  <!-- PROGRAMMING LANGUAGE -->
                   <ValidationProvider rules="required" v-slot="{ errors }">
-                    <!-- programming language -->
                     <div>
                       <label for="programming-language" class="fs-12 d-flex">
                         Programming Language
@@ -23,21 +45,24 @@
                         <span class="ml-auto">Priority(%)</span>
                       </label>
                       <div class="d-flex">
+                        <!-- VALUE INPUT -->
                         <v-select
                           :options="programming_language_options"
                           multiple
                           placeholder="Select Programming Language"
                           :selectable="
                             () =>
-                              requirements.programming_language.value.length < 4
+                              requirement.hardskill.programming_language
+                                .length < 4
                           "
-                          v-model="requirements.programming_language.value"
+                          v-model="requirement.hardskill.programming_language"
                         ></v-select>
+                        <!-- PRIORITY INPUT -->
                         <b-form-input
                           type="number"
                           min="0"
                           class="ml-2 input-persent"
-                          v-model="requirements.programming_language.percent"
+                          v-model="requirement.priorities.programming_language"
                         />
                       </div>
                     </div>
@@ -46,125 +71,141 @@
                       {{ errors[0] }}
                     </span>
                   </ValidationProvider>
-                  <!-- role -->
+                  <!-- ROLE -->
                   <div class="mt-2">
                     <label for="Role" class="fs-12">Role</label>
                     <div class="d-flex">
+                      <!-- VALUE INPUT -->
                       <v-select
-                        :options="[
-                          'Frontend Developer',
-                          'Backend Developer',
-                          'Fullstack Developer',
-                        ]"
-                        v-model="requirements.role.value"
+                        :options="['Frontend', 'Backend', 'Fullstack']"
+                        v-model="requirement.hardskill.role"
                         placeholder="Select Role"
                       ></v-select>
+                      <!-- PRIORITY INPUT -->
                       <b-form-input
                         type="number"
                         min="0"
                         class="ml-2 input-persent"
-                        v-model="requirements.role.percent"
+                        v-model="requirement.priorities.role"
                       />
                     </div>
                   </div>
-                  <!-- framework -->
+                  <!-- FRAMEWORK -->
                   <div class="mt-2">
                     <label for="Framework" class="fs-12"
                       >Framework Skills</label
                     >
                     <div class="d-flex">
+                      <!-- VALUE INPUT -->
                       <v-select
-                        :options="['VueJS', 'ReactJS']"
+                        :options="framework_options"
                         placeholder="Select Framework Skills"
-                        v-model="requirements.framework_skills.value"
+                        multiple
+                        :selectable="
+                          () => requirement.hardskill.framework.length < 3
+                        "
+                        v-model="requirement.hardskill.framework"
                       ></v-select>
+                      <!-- PRIORITY INPUT -->
                       <b-form-input
                         type="number"
                         min="0"
                         class="ml-2 input-persent"
-                        v-model="requirements.framework_skills.percent"
+                        v-model="requirement.priorities.framework"
                       />
                     </div>
                   </div>
-                  <!-- database -->
+                  <!-- DATABASE -->
                   <div class="mt-2">
                     <label for="Database" class="fs-12">Database Skills</label>
                     <div class="d-flex">
+                      <!-- VALUE INPUT -->
                       <v-select
-                        :options="['MySQL', 'SQL Server', 'MongoDB']"
+                        :options="database_options"
                         placeholder="Select Database Skills"
-                        v-model="requirements.database_skills.value"
+                        multiple
+                        :selectable="
+                          () => requirement.hardskill.database.length < 3
+                        "
+                        v-model="requirement.hardskill.database"
                       ></v-select>
+                      <!-- PRIORITY INPUT -->
                       <b-form-input
                         type="number"
                         min="0"
                         class="ml-2 input-persent"
-                        v-model="requirements.database_skills.percent"
+                        v-model="requirement.priorities.database"
                       />
                     </div>
                   </div>
-                  <!-- work experience -->
+                  <!-- WORK EXPERIENCE -->
                   <div class="mt-2">
                     <label for="work-experience" class="fs-12">
                       Minimum Work Experience (Years)
                     </label>
                     <div class="d-flex">
+                      <!-- VALUE INPUT -->
                       <b-form-input
                         type="number"
                         id="work-experience"
                         placeholder="Input Minimum Work Experience"
                         class="input-talent"
                         style="height: 2.5rem !important"
-                        v-model="requirements.work_experience.value"
+                        v-model="requirement.personal.min_experience"
                       />
+                      <!-- PRIORITY INPUT -->
                       <b-form-input
                         type="number"
                         min="0"
                         class="ml-2 input-persent"
-                        v-model="requirements.work_experience.percent"
+                        v-model="requirement.priorities.min_experience"
                       />
                     </div>
                   </div>
-                  <!-- gender -->
+                  <!-- GENDER -->
                   <div class="mt-2">
                     <label for="Gender" class="fs-12">Gender</label>
                     <div class="d-flex">
+                      <!-- VALUE INPUT -->
                       <v-select
                         :options="['Male', 'Female']"
                         placeholder="Select Gender"
-                        v-model="requirements.gender.value"
+                        v-model="requirement.personal.gender"
                       ></v-select>
+                      <!-- PRIORITY INPUT -->
                       <b-form-input
                         type="number"
                         min="0"
                         class="ml-2 input-persent"
-                        v-model="requirements.gender.percent"
+                        v-model="requirement.priorities.gender"
                       />
                     </div>
                   </div>
-                  <!-- max age -->
+                  <!-- MAXIMUM AGE -->
                   <div class="mt-2">
                     <label for="max-age" class="fs-12">
                       Maximum Age (Years)
                     </label>
                     <div class="d-flex">
+                      <!-- VALUE INPUT -->
                       <b-form-input
                         type="number"
                         id="max-age"
                         placeholder="Input Maximum Age"
                         class="input-talent"
                         style="height: 2.5rem !important"
-                        v-model="requirements.max_age.value"
+                        v-model="requirement.personal.max_age"
                       />
+                      <!-- PRIORITY INPUT -->
                       <b-form-input
                         type="number"
                         min="0"
                         class="ml-2 input-persent"
-                        v-model="requirements.max_age.percent"
+                        v-model="requirement.priorities.max_age"
                       />
                     </div>
                   </div>
-                  <!-- set requirements button -->
+                  <!-- SET REQUIREMENTS BUTTON -->
                   <b-button type="submit" class="btn-talent btn-block mt-5">
                     Set Requirements
                   </b-button>
@@ -173,19 +214,31 @@
             </b-card-body>
           </b-card>
         </div>
-        <!-- Recommendation Talent -->
+
+        <!-- RECOMMENDATION TALENT -->
         <div class="col-md-8 col-sm-12 mb-3">
           <b-card no-body class="pt-2 h-100">
             <b-card-header>
               <b-card-title class="fs-20">
-                <i class="bi bi-person-vcard"></i> Recommendation Talents
+                Recommendation Talents
               </b-card-title>
             </b-card-header>
+            <!-- RECOMMENDATION ITEM -->
             <b-card-body class="recommendation-wrapper">
-              <loader v-if="is_loading" />
+              <!-- LOADER COMPONENT -->
+              <loader-component v-if="is_loading" />
+              <!-- RECOMMENDATION VALUE -->
               <div v-else>
-                <div v-for="item in data" :key="item._id">
-                  <recommendation-card-component :data="item" />
+                <!-- IMAGE EMPTY DATA -->
+                <center v-if="data.length == 0">
+                  <img src="../../../../public/is_empty.png" width="70%" />
+                </center>
+                <!-- NOT EMPTY DATA -->
+                <div v-else>
+                  <div v-for="item in data" :key="item._id">
+                    <!-- RECOMMENDATION CARD COMPONENT -->
+                    <recommendation-card-component :data="item" />
+                  </div>
                 </div>
               </div>
             </b-card-body>
@@ -211,61 +264,58 @@ export default {
   name: "Home",
   components: {
     "recommendation-card-component": recommendation_card,
-    loader,
+    "loader-component": loader,
     ValidationProvider,
     ValidationObserver,
   },
   data() {
     return {
+      account_id: this.$store.getters.user.user_id,
       is_add_more: false,
       is_loading: true,
-      programming_language_options: ["Javascript", "Go", "PHP", "HTML", "CSS"],
-      requirements: {
-        programming_language: {
-          value: [],
-          percent: 0,
+      is_req_loading: true,
+      database_options: [],
+      framework_options: [],
+      programming_language_options: [],
+      requirement: {
+        hardskill: {
+          programming_language: [],
+          framework: [],
+          database: [],
+          role: null,
         },
-        role: {
-          value: null,
-          percent: 0,
+        personal: {
+          min_experience: null,
+          gender: null,
+          max_age: null,
         },
-        framework_skills: {
-          value: null,
-          percent: 0,
-        },
-        database_skills: {
-          value: null,
-          percent: 0,
-        },
-        work_experience: {
-          value: null,
-          percent: 0,
-        },
-        gender: {
-          value: null,
-          percent: 0,
-        },
-        max_age: {
-          value: null,
-          percent: 0,
+        priorities: {
+          programming_language: 0,
+          framework: 0,
+          database: 0,
+          role: 0,
+          min_experience: 0,
+          gender: 0,
+          max_age: 0,
         },
       },
-      data: null,
+      data: [],
     };
   },
   created() {
     this.getData();
+    this.getOptions();
   },
   computed: {
     totalPercent() {
       let val =
-        parseInt(this.requirements.programming_language.percent) +
-        parseInt(this.requirements.role.percent) +
-        parseInt(this.requirements.framework_skills.percent) +
-        parseInt(this.requirements.database_skills.percent) +
-        parseInt(this.requirements.work_experience.percent) +
-        parseInt(this.requirements.gender.percent) +
-        parseInt(this.requirements.max_age.percent);
+        parseInt(this.requirement.priorities.programming_language) +
+        parseInt(this.requirement.priorities.role) +
+        parseInt(this.requirement.priorities.framework) +
+        parseInt(this.requirement.priorities.database) +
+        parseInt(this.requirement.priorities.min_experience) +
+        parseInt(this.requirement.priorities.gender) +
+        parseInt(this.requirement.priorities.max_age);
       return val;
     },
   },
@@ -285,7 +335,23 @@ export default {
           this.is_loading = false;
         });
     },
-    setRequirements() {
+    getOptions() {
+      this.is_req_loading = true;
+      this.$url
+        .get("requirement/req/all")
+        .then((res) => {
+          this.programming_language_options = res.data.programming_language;
+          this.database_options = res.data.database;
+          this.framework_options = res.data.framework;
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          this.is_req_loading = false;
+        });
+    },
+    getRecommendationTalent() {
       if (this.totalPercent > 100) {
         Swal.fire({
           icon: "error",
@@ -294,7 +360,113 @@ export default {
           footer: "",
         });
       } else {
-        alert("submitted");
+        let params = {
+          hardskill: {
+            programming_language:
+              this.requirement.hardskill.programming_language,
+            framework:
+              this.requirement.hardskill.framework.length == 0
+                ? null
+                : this.requirement.hardskill.framework,
+            database:
+              this.requirement.hardskill.database.length == 0
+                ? null
+                : this.requirement.hardskill.database,
+            role: this.requirement.hardskill.role,
+          },
+          personal: {
+            min_experience: this.requirement.personal.min_experience
+              ? this.requirement.personal.min_experience
+              : null,
+            gender: this.requirement.personal.gender
+              ? this.requirement.personal.gender
+              : null,
+            max_age: this.requirement.personal.max_age
+              ? this.requirement.personal.max_age
+              : null,
+          },
+          priorities: [
+            {
+              needs: "programming_language",
+              percentage:
+                this.requirement.priorities.programming_language / 100,
+            },
+            {
+              needs: "framework",
+              percentage:
+                this.requirement.hardskill.framework.length > 0
+                  ? this.requirement.priorities.framework / 100
+                  : null,
+            },
+            {
+              needs: "database",
+              percentage:
+                this.requirement.hardskill.database.length > 0
+                  ? this.requirement.priorities.database / 100
+                  : null,
+            },
+            {
+              needs: "role",
+              percentage: this.requirement.hardskill.role
+                ? this.requirement.priorities.role / 100
+                : null,
+            },
+            {
+              needs: "min_experience",
+              percentage: this.requirement.personal.min_experience
+                ? this.requirement.priorities.min_experience / 100
+                : null,
+            },
+            {
+              needs: "gender",
+              percentage: this.requirement.personal.gender
+                ? this.requirement.priorities.gender / 100
+                : null,
+            },
+            {
+              needs: "max_age",
+              percentage: this.requirement.personal.max_age
+                ? this.requirement.priorities.max_age / 100
+                : null,
+            },
+          ],
+        };
+        this.is_loading = true;
+        let api =
+          process.env.VUE_APP_API_URL +
+          "talent/recommendation/" +
+          this.account_id +
+          "?status=available";
+        this.$url
+          .post(api, params)
+          .then((res) => {
+            let temp = [];
+            for (let i = 0; i < res.data.recommendation.length; i++) {
+              temp[i] = res.data.recommendation[i].talent;
+              if (res.data.recommendation[i].score == 0) {
+                temp.sort(function (a, b) {
+                  var prog_val_a = a.hardskill[0].programming_language.length;
+                  var prog_val_b = b.hardskill[0].programming_language.length;
+
+                  if (prog_val_a < prog_val_b) {
+                    return 1;
+                  }
+                  if (prog_val_a > prog_val_b) {
+                    return -1;
+                  }
+                  return 0;
+                });
+              }
+            }
+
+            this.data = temp;
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+          .finally(() => {
+            this.is_loading = false;
+          });
       }
     },
   },

@@ -1,18 +1,23 @@
 <template>
   <b-modal id="add-talent" size="md" hide-footer @hidden="closeModal">
+    <!-- MODAL TITLE -->
     <template #modal-title>
       <i class="bi bi bi-person-fill-add"></i>
       Add New Talent
     </template>
+
+    <!-- MODAL ITEM -->
     <b-card no-body class="shadow p-3">
+      <!-- TALENT FORM -->
       <ValidationObserver v-slot="{ handleSubmit }">
-        <form @submit.prevent="handleSubmit(addTalent)">
+        <form @submit.prevent="handleSubmit(addTalentAccount)">
+          <!-- ALERT WRONG EMAIL -->
           <b-alert :show="is_already_exist" variant="danger" class="p-2 fs-12">
             <i class="bi bi-exclamation-circle fs-14"></i>
             This Email is Already Exists!
           </b-alert>
+          <!-- FULL NAME -->
           <ValidationProvider rules="required" v-slot="{ errors }">
-            <!-- Full Name -->
             <div class="mb-2">
               <label for="school" class="fs-12">
                 Full Name <span class="text-danger">*</span>
@@ -34,8 +39,8 @@
               <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
             </span>
           </ValidationProvider>
+          <!-- EMAIL -->
           <ValidationProvider rules="required|email" v-slot="{ errors }">
-            <!-- Email -->
             <div class="mb-2">
               <label for="dgree" class="fs-12">
                 Email <span class="text-danger">*</span>
@@ -57,22 +62,23 @@
               <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
             </span>
           </ValidationProvider>
-          <ValidationProvider rules="required" v-slot="{ errors }">
-            <!-- Phone Number -->
-            <div class="mb-2">
-              <label for="subject" class="fs-12">
+          <!-- PHONE NUMER -->
+          <ValidationProvider rules="required|numeric" v-slot="{ errors }">
+            <div class="mt-2">
+              <label for="phone_number" class="fs-12">
                 Phone Number <span class="text-danger">*</span>
               </label>
               <div class="d-flex">
                 <div class="icon-talent d-flex p-0 form-control mr-1">
                   <i class="bi bi-telephone-fill mx-auto my-auto"></i>
                 </div>
-                <b-form-input
-                  type="number"
-                  id="subject"
-                  class="input-talent ml-auto"
-                  placeholder="Input Your Phone Number"
+                <input
                   v-model="talent.phone_number"
+                  type="text"
+                  maxLength="12"
+                  id="phone_number"
+                  placeholder="Input Telephone Number"
+                  class="form-control input-talent ml-auto"
                 />
               </div>
             </div>
@@ -80,8 +86,8 @@
               <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
             </span>
           </ValidationProvider>
+          <!-- COMPANY -->
           <ValidationProvider rules="required" v-slot="{ errors }">
-            <!-- Company -->
             <div class="mb-2">
               <label for="company" class="fs-12">
                 Company <span class="text-danger">*</span>
@@ -103,8 +109,9 @@
               <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
             </span>
           </ValidationProvider>
-          <!-- Action Button -->
+          <!-- ACTION BUTTON -->
           <div class="d-flex mt-3">
+            <!-- CANCEL BUTTON -->
             <b-button
               size="xs"
               variant="danger"
@@ -113,6 +120,7 @@
             >
               <span>Cancel</span>
             </b-button>
+            <!-- SAVE BUTTON -->
             <b-button
               size="xs"
               variant="secondary"
@@ -129,7 +137,7 @@
 </template>
 <script>
 import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
-import { required, email } from "vee-validate/dist/rules";
+import { required, email, numeric } from "vee-validate/dist/rules";
 
 extend("required", {
   ...required,
@@ -138,6 +146,10 @@ extend("required", {
 extend("email", {
   ...email,
   message: "This Email is Not Valid",
+});
+extend("numeric", {
+  ...numeric,
+  message: "This Field Must be a Number",
 });
 
 export default {
@@ -184,11 +196,11 @@ export default {
       this.resetModal();
       this.$bvModal.hide("add-talent");
     },
-    addTalent() {
+    addTalentAccount() {
       this.is_already_exist = false;
       this.is_loading = true;
       this.$url
-        .post("account/newtalent", this.talent)
+        .post("account/add", this.talent)
         .then((res) => {
           this.$toast.success("Success! Talent has been added.");
           this.closeModal();
@@ -198,7 +210,7 @@ export default {
         })
         .finally(() => {
           this.is_loading = false;
-          this.$parent.getData();
+          this.$parent.getTalentList();
         });
     },
   },

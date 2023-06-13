@@ -3,18 +3,23 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12 col-sm-12 mb-4">
-          <!-- Profile -->
+          <!-- PROFILE -->
           <b-card no-body class="p-2 mb-4">
             <b-card-header>
               <b-card-title class="fs-20"> Profile </b-card-title>
             </b-card-header>
-            <b-card-body class="mt-0 pt-0">
+            <!-- LOADER COMPONENT -->
+            <loader-component v-if="is_load_profile" class="mb-3" />
+            <!-- CARD ITEM -->
+            <b-card-body v-else class="mt-0 pt-0">
+              <!-- PROFILE FORM -->
               <ValidationObserver v-slot="{ handleSubmit }">
                 <form @submit.prevent="handleSubmit(updateProfile)">
                   <div class="row">
+                    <!-- LEFT COLUMN -->
                     <div class="col-md-6">
+                      <!-- FULL NAME -->
                       <ValidationProvider rules="required" v-slot="{ errors }">
-                        <!-- Full Name -->
                         <div class="mt-2">
                           <label for="full-name" class="fs-12">
                             Full Name
@@ -40,7 +45,7 @@
                         </div>
                         <span class="text-danger fs-10">{{ errors[0] }}</span>
                       </ValidationProvider>
-                      <!-- Description -->
+                      <!-- DESCRIPTION -->
                       <div class="mt-2">
                         <label for="description" class="fs-12">
                           Description
@@ -59,7 +64,7 @@
                           />
                         </div>
                       </div>
-                      <!-- Place of Birth -->
+                      <!-- PLACE OF BIRTH -->
                       <div class="mt-2">
                         <label for="place-of-birth" class="fs-12">
                           Place of Birth
@@ -78,8 +83,8 @@
                           />
                         </div>
                       </div>
+                      <!-- DATE OF BIRTH -->
                       <ValidationProvider rules="required" v-slot="{ errors }">
-                        <!-- Date of Birth -->
                         <div class="mt-2">
                           <label for="date-of-birth" class="fs-12">
                             Date of Birth
@@ -108,8 +113,8 @@
                         </div>
                         <span class="text-danger fs-10">{{ errors[0] }}</span>
                       </ValidationProvider>
+                      <!-- GENDER -->
                       <ValidationProvider rules="required" v-slot="{ errors }">
-                        <!-- Gender -->
                         <div class="mt-2">
                           <label for="gender" class="fs-12">
                             Gender
@@ -126,7 +131,6 @@
                             <v-select
                               id="gender"
                               :options="['Male', 'Female']"
-                              multiple
                               placeholder="Select Your Gender"
                               v-model="profile.gender"
                             ></v-select>
@@ -134,7 +138,7 @@
                         </div>
                         <span class="text-danger fs-10">{{ errors[0] }}</span>
                       </ValidationProvider>
-                      <!-- Health -->
+                      <!-- HEALTH -->
                       <div class="mt-2">
                         <label for="health" class="fs-12"> Health </label>
                         <div class="d-flex">
@@ -151,7 +155,7 @@
                           />
                         </div>
                       </div>
-                      <!-- Religion -->
+                      <!-- RELIGION -->
                       <div class="mt-2">
                         <label for="religion" class="fs-12"> Religion </label>
                         <div class="d-flex">
@@ -168,9 +172,11 @@
                           />
                         </div>
                       </div>
-                      <!-- Language -->
+                      <!-- LANGUAGE SKILLS -->
                       <div class="mt-2">
-                        <label for="language" class="fs-12"> Language </label>
+                        <label for="language" class="fs-12">
+                          Language Skills
+                        </label>
                         <div class="d-flex">
                           <div class="icon-talent d-flex p-0 form-control mr-1">
                             <i class="bi bi-translate mx-auto my-auto"></i>
@@ -178,7 +184,7 @@
                           <b-form-input
                             type="text"
                             id="language"
-                            placeholder="Input Your Language Skills"
+                            placeholder="Input Your Language Skills (Ex. English, Indonesian)"
                             class="input-talent ml-auto"
                             style="height: 2.5rem !important"
                             v-model="profile.language"
@@ -186,12 +192,14 @@
                         </div>
                       </div>
                     </div>
+
+                    <!-- RIGHT COLUMN -->
                     <div class="col-md-6">
-                      <!-- Programming Language -->
+                      <!-- PROGRAMMING LANGUAGE SKILLS -->
                       <ValidationProvider rules="required" v-slot="{ errors }">
                         <div class="mt-2">
                           <label for="programming-language" class="fs-12">
-                            Programming Language
+                            Programming Language Skills
                             <span class="text-danger">*</span>
                           </label>
                           <div class="d-flex">
@@ -202,7 +210,7 @@
                             </div>
                             <v-select
                               id="programming-language"
-                              :options="['php', 'Javascript']"
+                              :options="programming_language_options"
                               multiple
                               placeholder="Select Your Programming Language Skills"
                               v-model="profile.programming_language"
@@ -211,11 +219,11 @@
                         </div>
                         <span class="text-danger fs-10">{{ errors[0] }}</span>
                       </ValidationProvider>
+                      <!-- FRAMEWORK SKILLS -->
                       <ValidationProvider rules="required" v-slot="{ errors }">
-                        <!-- Framework -->
                         <div class="mt-2">
                           <label for="framework" class="fs-12">
-                            Framework
+                            Framework Skills
                             <span class="text-danger">*</span>
                           </label>
                           <div class="d-flex">
@@ -228,7 +236,7 @@
                             </div>
                             <v-select
                               id="framework"
-                              :options="['php', 'Javascript']"
+                              :options="framework_options"
                               multiple
                               placeholder="Select Your Framework Skills"
                               v-model="profile.framework"
@@ -237,10 +245,10 @@
                         </div>
                         <span class="text-danger fs-10">{{ errors[0] }}</span>
                       </ValidationProvider>
-                      <!-- Application Server -->
+                      <!-- APPLICATION SERVER SKILLS -->
                       <div class="mt-2">
                         <label for="application-server" class="fs-12">
-                          Application Server
+                          Application Server Skills
                         </label>
                         <div class="d-flex">
                           <div class="icon-talent d-flex p-0 form-control mr-1">
@@ -249,18 +257,18 @@
                           <b-form-input
                             type="text"
                             id="application-server"
-                            placeholder="Input Your Application Server Skills"
+                            placeholder="Input Your Application Server Skills (Ex. Web Server, Proxy Server)"
                             class="input-talent ml-auto"
                             style="height: 2.5rem !important"
                             v-model="profile.application_server"
                           />
                         </div>
                       </div>
+                      <!-- DATABASE SKILLS -->
                       <ValidationProvider rules="required" v-slot="{ errors }">
-                        <!-- Database -->
                         <div class="mt-2">
                           <label for="database" class="fs-12">
-                            Database
+                            Database Skills
                             <span class="text-danger">*</span>
                           </label>
                           <div class="d-flex">
@@ -271,7 +279,7 @@
                             </div>
                             <v-select
                               id="database"
-                              :options="['php', 'Javascript']"
+                              :options="database_options"
                               multiple
                               placeholder="Select Your Database Skills"
                               v-model="profile.database"
@@ -280,10 +288,10 @@
                         </div>
                         <span class="text-danger fs-10">{{ errors[0] }}</span>
                       </ValidationProvider>
-                      <!-- Operating System -->
+                      <!-- OPERATING SYSTEM SKILLS -->
                       <div class="mt-2">
                         <label for="operating-system" class="fs-12">
-                          Operating System
+                          Operating System Skills
                         </label>
                         <div class="d-flex">
                           <div class="icon-talent d-flex p-0 form-control mr-1">
@@ -292,17 +300,17 @@
                           <b-form-input
                             type="text"
                             id="operating-system"
-                            placeholder="Input Your Operating System Skills"
+                            placeholder="Input Your Operating System Skills (Ex. Windows, Linux)"
                             class="input-talent ml-auto"
                             style="height: 2.5rem !important"
                             v-model="profile.operating_system"
                           />
                         </div>
                       </div>
-                      <!-- Development Tools -->
+                      <!-- DEVELOPMENT TOOL SKILLS -->
                       <div class="mt-2">
                         <label for="development-tools" class="fs-12">
-                          Development Tools
+                          Development Tool Skills
                         </label>
                         <div class="d-flex">
                           <div class="icon-talent d-flex p-0 form-control mr-1">
@@ -311,15 +319,15 @@
                           <b-form-input
                             type="text"
                             id="development-tools"
-                            placeholder="Input Your Development Tool Skills"
+                            placeholder="Input Your Development Tool Skills (Ex. VSCode, Intellije)"
                             class="input-talent ml-auto"
                             style="height: 2.5rem !important"
                             v-model="profile.development_tools"
                           />
                         </div>
                       </div>
+                      <!-- ROLE -->
                       <ValidationProvider rules="required" v-slot="{ errors }">
-                        <!-- Role -->
                         <div class="mt-2">
                           <label for="role" class="fs-12">
                             Role
@@ -341,35 +349,40 @@
                         </div>
                         <span class="text-danger fs-10">{{ errors[0] }}</span>
                       </ValidationProvider>
-                      <!-- Work Experience  -->
-                      <div class="mt-2">
-                        <label for="work-experience" class="fs-12">
-                          Work Experience (Years)
-                        </label>
-                        <div class="d-flex">
-                          <div class="icon-talent d-flex p-0 form-control mr-1">
-                            <i
-                              class="bi bi-person-workspace mx-auto my-auto"
-                            ></i>
+                      <!-- WORK EXPERIENCE  -->
+                      <ValidationProvider rules="required" v-slot="{ errors }">
+                        <div class="mt-2">
+                          <label for="work-experience" class="fs-12">
+                            Work Experience (Years)
+                          </label>
+                          <div class="d-flex">
+                            <div
+                              class="icon-talent d-flex p-0 form-control mr-1"
+                            >
+                              <i
+                                class="bi bi-person-workspace mx-auto my-auto"
+                              ></i>
+                            </div>
+                            <b-form-input
+                              type="number"
+                              id="work-experience"
+                              placeholder="Input Your Work Experience"
+                              class="input-talent ml-auto"
+                              style="height: 2.5rem !important"
+                              v-model="profile.work_experience"
+                            />
                           </div>
-                          <b-form-input
-                            type="number"
-                            id="work-experience"
-                            placeholder="Input Your Work Experience"
-                            class="input-talent ml-auto"
-                            style="height: 2.5rem !important"
-                            v-model="profile.work_experience"
-                          />
                         </div>
-                      </div>
-                      <!-- submit button -->
+                        <span class="text-danger fs-10">{{ errors[0] }}</span>
+                      </ValidationProvider>
+                      <!-- SUBMIT BUTTON -->
                       <b-button
                         size="sm"
                         type="submit"
-                        class="mt-5 btn-talent float-right"
+                        class="mt-5 btn-talent float-right rounded-talent"
                       >
-                        <i class="bi bi-check-circle mr-1"></i>
-                        <span>Save Changes</span>
+                        Save Changes
+                        <b-spinner v-if="is_process" small></b-spinner>
                       </b-button>
                     </div>
                   </div>
@@ -377,7 +390,8 @@
               </ValidationObserver>
             </b-card-body>
           </b-card>
-          <!-- Education -->
+
+          <!-- EDUCATION PROFILE -->
           <b-card no-body class="mb-4">
             <b-card-header>
               <b-card-title class="fs-20">
@@ -385,6 +399,7 @@
                   <div class="col-md-4 col-sm-12 mb-2">Education</div>
                   <div class="col-md-8 col-sm-12">
                     <div class="d-flex align-items-center">
+                      <!-- ADD EDUCATION BUTTON -->
                       <div class="ml-auto">
                         <button
                           class="btn btn-talent text-white shadow btn-sm rounded-talent"
@@ -394,6 +409,7 @@
                           <span>Add Education</span>
                         </button>
                       </div>
+                      <!-- SEARCH INPUT -->
                       <div class="ml-2">
                         <div class="input-group input-group-sm">
                           <span class="input-group-text bg-white">
@@ -412,14 +428,19 @@
                 </div>
               </b-card-title>
             </b-card-header>
+            <!-- LOADER COMPONENT -->
+            <loader-component v-if="is_load_education" class="mb-3" />
+            <!-- TABLE COMPONENT -->
             <table-component
+              v-else
               :data="education_table"
               :deleteItem="deleteEducation"
               :editItem="editEducation"
               :hide_show="true"
             />
           </b-card>
-          <!-- Course -->
+
+          <!-- COURSE PROFILE -->
           <b-card no-body class="mb-4">
             <b-card-header>
               <b-card-title class="fs-20">
@@ -427,6 +448,7 @@
                   <div class="col-md-4 col-sm-12 mb-2">Course / Training</div>
                   <div class="col-md-8 col-sm-12">
                     <div class="d-flex align-items-center">
+                      <!-- ADD COURSE BUTTON -->
                       <div class="ml-auto">
                         <button
                           class="btn btn-talent text-white shadow btn-sm rounded-talent"
@@ -436,6 +458,7 @@
                           <span>Add Course</span>
                         </button>
                       </div>
+                      <!-- SEARCH INPUT -->
                       <div class="ml-2">
                         <div class="input-group input-group-sm">
                           <span class="input-group-text bg-white">
@@ -454,14 +477,19 @@
                 </div>
               </b-card-title>
             </b-card-header>
+            <!-- LOADER COMPONENT -->
+            <loader-component v-if="is_load_course" class="mb-3" />
+            <!-- TABLE COMPONENT -->
             <table-component
+              v-else
               :data="course_table"
               :deleteItem="deleteCourse"
               :editItem="editCourse"
               :hide_show="true"
             />
           </b-card>
-          <!-- Employement -->
+
+          <!-- EMPLOYMENT PROFILE -->
           <b-card no-body class="mb-4">
             <b-card-header>
               <b-card-title class="fs-20">
@@ -469,6 +497,7 @@
                   <div class="col-md-4 col-sm-12 mb-2">Employment</div>
                   <div class="col-md-8 col-sm-12">
                     <div class="d-flex align-items-center">
+                      <!-- ADD EMPLOYMENT BUTTON -->
                       <div class="ml-auto">
                         <button
                           class="btn btn-talent text-white shadow btn-sm rounded-talent"
@@ -478,6 +507,7 @@
                           <span>Add Employment</span>
                         </button>
                       </div>
+                      <!-- SEARCH INPUT -->
                       <div class="ml-2">
                         <div class="input-group input-group-sm">
                           <span class="input-group-text bg-white">
@@ -496,7 +526,11 @@
                 </div>
               </b-card-title>
             </b-card-header>
+            <!-- LOADER COMPONENT -->
+            <loader-component v-if="is_load_employment" class="mb-3" />
+            <!-- TABLE COMPONENT -->
             <table-component
+              v-else
               :data="employment_table"
               :deleteItem="deleteEmployment"
               :editItem="editEmployement"
@@ -504,7 +538,8 @@
               :hide_show="true"
             />
           </b-card>
-          <!-- Project Experience -->
+
+          <!-- PROJECT EXPERIENCE PROFILE -->
           <b-card no-body>
             <b-card-header>
               <b-card-title class="fs-20">
@@ -512,6 +547,7 @@
                   <div class="col-md-4 col-sm-12 mb-2">Project Experience</div>
                   <div class="col-md-8 col-sm-12">
                     <div class="d-flex align-items-center">
+                      <!-- ADD PROJECT BUTTON -->
                       <div class="ml-auto">
                         <button
                           class="btn btn-talent text-white shadow btn-sm rounded-talent"
@@ -521,6 +557,7 @@
                           <span>Add Project</span>
                         </button>
                       </div>
+                      <!-- SEARCH INPUT -->
                       <div class="ml-2">
                         <div class="input-group input-group-sm">
                           <span class="input-group-text bg-white">
@@ -539,7 +576,11 @@
                 </div>
               </b-card-title>
             </b-card-header>
+            <!-- LOADER COMPONENT -->
+            <loader-component v-if="is_load_project" class="mb-3" />
+            <!-- TABLE COMPONENT -->
             <table-component
+              v-else
               :data="project_table"
               :deleteItem="deleteProject"
               :editItem="editProject"
@@ -549,14 +590,22 @@
         </div>
       </div>
     </div>
+    <!-- ADD EDUCATION MODAL COMPONENT -->
     <add-education-component />
-    <edit-education-component />
+    <!-- EDIT EDUCATION MODAL COMPONENT -->
+    <edit-education-component ref="edit_education" />
+    <!-- ADD COURSE MODAL COMPONENT -->
     <add-course-component />
-    <edit-course-component />
+    <!-- EDIT COURSE MODAL COMPONENT -->
+    <edit-course-component ref="edit_course" />
+    <!-- ADD EMPLOYMENT MODAL COMPONENT -->
     <add-employment-component />
-    <edit-employment-component />
+    <!-- EDIT EMPLOYMENT MODAL COMPONENT -->
+    <edit-employment-component ref="edit_employment" />
+    <!-- ADD PROJECT EXPERIENCE MODAL COMPONENT -->
     <add-project-component />
-    <edit-project-component />
+    <!-- EDIT PROJECT EXPERIENCE MODAL COMPONENT -->
+    <edit-project-component ref="edit_project" />
   </div>
 </template>
 <script>
@@ -572,6 +621,7 @@ import add_project_modal from "../../components/talent/add_project_modal.vue";
 import edit_project_modal from "../../components/talent/edit_project_modal.vue";
 import add_employment_modal from "../../components/talent/add_employment_modal.vue";
 import edit_employment_modal from "../../components/talent/edit_employment_modal.vue";
+import loader from "../../components/loader.vue";
 
 extend("required", {
   ...required,
@@ -590,13 +640,24 @@ export default {
     "edit-employment-component": edit_employment_modal,
     "add-project-component": add_project_modal,
     "edit-project-component": edit_project_modal,
+    "loader-component": loader,
     ValidationProvider,
     ValidationObserver,
   },
   data() {
     return {
+      is_load_profile: true,
+      is_load_education: true,
+      is_load_course: true,
+      is_load_employment: true,
+      is_load_project: true,
+      is_process: false,
+      account_id: this.$store.getters.user.user_id,
+      programming_language_options: [],
+      database_options: [],
+      framework_options: [],
       profile: {
-        full_name: "Hanhan Septian",
+        full_name: "",
         description: "",
         programming_language: [],
         framework: [],
@@ -649,41 +710,10 @@ export default {
             key: "action",
             label: "ACTION",
             thClass: "fs-12 text-center bg-talent text-white p-2",
-            tdClass: "text-center fs-12 d-flex",
+            tdClass: "text-center fs-12",
           },
         ],
-        items: [
-          {
-            id: 1,
-            school: "Insititut Teknologi Bandung",
-            degree: "Doctor",
-            subject: "Informatics Engineering",
-          },
-          {
-            id: 2,
-            school: "Telkom University",
-            degree: "Master",
-            subject: "Informatics Engineering",
-          },
-          {
-            id: 3,
-            school: "Politeknik Negeri Bandung",
-            degree: "Bachelor",
-            subject: "Informatics Engineering",
-          },
-          {
-            id: 4,
-            school: "Politeknik Negeri Bandung",
-            degree: "Associate Degree",
-            subject: "Informatics Engineering",
-          },
-          {
-            id: 5,
-            school: "Politeknik Negeri Bandung",
-            degree: "Associate Degree",
-            subject: "Informatics Engineering",
-          },
-        ],
+        items: [],
       },
       course_table: {
         row: 5,
@@ -732,43 +762,7 @@ export default {
             thStyle: "width:10%",
           },
         ],
-        items: [
-          {
-            id: 1,
-            title: "Machine Learning for Beginners",
-            provider: "Dicoding",
-            date: "02 December 2022",
-            duration: "2 Month",
-          },
-          {
-            id: 2,
-            title: "Machine Learning for Beginners",
-            provider: "Dicoding",
-            date: "02 December 2022",
-            duration: "2 Month",
-          },
-          {
-            id: 3,
-            title: "Machine Learning for Beginners",
-            provider: "Dicoding",
-            date: "02 December 2022",
-            duration: "2 Month",
-          },
-          {
-            id: 4,
-            title: "Machine Learning for Beginners",
-            provider: "Dicoding",
-            date: "02 December 2022",
-            duration: "2 Month",
-          },
-          {
-            id: 5,
-            title: "Machine Learning for Beginners",
-            provider: "Dicoding",
-            date: "02 December 2022",
-            duration: "2 Month",
-          },
-        ],
+        items: [],
       },
       employment_table: {
         row: 5,
@@ -782,7 +776,7 @@ export default {
             thStyle: "width:2%",
           },
           {
-            key: "company",
+            key: "company_name",
             label: "COMPANY",
             thClass: "fs-12 text-left bg-talent text-white p-2",
             tdClass: "text-left fs-12",
@@ -817,43 +811,7 @@ export default {
             thStyle: "width:10%",
           },
         ],
-        items: [
-          {
-            id: 1,
-            company: "PT Jayandra",
-            work_from: "03 January 2020",
-            work_until: "02 December 2022",
-            role: "Junior Programmer",
-          },
-          {
-            id: 2,
-            company: "PT Jayandra",
-            work_from: "03 January 2020",
-            work_until: "02 December 2022",
-            role: "Junior Programmer",
-          },
-          {
-            id: 3,
-            company: "PT Jayandra",
-            work_from: "03 January 2020",
-            work_until: "02 December 2022",
-            role: "Junior Programmer",
-          },
-          {
-            id: 4,
-            company: "PT Jayandra",
-            work_from: "03 January 2020",
-            work_until: "02 December 2022",
-            role: "Junior Programmer",
-          },
-          {
-            id: 5,
-            company: "PT Jayandra",
-            work_from: "03 January 2020",
-            work_until: "02 December 2022",
-            role: "Junior Programmer",
-          },
-        ],
+        items: [],
       },
       project_table: {
         row: 5,
@@ -902,7 +860,7 @@ export default {
             thStyle: "background-color: #c1dbec",
           },
           {
-            key: "descriptions",
+            key: "description",
             label: "DESCRIPTIONS",
             thClass: "fs-12 text-left bg-talent text-white p-2",
             tdClass: "text-left fs-12",
@@ -979,104 +937,143 @@ export default {
             thStyle: "width:10%",
           },
         ],
-        items: [
-          {
-            id: 1,
-            name: "Monitoring Maps",
-            site: "Bandung",
-            project_start: "02 December 2022",
-            project_end: "03 Januari 2023",
-            client: "Leslar Metaverse",
-            descriptions: "Sistem NLP",
-            app_type: "Website",
-            dev_language: ["Javascript", "Go"],
-            role: "Backend",
-            framework: ["VueJS", "Gogin"],
-            dev_tools: ["VS Code"],
-            server_os: ["Linux"],
-            database: ["MongoDB"],
-            app_server: ["Web Server"],
-            other_info: "Info Lainnya",
-          },
-          {
-            id: 2,
-            name: "Monitoring Maps",
-            site: "Bandung",
-            project_start: "02 December 2022",
-            project_end: "03 Januari 2023",
-            client: "Leslar Metaverse",
-            descriptions: "Sistem NLP",
-            app_type: "Website",
-            dev_language: ["Javascript", "Go"],
-            role: "Backend",
-            framework: ["VueJS", "Gogin"],
-            dev_tools: ["VS Code"],
-            server_os: ["Linux"],
-            database: ["MongoDB"],
-            app_server: ["Web Server"],
-            other_info: "Info Lainnya",
-          },
-          {
-            id: 3,
-            name: "Monitoring Maps",
-            site: "Bandung",
-            project_start: "02 December 2022",
-            project_end: "03 Januari 2023",
-            client: "Leslar Metaverse",
-            descriptions: "Sistem NLP",
-            app_type: "Website",
-            dev_language: ["Javascript", "Go"],
-            role: "Backend",
-            framework: ["VueJS", "Gogin"],
-            dev_tools: ["VS Code"],
-            server_os: ["Linux"],
-            database: ["MongoDB"],
-            app_server: ["Web Server"],
-            other_info: "Info Lainnya",
-          },
-          {
-            id: 4,
-            name: "Monitoring Maps",
-            site: "Bandung",
-            project_start: "02 December 2022",
-            project_end: "03 Januari 2023",
-            client: "Leslar Metaverse",
-            descriptions: "Sistem NLP",
-            app_type: "Website",
-            dev_language: ["Javascript", "Go"],
-            role: "Backend",
-            framework: ["VueJS", "Gogin"],
-            dev_tools: ["VS Code"],
-            server_os: ["Linux"],
-            database: ["MongoDB"],
-            app_server: ["Web Server"],
-            other_info: "Info Lainnya",
-          },
-          {
-            id: 5,
-            name: "Monitoring Maps",
-            site: "Bandung",
-            project_start: "02 December 2022",
-            project_end: "03 Januari 2023",
-            client: "Leslar Metaverse",
-            descriptions: "Sistem NLP",
-            app_type: "Website",
-            dev_language: ["Javascript", "Go"],
-            role: "Backend",
-            framework: ["VueJS", "Gogin"],
-            dev_tools: ["VS Code"],
-            server_os: ["Linux"],
-            database: ["MongoDB"],
-            app_server: ["Web Server"],
-            other_info: "Info Lainnya",
-          },
-        ],
+        items: [],
       },
     };
   },
+  created() {
+    this.getOptions();
+  },
   methods: {
+    getOptions() {
+      this.is_req_loading = true;
+      this.$url
+        .get("requirement/req/all")
+        .then((res) => {
+          this.programming_language_options = res.data.programming_language;
+          this.database_options = res.data.database;
+          this.framework_options = res.data.framework;
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          this.getProfile();
+          this.is_req_loading = false;
+        });
+    },
+    getProfile(
+      profile = true,
+      education = true,
+      course = true,
+      employment = true,
+      project = true
+    ) {
+      this.is_load_profile = profile;
+      this.is_load_education = education;
+      this.is_load_course = course;
+      this.is_load_employment = employment;
+      this.is_load_project = project;
+      let api = process.env.VUE_APP_API_URL + "talent/" + this.account_id;
+      this.$url
+        .get(api)
+        .then((res) => {
+          let val = res.data.talent;
+          this.profile.full_name = val.full_name;
+          if ("description" in val) {
+            this.profile.description = val.description;
+          }
+          if ("place_of_birth" in val) {
+            this.profile.place_of_birth = val.place_of_birth;
+          }
+          if ("date_of_birth" in val) {
+            this.profile.date_of_birth = val.date_of_birth;
+          }
+          if ("gender" in val) {
+            this.profile.gender = val.gender;
+          }
+          if ("health" in val) {
+            this.profile.health = val.health;
+          }
+          if ("religion" in val) {
+            this.profile.religion = val.religion;
+          }
+          if ("language" in val) {
+            this.profile.language = val.language.join(",");
+          }
+          if ("role" in val) {
+            this.profile.role = val.role;
+          }
+          if ("work_experience" in val) {
+            this.profile.work_experience = val.work_experience;
+          }
+          if ("programming_language" in val) {
+            this.profile.programming_language = val.programming_language;
+          }
+          if ("framework" in val) {
+            this.profile.framework = val.framework;
+          }
+          if ("application_server" in val) {
+            this.profile.application_server = val.application_server.join(",");
+          }
+          if ("database" in val) {
+            this.profile.database = val.database;
+          }
+          if ("operating_system" in val) {
+            this.profile.operating_system = val.operating_system.join(",");
+          }
+          if ("development_tools" in val) {
+            this.profile.development_tools = val.development_tools.join(",");
+          }
+          this.education_table.items = val.education;
+          this.course_table.items = val.courses;
+          this.employment_table.items = val.employment;
+          this.project_table.items = val.projectexperience;
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          this.is_load_profile = false;
+          this.is_load_education = false;
+          this.is_load_course = false;
+          this.is_load_employment = false;
+          this.is_load_project = false;
+        });
+    },
     updateProfile() {
-      alert("submitted");
+      this.is_process = true;
+      let api =
+        process.env.VUE_APP_API_URL + "talent/" + this.account_id + "/profile";
+      this.$url
+        .post(api, {
+          editor: "talent",
+          full_name: this.profile.full_name,
+          description: this.profile.description,
+          place_of_birth: this.profile.place_of_birth,
+          date_of_birth: this.profile.date_of_birth,
+          religion: this.profile.religion,
+          gender: this.profile.gender,
+          health: this.profile.health,
+          role: this.profile.role,
+          work_experience: this.profile.work_experience,
+          language: this.profile.language.split(","),
+          programming_language: this.profile.programming_language,
+          framework: this.profile.framework,
+          database: this.profile.database,
+          operating_system: this.profile.operating_system.split(","),
+          development_tools: this.profile.development_tools.split(","),
+          application_server: this.profile.application_server.split(","),
+        })
+        .then(() => {
+          this.$toast.success(`Success! Request successfully updated.`);
+        })
+        .catch(() => {
+          this.$toast.error(`Error! An Error Occured while updating data.`);
+        })
+        .finally(() => {
+          this.is_process = false;
+        });
     },
     addEducation() {
       this.$bvModal.show("add-education-modal");
@@ -1090,19 +1087,54 @@ export default {
     addProject() {
       this.$bvModal.show("add-project-modal");
     },
-    editEducation() {
+    editEducation(id) {
+      let val = this.education_table.items.filter((el) => el._id == id);
+      this.$refs.edit_education._id = val[0]._id;
+      this.$refs.edit_education.education.school = val[0].school;
+      this.$refs.edit_education.education.degree = val[0].degree;
+      this.$refs.edit_education.education.subject = val[0].subject;
       this.$bvModal.show("edit-education-modal");
     },
-    editCourse() {
+    editCourse(id) {
+      let val = this.course_table.items.filter((el) => el._id == id);
+      this.$refs.edit_course._id = val[0]._id;
+      this.$refs.edit_course.course.title = val[0].title;
+      this.$refs.edit_course.course.provider = val[0].provider;
+      this.$refs.edit_course.course.date = val[0].date;
+      this.$refs.edit_course.course.duration = val[0].duration;
       this.$bvModal.show("edit-course-modal");
     },
-    editEmployement() {
-      this.$bvModal.show("edit-employement-modal");
+    editEmployement(id) {
+      let val = this.employment_table.items.filter((el) => el._id == id);
+      this.$refs.edit_employment._id = val[0]._id;
+      this.$refs.edit_employment.employment.company_name = val[0].company_name;
+      this.$refs.edit_employment.employment.work_from = val[0].work_from;
+      this.$refs.edit_employment.employment.work_until = val[0].work_until;
+      this.$refs.edit_employment.employment.role = val[0].role;
+      this.$bvModal.show("edit-employment-modal");
     },
-    editProject() {
+    editProject(id) {
+      let val = this.project_table.items.filter((el) => el._id == id);
+      this.$refs.edit_project._id = val[0]._id;
+      this.$refs.edit_project.project.site = val[0].site;
+      this.$refs.edit_project.project.name = val[0].name;
+      this.$refs.edit_project.project.project_start = val[0].project_start;
+      this.$refs.edit_project.project.project_end = val[0].project_end;
+      this.$refs.edit_project.project.client = val[0].client;
+      this.$refs.edit_project.project.description = val[0].description;
+      this.$refs.edit_project.project.app_type = val[0].app_type;
+      this.$refs.edit_project.project.dev_language =
+        val[0].dev_language.join(",");
+      this.$refs.edit_project.project.role = val[0].role;
+      this.$refs.edit_project.project.framework = val[0].framework.join(",");
+      this.$refs.edit_project.project.dev_tools = val[0].dev_tools.join(",");
+      this.$refs.edit_project.project.server_os = val[0].server_os.join(",");
+      this.$refs.edit_project.project.database = val[0].database.join(",");
+      this.$refs.edit_project.project.app_server = val[0].app_server.join(",");
+      this.$refs.edit_project.project.other_info = val[0].other_info;
       this.$bvModal.show("edit-project-modal");
     },
-    deleteEducation() {
+    deleteEducation(id) {
       Swal.fire({
         title: "Are you sure?",
         text: "You want to delete this education",
@@ -1114,11 +1146,27 @@ export default {
         reverseButtons: true,
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire("Deleted!", "Education has been deleted.", "success");
+          let api =
+            process.env.VUE_APP_API_URL +
+            "talent/" +
+            this.account_id +
+            "/education/" +
+            id;
+          this.$url
+            .delete(api)
+            .then(() => {
+              this.getProfile(false, true, false, false, false);
+              this.$toast.success(`Success! Education successfully deleted.`);
+            })
+            .catch(() => {
+              this.$toast.error(
+                `Error! An Error occured while deleting education.`
+              );
+            });
         }
       });
     },
-    deleteCourse() {
+    deleteCourse(id) {
       Swal.fire({
         title: "Are you sure?",
         text: "You want to delete this course",
@@ -1130,11 +1178,27 @@ export default {
         reverseButtons: true,
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire("Deleted!", "Course has been deleted.", "success");
+          let api =
+            process.env.VUE_APP_API_URL +
+            "talent/" +
+            this.account_id +
+            "/course/" +
+            id;
+          this.$url
+            .delete(api)
+            .then(() => {
+              this.getProfile(false, false, true, false, false);
+              this.$toast.success(`Success! Course successfully deleted.`);
+            })
+            .catch(() => {
+              this.$toast.error(
+                `Error! An Error occured while deleting courses.`
+              );
+            });
         }
       });
     },
-    deleteEmployment() {
+    deleteEmployment(id) {
       Swal.fire({
         title: "Are you sure?",
         text: "You want to delete this employment",
@@ -1146,11 +1210,27 @@ export default {
         reverseButtons: true,
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire("Deleted!", "Employment has been deleted.", "success");
+          let api =
+            process.env.VUE_APP_API_URL +
+            "talent/" +
+            this.account_id +
+            "/employment/" +
+            id;
+          this.$url
+            .delete(api)
+            .then(() => {
+              this.getProfile(false, false, false, true, false);
+              this.$toast.success(`Success! Employment successfully deleted.`);
+            })
+            .catch(() => {
+              this.$toast.error(
+                `Error! An Error occured while deleting employment.`
+              );
+            });
         }
       });
     },
-    deleteProject() {
+    deleteProject(id) {
       Swal.fire({
         title: "Are you sure?",
         text: "You want to delete this project",
@@ -1162,7 +1242,23 @@ export default {
         reverseButtons: true,
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire("Deleted!", "Project has been deleted.", "success");
+          let api =
+            process.env.VUE_APP_API_URL +
+            "talent/" +
+            this.account_id +
+            "/projectexp/" +
+            id;
+          this.$url
+            .delete(api)
+            .then(() => {
+              this.getProfile(false, false, false, false, true);
+              this.$toast.success(`Success! Project successfully deleted.`);
+            })
+            .catch(() => {
+              this.$toast.error(
+                `Error! An Error occured while deleting project.`
+              );
+            });
         }
       });
     },

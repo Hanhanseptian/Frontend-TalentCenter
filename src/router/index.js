@@ -1,18 +1,20 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-// bizdev page
+
+// BIZDEV PAGE
 import Dashboard from "../views/pages/bizdev/Dashboard.vue";
 import TalentList from "../views/pages/bizdev/TalentList.vue";
 import RequestList from "../views/pages/bizdev/RequestList.vue";
 import DetailRequestList from "../views/pages/bizdev/DetailRequestList.vue";
 import TalentOnJob from "../views/pages/bizdev/TalentOnJob.vue";
-import ContractHistory from "../views/pages/bizdev/ContractHistory.vue";
-// recruiter page
+
+// RECRUITER PAGE
 import Home from "../views/pages/recruiter/Home.vue";
 import MyTalent from "../views/pages/recruiter/MyTalent.vue";
-import MyCart from "../views/pages/recruiter/MyCart.vue";
-// talent
-import ProfileTalent from "../views/pages/talent/Profile.vue";
+import MarkedTalent from "../views/pages/recruiter/MarkedTalent.vue";
+
+// TALENT PAGE
+import MyProfile from "../views/pages/talent/MyProfile.vue";
 
 Vue.use(VueRouter);
 
@@ -26,9 +28,9 @@ const routes = [
       access: 1,
     },
   },
-  // admin
+  // BIZDEV ROUTES
   {
-    path: "/admin/dashboard",
+    path: "/bizdev/dashboard",
     name: "Dashboard",
     component: Dashboard,
     meta: {
@@ -37,7 +39,7 @@ const routes = [
     },
   },
   {
-    path: "/admin/talent-list",
+    path: "/bizdev/talent-list",
     name: "Talent List",
     component: TalentList,
     meta: {
@@ -46,7 +48,7 @@ const routes = [
     },
   },
   {
-    path: "/admin/request-list",
+    path: "/bizdev/request-list",
     name: "Request List",
     component: RequestList,
     meta: {
@@ -55,7 +57,7 @@ const routes = [
     },
   },
   {
-    path: "/admin/detail-request-list",
+    path: "/bizdev/detail-request-list",
     name: "Request List",
     component: DetailRequestList,
     meta: {
@@ -64,7 +66,7 @@ const routes = [
     },
   },
   {
-    path: "/admin/talent-on-job",
+    path: "/bizdev/talent-on-job",
     name: "Talent on Job",
     component: TalentOnJob,
     meta: {
@@ -72,16 +74,8 @@ const routes = [
       access: 1,
     },
   },
-  {
-    path: "/admin/contract-history",
-    name: "Contract History",
-    component: ContractHistory,
-    meta: {
-      full: false,
-      access: 1,
-    },
-  },
-  // bizdev
+
+  // RECRUITER ROUTES
   {
     path: "/home",
     name: "Home",
@@ -92,9 +86,9 @@ const routes = [
     },
   },
   {
-    path: "/my-cart",
-    name: "My Cart",
-    component: MyCart,
+    path: "/marked-talent",
+    name: "Marked Talent",
+    component: MarkedTalent,
     meta: {
       full: false,
       access: 2,
@@ -109,17 +103,19 @@ const routes = [
       access: 2,
     },
   },
-  // talent
+
+  // TALENT ROUTES
   {
     path: "/talent-profile",
     name: "Profile Talent",
-    component: ProfileTalent,
+    component: MyProfile,
     meta: {
       full: false,
       access: 3,
     },
   },
-  // all user
+
+  // ALL USER
   {
     path: "/register",
     name: "Sign Up",
@@ -135,6 +131,18 @@ const routes = [
     meta: {
       full: true,
     },
+  },
+  {
+    path: "/error-404",
+    name: "Error 404",
+    component: () => import("../views/pages/Error404.vue"),
+    meta: {
+      full: true,
+    },
+  },
+  {
+    path: "*",
+    redirect: "error-404",
   },
 ];
 const router = new VueRouter({

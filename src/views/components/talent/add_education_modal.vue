@@ -6,17 +6,21 @@
     @hidden="resetModal"
     no-close-on-backdrop
   >
+    <!-- MODAL TITLE -->
     <template #modal-title>
       <span class="fs-18">
         <i class="bi bi bi-mortarboard"></i>
         Add New Education
       </span>
     </template>
+
+    <!-- MODAL ITEM -->
     <b-card no-body class="shadow p-2">
+      <!-- EDUCATION FORM -->
       <ValidationObserver v-slot="{ handleSubmit }">
-        <form @submit.prevent="handleSubmit(addToCart)">
+        <form @submit.prevent="handleSubmit(addEducation)">
+          <!-- EDUCATION SCHOOL -->
           <ValidationProvider rules="required" v-slot="{ errors }">
-            <!-- Education School -->
             <div class="mb-2">
               <label for="school" class="fs-12">
                 Education School <span class="text-danger">*</span>
@@ -38,8 +42,8 @@
               <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
             </span>
           </ValidationProvider>
+          <!-- EDUCATION DEGREE -->
           <ValidationProvider rules="required" v-slot="{ errors }">
-            <!-- Education Degree -->
             <div class="mb-2">
               <label for="dgree" class="fs-12">
                 Education Degree <span class="text-danger">*</span>
@@ -61,8 +65,8 @@
               <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
             </span>
           </ValidationProvider>
+          <!-- EDUCATION SUBJECT -->
           <ValidationProvider rules="required" v-slot="{ errors }">
-            <!-- Education Subject -->
             <div class="mb-2">
               <label for="subject" class="fs-12">
                 Education Subject <span class="text-danger">*</span>
@@ -84,8 +88,9 @@
               <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
             </span>
           </ValidationProvider>
-          <!-- Action Button -->
+          <!-- ACTION BUTTON -->
           <div class="d-flex mt-3">
+            <!-- CANCEL BUTTON -->
             <b-button
               size="xs"
               variant="danger"
@@ -94,13 +99,14 @@
             >
               <span>Cancel</span>
             </b-button>
+            <!-- SAVE BUTTON -->
             <b-button
               size="xs"
               variant="secondary"
               class="btn-talent"
               type="submit"
             >
-              <span>Save</span>
+              Save <b-spinner v-if="is_process" small></b-spinner>
             </b-button>
           </div>
         </form>
@@ -125,6 +131,8 @@ export default {
   },
   data() {
     return {
+      account_id: this.$store.getters.user.user_id,
+      is_process: false,
       education: {
         school: "",
         degree: "",
@@ -133,13 +141,33 @@ export default {
     };
   },
   methods: {
-    addToCart() {
-      alert("submitted");
-      this.closeModal();
+    addEducation() {
+      this.is_process = true;
+      let api =
+        process.env.VUE_APP_API_URL +
+        "talent/" +
+        this.account_id +
+        "/education";
+      this.$url
+        .post(api, this.education)
+        .then(() => {
+          this.$toast.success(`Success! Education successfully added.`);
+          this.$parent.getProfile(false, true, false, false, false);
+        })
+        .catch(() => {
+          this.$toast.error(`Error! An Error occured while adding education.`);
+        })
+        .finally(() => {
+          this.is_process = false;
+          this.closeModal();
+        });
     },
     resetModal() {
-      this.start_date = null;
-      this.end_date = null;
+      this.education = {
+        school: "",
+        degree: "",
+        subject: "",
+      };
     },
     closeModal() {
       this.resetModal();
@@ -148,16 +176,3 @@ export default {
   },
 };
 </script>
-<style scoped>
-.date-talent {
-  border-radius: 7px !important;
-  border-color: #0173a7 !important;
-  /* font-size: 16px !important; */
-  height: 2.5rem !important;
-  background-color: #eff2f4;
-}
-.date-talent:focus {
-  box-shadow: 2px 2px 2px #0173a7 !important;
-  border-color: none !important;
-}
-</style>

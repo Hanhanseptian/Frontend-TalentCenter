@@ -1,22 +1,26 @@
 <template>
   <b-modal
-    id="edit-employement-modal"
+    id="edit-employment-modal"
     size="md"
     hide-footer
     @hidden="resetModal"
     no-close-on-backdrop
   >
+    <!-- MODAL TITLE -->
     <template #modal-title>
       <span class="fs-18">
         <i class="bi bi bi-pencil-square"></i>
         Edit Employment
       </span>
     </template>
+
+    <!-- MODAL ITEM -->
     <b-card no-body class="shadow p-2">
+      <!-- EMPLOYMENT FOROM -->
       <ValidationObserver v-slot="{ handleSubmit }">
-        <form @submit.prevent="handleSubmit(addToCart)">
+        <form @submit.prevent="handleSubmit(updateEmployment)">
+          <!-- COMPANY NAME -->
           <ValidationProvider rules="required" v-slot="{ errors }">
-            <!-- Company Name -->
             <div class="mb-2">
               <label for="company_name" class="fs-12">
                 Company Name <span class="text-danger">*</span>
@@ -30,7 +34,7 @@
                   id="company_name"
                   class="input-talent ml-auto"
                   placeholder="Input Your Company Name"
-                  v-model="employement.company_name"
+                  v-model="employment.company_name"
                 />
               </div>
             </div>
@@ -38,8 +42,8 @@
               <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
             </span>
           </ValidationProvider>
+          <!-- WORK FROM -->
           <ValidationProvider rules="required" v-slot="{ errors }">
-            <!-- Work From -->
             <div class="mb-2">
               <label for="work-from" class="fs-12">
                 Work From <span class="text-danger">*</span>
@@ -58,7 +62,7 @@
                   }"
                   locale="en"
                   placeholder="Choose Work From"
-                  v-model="employement.work_from"
+                  v-model="employment.work_from"
                 ></b-form-datepicker>
               </div>
             </div>
@@ -66,11 +70,9 @@
               <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
             </span>
           </ValidationProvider>
-          <!-- Work Until -->
+          <!-- WORK UNTIL -->
           <div class="mb-2">
-            <label for="work-until" class="fs-12">
-              Work Until <span class="text-danger">*</span>
-            </label>
+            <label for="work-until" class="fs-12"> Work Until </label>
             <div class="d-flex">
               <div class="icon-talent d-flex p-0 form-control mr-1">
                 <i class="bi bi-calendar-fill mx-auto my-auto"></i>
@@ -85,12 +87,12 @@
                 }"
                 locale="en"
                 placeholder="Choose Work Until"
-                v-model="employement.work_until"
+                v-model="employment.work_until"
               ></b-form-datepicker>
             </div>
           </div>
+          <!-- ROLE -->
           <ValidationProvider rules="required" v-slot="{ errors }">
-            <!-- Role -->
             <div class="mb-2">
               <label for="role" class="fs-12">
                 Role <span class="text-danger">*</span>
@@ -104,7 +106,7 @@
                   id="role"
                   class="input-talent ml-auto"
                   placeholder="Input Your Role"
-                  v-model="employement.role"
+                  v-model="employment.role"
                 />
               </div>
             </div>
@@ -112,8 +114,9 @@
               <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
             </span>
           </ValidationProvider>
-          <!-- Action Button -->
+          <!-- ACTION BUTTON -->
           <div class="d-flex mt-3">
+            <!-- CANCEL BUTTON -->
             <b-button
               size="xs"
               variant="danger"
@@ -122,13 +125,14 @@
             >
               <span>Cancel</span>
             </b-button>
+            <!-- SAVE BUTTON -->
             <b-button
               size="xs"
               variant="secondary"
               class="btn-talent"
               type="submit"
             >
-              <span>Save</span>
+              Save <b-spinner v-if="is_process" small></b-spinner>
             </b-button>
           </div>
         </form>
@@ -153,7 +157,10 @@ export default {
   },
   data() {
     return {
-      employement: {
+      account_id: this.$store.getters.user.user_id,
+      _id: "",
+      is_process: false,
+      employment: {
         company_name: "",
         work_from: "",
         work_until: "",
@@ -162,31 +169,42 @@ export default {
     };
   },
   methods: {
-    addToCart() {
-      alert("submitted");
-      this.closeModal();
+    updateEmployment() {
+      this.is_process = true;
+      let api =
+        process.env.VUE_APP_API_URL +
+        "talent/" +
+        this.account_id +
+        "/employment/" +
+        this._id;
+      this.$url
+        .post(api, this.employment)
+        .then(() => {
+          this.$toast.success(`Success! Employment successfully updated.`);
+          this.$parent.getProfile(false, false, false, true, false);
+        })
+        .catch(() => {
+          this.$toast.error(
+            `Error! An Error occured while updating employment.`
+          );
+        })
+        .finally(() => {
+          this.is_process = false;
+          this.closeModal();
+        });
     },
     resetModal() {
-      this.start_date = null;
-      this.end_date = null;
+      this.employment = {
+        company_name: "",
+        work_from: "",
+        work_until: "",
+        role: "",
+      };
     },
     closeModal() {
       this.resetModal();
-      this.$bvModal.hide("add-employement-modal");
+      this.$bvModal.hide("edit-employment-modal");
     },
   },
 };
 </script>
-<style scoped>
-.date-talent {
-  border-radius: 7px !important;
-  border-color: #0173a7 !important;
-  /* font-size: 16px !important; */
-  height: 2.5rem !important;
-  background-color: #eff2f4;
-}
-.date-talent:focus {
-  box-shadow: 2px 2px 2px #0173a7 !important;
-  border-color: none !important;
-}
-</style>

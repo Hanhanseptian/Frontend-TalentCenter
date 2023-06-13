@@ -1,18 +1,23 @@
 <template>
   <b-modal id="edit-talent" size="md" hide-footer @hidden="closeModal">
+    <!-- MODAL TITLE -->
     <template #modal-title>
       <i class="bi bi bi-pencil-square"></i>
       Edit Talent
     </template>
+
+    <!-- MODAL ITEM -->
     <b-card no-body class="shadow p-3">
+      <!-- TALENT FORM -->
       <ValidationObserver v-slot="{ handleSubmit }">
-        <form @submit.prevent="handleSubmit(updateData)">
+        <form @submit.prevent="handleSubmit(updateTalent)">
+          <!-- ALERT WRONG EMAIL -->
           <b-alert :show="is_already_exist" variant="danger" class="p-2 fs-12">
             <i class="bi bi-exclamation-circle fs-14"></i>
             This Email is Already Exists!
           </b-alert>
+          <!-- FULL NAME -->
           <ValidationProvider rules="required" v-slot="{ errors }">
-            <!-- Full Name -->
             <div class="mb-2">
               <label for="school" class="fs-12">
                 Full Name <span class="text-danger">*</span>
@@ -34,8 +39,8 @@
               <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
             </span>
           </ValidationProvider>
+          <!-- EMAIL -->
           <ValidationProvider rules="required" v-slot="{ errors }">
-            <!-- Email -->
             <div class="mb-2">
               <label for="dgree" class="fs-12">
                 Email <span class="text-danger">*</span>
@@ -57,8 +62,8 @@
               <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
             </span>
           </ValidationProvider>
-          <ValidationProvider rules="required" v-slot="{ errors }">
-            <!-- Phone Number -->
+          <!-- PHONE NUMBER -->
+          <ValidationProvider rules="required|numeric" v-slot="{ errors }">
             <div class="mb-2">
               <label for="subject" class="fs-12">
                 Phone Number <span class="text-danger">*</span>
@@ -68,8 +73,9 @@
                   <i class="bi bi-telephone-fill mx-auto my-auto"></i>
                 </div>
                 <b-form-input
-                  type="number"
+                  type="text"
                   id="subject"
+                  maxLength="12"
                   class="input-talent ml-auto"
                   placeholder="Input Your Phone Number"
                   v-model="talent.phone_number"
@@ -80,8 +86,8 @@
               <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
             </span>
           </ValidationProvider>
+          <!-- COMPANY -->
           <ValidationProvider rules="required" v-slot="{ errors }">
-            <!-- Company -->
             <div class="mb-2">
               <label for="company" class="fs-12">
                 Company <span class="text-danger">*</span>
@@ -103,8 +109,8 @@
               <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
             </span>
           </ValidationProvider>
+          <!-- STATUS -->
           <ValidationProvider rules="required" v-slot="{ errors }">
-            <!-- Status -->
             <div class="mb-2">
               <label for="status" class="fs-12">
                 Status <span class="text-danger">*</span>
@@ -126,8 +132,9 @@
               <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
             </span>
           </ValidationProvider>
-          <!-- Action Button -->
+          <!-- ACTION BUTTON -->
           <div class="d-flex mt-3">
+            <!-- CANCEL BUTTON -->
             <b-button
               size="xs"
               variant="danger"
@@ -136,13 +143,15 @@
             >
               <span>Cancel</span>
             </b-button>
+            <!-- UPDATE BUTTON -->
             <b-button
               size="xs"
               variant="secondary"
               class="btn-talent"
               type="submit"
             >
-              <span>Update</span>
+              Update
+              <b-spinner class="ml-1" v-if="is_process" small></b-spinner>
             </b-button>
           </div>
         </form>
@@ -152,7 +161,7 @@
 </template>
 <script>
 import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
-import { required, email } from "vee-validate/dist/rules";
+import { required, email, numeric } from "vee-validate/dist/rules";
 
 extend("required", {
   ...required,
@@ -161,6 +170,10 @@ extend("required", {
 extend("email", {
   ...email,
   message: "This Email is Not Valid",
+});
+extend("numeric", {
+  ...numeric,
+  message: "This Fiels Must be a Number",
 });
 
 export default {
@@ -172,6 +185,7 @@ export default {
   data() {
     return {
       is_already_exist: false,
+      is_process: false,
       talent: {
         _id: "",
         full_name: "",
@@ -191,6 +205,7 @@ export default {
       status_options: [
         { value: "available", text: "Available" },
         { value: "not_available", text: "Not Available" },
+        { value: "on_job", text: "On Job" },
       ],
     };
   },
@@ -209,9 +224,27 @@ export default {
       this.resetModal();
       this.$bvModal.hide("edit-talent");
     },
-    updateData() {
-      this.$toast.success("Success! Talent has been updated.");
-      this.closeModal();
+    updateTalent() {
+      this.is_process = true;
+      let api =
+        process.env.VUE_APP_API_URL + "talent/" + this.talent._id + "/profile";
+      this.$url
+        .post(api, {
+          editor: "bizdev",
+          company: this.talent.company,
+          status: this.talent.status,
+        })
+        .then(() => {
+          this.$toast.success(`Success! Request successfully updated.`);
+          this.closeModal();
+        })
+        .catch(() => {
+          this.$toast.error(`Error! An Error Occured while updating data.`);
+        })
+        .finally(() => {
+          this.is_process = false;
+          this.$parent.getTalentList();
+        });
     },
   },
 };

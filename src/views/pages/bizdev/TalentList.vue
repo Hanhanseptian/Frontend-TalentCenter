@@ -7,49 +7,60 @@
       <i class="bi bi-chevron-right fs-14 mt-1"></i>
       <small class="fs-14 mt-1">Talent List</small>
     </div>
+
     <!-- MAIN CONTENT -->
     <b-card no-body>
-      <b-card-header>
-        <b-card-title class="d-flex align-items-center">
-          Talent List
-          <div class="ml-auto">
-            <button
-              class="btn btn-talent text-white shadow btn-sm rounded-talent"
-              @click="addData"
-            >
-              <i class="bi bi-person-plus-fill mr-1"></i>
-              <span>Add Talent</span>
-            </button>
-          </div>
-          <div class="ml-2">
-            <div class="input-group input-group-sm">
-              <span class="input-group-text bg-white">
-                <i class="bi bi-search fs-12"></i>
-              </span>
-              <input
-                type="text"
-                class="form-control form-talent"
-                placeholder="Search..."
-                v-model="data_table.filter"
-              />
-            </div>
-          </div>
+      <b-card-header class="d-flex align-items-center pt-4">
+        <!-- CARD TITLE -->
+        <b-card-title>
+          <span> <i class="bi bi-list-check"></i> Talent List </span> <br />
+          <span class="text-muted fs-14">Showing All of Available Talents</span>
         </b-card-title>
-        <span>Showing All of Available Talents</span>
+        <!-- ADD TALENT BUTTON -->
+        <div class="ml-auto">
+          <button
+            class="btn btn-talent text-white shadow btn-sm rounded-talent"
+            @click="addData"
+          >
+            <i class="bi bi-person-plus-fill mr-1"></i>
+            <span> Add Talent </span>
+          </button>
+        </div>
+        <!-- SEARCH INPUT -->
+        <div class="ml-2 w-25">
+          <div class="input-group">
+            <span class="input-group-text bg-white">
+              <i class="bi bi-search fs-12"></i>
+            </span>
+            <input
+              type="text"
+              class="form-control form-talent"
+              placeholder="Search..."
+              v-model="data_table.filter"
+            />
+          </div>
+        </div>
       </b-card-header>
+      <!-- CARD ITEM -->
       <div class="mt-3">
+        <!-- LOADER COMPONENT -->
         <loader-component v-if="is_loading" class="mb-5" />
+        <!-- TABLE COMPONENT -->
         <table-component
           v-else
           :data="data_table"
-          :deleteItem="deleteData"
+          :deleteItem="deleteTalent"
           :editItem="editData"
           :showDetail="showDetail"
         />
       </div>
     </b-card>
+
+    <!-- ADD TALENT MODAL COMPONENT -->
     <add-talent-component />
+    <!-- EDIT TALENT MODAL COMPONENT -->
     <edit-talent-component ref="edit_talent" />
+    <!-- DETAIL TALENT MODAL COMPONENT -->
     <detail-talent-component ref="detail_talent" />
   </div>
 </template>
@@ -132,10 +143,10 @@ export default {
     };
   },
   created() {
-    this.getData();
+    this.getTalentList();
   },
   methods: {
-    getData() {
+    getTalentList() {
       this.is_loading = true;
       this.$url
         .get("talent/all")
@@ -152,7 +163,7 @@ export default {
     addData() {
       this.$bvModal.show("add-talent");
     },
-    deleteData(id, name) {
+    deleteTalent(id, name) {
       Swal.fire({
         title: "Are you sure?",
         text: `You to delete "${name}" from Talent List.`,
@@ -164,11 +175,11 @@ export default {
         reverseButtons: true,
       }).then((result) => {
         if (result.isConfirmed) {
-          let api = process.env.VUE_APP_API_URL + "talent/delete/" + id;
+          let api = process.env.VUE_APP_API_URL + "talent/" + id + "/delete";
           this.$url
             .delete(api)
             .then(() => {
-              this.getData();
+              this.getTalentList();
               this.$toast.success(`Success! ${name} has been deleted.`);
             })
             .catch(() => {
@@ -188,7 +199,7 @@ export default {
       this.$bvModal.show("edit-talent");
     },
     showDetail(id) {
-      this.$refs.detail_talent.getData(id);
+      this.$refs.detail_talent.getDetailTalent(id);
       this.$bvModal.show("detail-talent-idtalent");
     },
   },

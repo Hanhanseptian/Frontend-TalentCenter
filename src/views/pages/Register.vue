@@ -1,21 +1,21 @@
 <template>
   <div class="login">
     <div class="login-form">
-      <!-- logo -->
+      <!-- APPS LOGO -->
       <div class="text-center">
         <img src="../../../public/logo.png" width="50%" class="my-4" />
       </div>
+
+      <!-- PIC INFORMATION FORM -->
       <ValidationObserver v-slot="{ handleSubmit }">
-        <!-- pic information -->
         <form
           v-if="!is_next_step"
           class="px-5"
           @submit.prevent="handleSubmit(nextStep)"
         >
-          <!-- pic information text -->
-          <center><span>PIC Information</span></center>
+          <div class="text-center">PIC Information</div>
+          <!-- FULL NAME -->
           <ValidationProvider rules="required" v-slot="{ errors }">
-            <!-- name -->
             <div class="mt-2">
               <label for="name" class="fs-12">
                 Full Name
@@ -38,8 +38,8 @@
               <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
             </span>
           </ValidationProvider>
+          <!-- EMAIL -->
           <ValidationProvider rules="required|email" v-slot="{ errors }">
-            <!-- email -->
             <div class="mt-2">
               <label for="email" class="fs-12">
                 Email <span class="text-danger">*</span>
@@ -61,8 +61,8 @@
               <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
             </span>
           </ValidationProvider>
+          <!-- PASSWORD -->
           <ValidationProvider rules="required" v-slot="{ errors }">
-            <!-- password -->
             <div class="mt-2">
               <label for="password" class="fs-12">
                 Password <span class="text-danger">*</span>
@@ -110,8 +110,8 @@
               <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
             </span>
           </ValidationProvider>
+          <!-- PHONE NUMER -->
           <ValidationProvider rules="required|numeric" v-slot="{ errors }">
-            <!-- telephone number -->
             <div class="mt-2">
               <label for="phone_number" class="fs-12">
                 Phone Number <span class="text-danger">*</span>
@@ -134,38 +134,36 @@
               <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
             </span>
           </ValidationProvider>
-          <!-- next step button -->
+          <!-- NEXT STEP BUTTON -->
           <button
             class="form-control mt-4 mb-1 text-center btn-login"
             type="submit"
           >
             Next Step
           </button>
-          <!-- to sign in link -->
-          <center>
-            <span class="fs-12">
-              Already have an Account?
-              <u
-                class="clickable link text-talent"
-                @click="$router.push('login')"
-              >
-                Sign In
-              </u>
-            </span>
-          </center>
+          <!-- TO SIGN IN BUTTON -->
+          <div class="fs-12 text-center">
+            Already have an Account?
+            <u
+              class="clickable link text-talent"
+              @click="$router.push('login')"
+            >
+              Sign In
+            </u>
+          </div>
         </form>
       </ValidationObserver>
+
+      <!-- COMPANY INFORMATION FORM -->
       <ValidationObserver v-slot="{ handleSubmit }">
-        <!-- company information -->
         <form
           v-if="is_next_step"
           class="px-5"
-          @submit.prevent="handleSubmit(setRegister)"
+          @submit.prevent="handleSubmit(registerAccount)"
         >
-          <!-- company information text -->
-          <center><span>Company Information</span></center>
+          <div class="text-center">Company Information</div>
+          <!-- COMPANY NAME -->
           <ValidationProvider rules="required" v-slot="{ errors }">
-            <!-- company name -->
             <div class="mt-2">
               <label for="company_name" class="fs-12">
                 Company Name <span class="text-danger">*</span>
@@ -187,7 +185,7 @@
               <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
             </span>
           </ValidationProvider>
-          <!-- company address -->
+          <!-- COMPANY ADDRESS -->
           <div class="mt-2">
             <label for="company_address" class="fs-12">Company Address</label>
             <div class="d-flex">
@@ -203,7 +201,7 @@
               />
             </div>
           </div>
-          <!-- company subject -->
+          <!-- COMPANY SUBJECT -->
           <div class="mt-2">
             <label for="company_subject" class="fs-12">Company Subject</label>
             <div class="d-flex">
@@ -219,7 +217,7 @@
               />
             </div>
           </div>
-          <!-- previous button -->
+          <!-- PREVIOUS BUTTON -->
           <div class="d-flex">
             <span
               class="fs-12 ml-auto clickable link text-talent mt-2"
@@ -228,25 +226,23 @@
               <i class="bi bi-chevron-double-left mx-auto my-auto"></i> Previous
             </span>
           </div>
-          <!-- sign up button -->
+          <!-- SIGN UP BUTTON -->
           <button
             class="form-control mt-3 mb-1 text-center btn-login"
             type="submit"
           >
             Sign Up <b-spinner v-if="is_loading" small></b-spinner>
           </button>
-          <!-- to sign in link -->
-          <center>
-            <span class="fs-12">
-              Already have an Account?
-              <u
-                class="clickable link text-talent"
-                @click="$router.push('login')"
-              >
-                Sign In
-              </u>
-            </span>
-          </center>
+          <!-- TO SIGN IN LINK -->
+          <div class="fs-12 text-center">
+            Already have an Account?
+            <u
+              class="clickable link text-talent"
+              @click="$router.push('login')"
+            >
+              Sign In
+            </u>
+          </div>
         </form>
       </ValidationObserver>
     </div>
@@ -281,7 +277,7 @@ export default {
       register: {
         name: "",
         email: "",
-        pasword: "",
+        password: "",
         phone_number: "",
         company_name: "",
         company_address: "",
@@ -290,7 +286,7 @@ export default {
     };
   },
   methods: {
-    setRegister() {
+    registerAccount() {
       this.is_loading = true;
       this.$url
         .post("account/register", {
@@ -380,8 +376,8 @@ export default {
 }
 @media only screen and (max-width: 600px) {
   .login-form {
-    height: 70%;
-    width: 75%;
+    height: 82%;
+    width: 85%;
   }
 }
 </style>

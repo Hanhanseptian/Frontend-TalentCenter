@@ -5,167 +5,358 @@
     hide-footer
     no-close-on-backdrop
   >
+    <!-- MODAL TITLE -->
     <template #modal-title>
       <span class="fs-18">
         <i class="bi bi bi-info-circle"></i>
         Talent Detail
       </span>
     </template>
-    <loader v-if="is_loading" />
+
+    <!-- LOADER COMPONENT -->
+    <loader-component v-if="is_loading" />
+
+    <!-- MODAL ITEM -->
     <div v-else class="row scroller">
       <div class="col-md-12 mb-4">
         <div class="row">
-          <!-- Profile -->
+          <!-- PROFILE -->
           <div class="col-md-6">
             <b-card no-body class="shadow p-2 h-100">
               <span>Profile</span>
               <div class="fs-12 mt-3">
-                <span>Full Name :</span>
-                <div class="mb-2 border shadow-sm p-2 rounded-lg">
-                  {{ talent_data.full_name }}
+                <!-- FULL NAME -->
+                <div>
+                  <span>Full Name :</span>
+                  <div class="mb-2 border shadow-sm p-2 rounded-lg">
+                    {{ talent_data.full_name }}
+                  </div>
                 </div>
-                <span>Descriptions :</span>
-                <div class="mb-2 border shadow-sm p-2 rounded-lg text-justify">
-                  {{ talent_data.description }}
+                <!-- DESCRIPTIONS -->
+                <div>
+                  <span>Descriptions :</span>
+                  <div
+                    v-if="talent_data.description"
+                    class="mb-2 border shadow-sm p-2 rounded-lg text-justify"
+                  >
+                    {{ talent_data.description }}
+                  </div>
+                  <div
+                    v-else
+                    class="mb-2 border shadow-sm p-2 rounded-lg text-muted"
+                  >
+                    -- Not Set --
+                  </div>
                 </div>
-                <span>Place of Birth :</span>
-                <div class="mb-2 border shadow-sm p-2 rounded-lg">
-                  {{ talent_data.place_of_birth }}
+                <!-- PLACE OF BIRTH -->
+                <div>
+                  <span>Place of Birth :</span>
+                  <div
+                    v-if="talent_data.place_of_birth"
+                    class="mb-2 border shadow-sm p-2 rounded-lg"
+                  >
+                    {{ talent_data.place_of_birth }}
+                  </div>
+                  <div
+                    v-else
+                    class="mb-2 border shadow-sm p-2 rounded-lg text-muted"
+                  >
+                    -- Not Set --
+                  </div>
                 </div>
-                <span>Date of Birth :</span>
-                <div class="mb-2 border shadow-sm p-2 rounded-lg">
-                  {{ parseDate(talent_data.date_of_birth) }}
+                <!-- DATE OF BIRTH -->
+                <div>
+                  <span>Date of Birth :</span>
+                  <div
+                    v-if="talent_data.date_of_birth"
+                    class="mb-2 border shadow-sm p-2 rounded-lg"
+                  >
+                    {{ parseDate(talent_data.date_of_birth) }}
+                  </div>
+                  <div
+                    v-else
+                    class="mb-2 border shadow-sm p-2 rounded-lg text-muted"
+                  >
+                    -- Not Set --
+                  </div>
                 </div>
-                <span>Gender :</span>
-                <div class="mb-2 border shadow-sm p-2 rounded-lg">
-                  {{ talent_data.gender == "male" ? "Male" : "Female" }}
+                <!-- GENDER -->
+                <div>
+                  <span>Gender :</span>
+                  <div
+                    v-if="talent_data.gender"
+                    class="mb-2 border shadow-sm p-2 rounded-lg"
+                  >
+                    {{ talent_data.gender == "male" ? "Male" : "Female" }}
+                  </div>
+                  <div
+                    v-else
+                    class="mb-2 border shadow-sm p-2 rounded-lg text-muted"
+                  >
+                    -- Not Set --
+                  </div>
                 </div>
-                <span>Health :</span>
-                <div class="mb-2 border shadow-sm p-2 rounded-lg">
-                  {{ talent_data.health }}
+                <!-- HEALTH -->
+                <div>
+                  <span>Health :</span>
+                  <div
+                    v-if="talent_data.health"
+                    class="mb-2 border shadow-sm p-2 rounded-lg"
+                  >
+                    {{ talent_data.health }}
+                  </div>
+                  <div
+                    v-else
+                    class="mb-2 border shadow-sm p-2 rounded-lg text-muted"
+                  >
+                    -- Not Set --
+                  </div>
                 </div>
-                <span>Religion :</span>
-                <div class="mb-2 border shadow-sm p-2 rounded-lg">
-                  {{ talent_data.religion }}
+                <!-- RELIGION -->
+                <div>
+                  <span>Religion :</span>
+                  <div
+                    v-if="talent_data.religion"
+                    class="mb-2 border shadow-sm p-2 rounded-lg"
+                  >
+                    {{ talent_data.religion }}
+                  </div>
+                  <div
+                    v-else
+                    class="mb-2 border shadow-sm p-2 rounded-lg text-muted"
+                  >
+                    -- Not Set --
+                  </div>
                 </div>
               </div>
             </b-card>
           </div>
-          <!-- Skills -->
+
+          <!-- SKILLS -->
           <div class="col-md-6">
             <b-card no-body class="shadow p-2 h-100">
               <span>Skills</span>
               <div class="fs-12 mt-3">
-                <span>Programming Language Skills:</span>
-                <div class="mb-2 border shadow-sm p-2 rounded-lg">
-                  <b-badge
-                    v-for="pro_lang in talent_data.hardskill[0]
-                      .programming_language"
-                    :key="pro_lang"
-                    class="mr-1 bg-talent p-1"
+                <!-- PROGRAMMING LANGUAGE SKILLS -->
+                <div>
+                  <span>Programming Language Skills:</span>
+                  <div
+                    v-if="talent_data.programming_language.length != 0"
+                    class="mb-2 border shadow-sm p-2 rounded-lg"
                   >
-                    {{ pro_lang }}
-                  </b-badge>
-                </div>
-                <span>Framework Skills :</span>
-                <div class="mb-2 border shadow-sm p-2 rounded-lg">
-                  <b-badge
-                    v-for="framework in talent_data.hardskill[0].framework"
-                    :key="framework"
-                    class="mr-1 bg-talent p-1"
+                    <b-badge
+                      v-for="pro_lang in talent_data.programming_language"
+                      :key="pro_lang"
+                      class="mr-1 bg-talent p-1"
+                    >
+                      {{ pro_lang }}
+                    </b-badge>
+                  </div>
+                  <div
+                    v-else
+                    class="mb-2 border shadow-sm p-2 rounded-lg text-muted"
                   >
-                    {{ framework }}
-                  </b-badge>
+                    -- Not Set --
+                  </div>
                 </div>
-                <span>Application Server Skills :</span>
-                <div class="mb-2 border shadow-sm p-2 rounded-lg">
-                  <b-badge
-                    v-for="app_server in talent_data.hardskill[0]
-                      .application_server"
-                    :key="app_server"
-                    class="mr-1 bg-talent p-1"
+                <!-- FRAMEWORK SKILLS -->
+                <div>
+                  <span>Framework Skills :</span>
+                  <div
+                    v-if="talent_data.framework.length != 0"
+                    class="mb-2 border shadow-sm p-2 rounded-lg"
                   >
-                    {{ app_server }}
-                  </b-badge>
-                </div>
-                <span>Database Skills :</span>
-                <div class="mb-2 border shadow-sm p-2 rounded-lg">
-                  <b-badge
-                    v-for="database in talent_data.hardskill[0].database"
-                    :key="database"
-                    class="mr-1 bg-talent p-1"
+                    <b-badge
+                      v-for="framework in talent_data.framework"
+                      :key="framework"
+                      class="mr-1 bg-talent p-1"
+                    >
+                      {{ framework }}
+                    </b-badge>
+                  </div>
+                  <div
+                    v-else
+                    class="mb-2 border shadow-sm p-2 rounded-lg text-muted"
                   >
-                    {{ database }}
-                  </b-badge>
+                    -- Not Set --
+                  </div>
                 </div>
-                <span>Operating System Skills :</span>
-                <div class="mb-2 border shadow-sm p-2 rounded-lg">
-                  <b-badge
-                    v-for="os in talent_data.hardskill[0].operating_system"
-                    :key="os"
-                    class="mr-1 bg-talent p-1"
+                <!-- APPLICATION SERVER SKILLS -->
+                <div>
+                  <span>Application Server Skills :</span>
+                  <div
+                    v-if="talent_data.application_server.length != 0"
+                    class="mb-2 border shadow-sm p-2 rounded-lg"
                   >
-                    {{ os }}
-                  </b-badge>
-                </div>
-                <span>Development Tool Skills :</span>
-                <div class="mb-2 border shadow-sm p-2 rounded-lg">
-                  <b-badge
-                    v-for="dev_tools in talent_data.hardskill[0]
-                      .development_tools"
-                    :key="dev_tools"
-                    class="mr-1 bg-talent p-1"
+                    <b-badge
+                      v-for="app_server in talent_data.application_server"
+                      :key="app_server"
+                      class="mr-1 bg-talent p-1"
+                    >
+                      {{ app_server }}
+                    </b-badge>
+                  </div>
+                  <div
+                    v-else
+                    class="mb-2 border shadow-sm p-2 rounded-lg text-muted"
                   >
-                    {{ dev_tools }}
-                  </b-badge>
+                    -- Not Set --
+                  </div>
                 </div>
-                <span>Language Skills :</span>
-                <div class="mb-2 border shadow-sm p-2 rounded-lg">
-                  <b-badge
-                    v-for="lang in talent_data.language"
-                    :key="lang"
-                    class="mr-1 bg-talent p-1"
+                <!-- DATABASE SKILLS -->
+                <div>
+                  <span>Database Skills :</span>
+                  <div
+                    v-if="talent_data.database.length != 0"
+                    class="mb-2 border shadow-sm p-2 rounded-lg"
                   >
-                    {{ lang }}
-                  </b-badge>
+                    <b-badge
+                      v-for="database in talent_data.database"
+                      :key="database"
+                      class="mr-1 bg-talent p-1"
+                    >
+                      {{ database }}
+                    </b-badge>
+                  </div>
+                  <div
+                    v-else
+                    class="mb-2 border shadow-sm p-2 rounded-lg text-muted"
+                  >
+                    -- Not Set --
+                  </div>
                 </div>
-                <span>Role :</span>
-                <div class="mb-2 border shadow-sm p-2 rounded-lg">
-                  {{ talent_data.role }} Developer
+                <!-- OPERATING SYSTEM SKILLS -->
+                <div>
+                  <span>Operating System Skills :</span>
+                  <div
+                    v-if="talent_data.operating_system.length != 0"
+                    class="mb-2 border shadow-sm p-2 rounded-lg"
+                  >
+                    <b-badge
+                      v-for="os in talent_data.operating_system"
+                      :key="os"
+                      class="mr-1 bg-talent p-1"
+                    >
+                      {{ os }}
+                    </b-badge>
+                  </div>
+                  <div
+                    v-else
+                    class="mb-2 border shadow-sm p-2 rounded-lg text-muted"
+                  >
+                    -- Not Set --
+                  </div>
                 </div>
-                <span>Work Experience :</span>
-                <div class="mb-2 border shadow-sm p-2 rounded-lg">
-                  {{ talent_data.work_experience }} Years
+                <!-- DEVELOPMENT TOOL SKILLS -->
+                <div>
+                  <span>Development Tool Skills :</span>
+                  <div
+                    v-if="talent_data.development_tools.length != 0"
+                    class="mb-2 border shadow-sm p-2 rounded-lg"
+                  >
+                    <b-badge
+                      v-for="dev_tools in talent_data.development_tools"
+                      :key="dev_tools"
+                      class="mr-1 bg-talent p-1"
+                    >
+                      {{ dev_tools }}
+                    </b-badge>
+                  </div>
+                  <div
+                    v-else
+                    class="mb-2 border shadow-sm p-2 rounded-lg text-muted"
+                  >
+                    -- Not Set --
+                  </div>
+                </div>
+                <!-- LANGUAGE SKILLS -->
+                <div>
+                  <span>Language Skills :</span>
+                  <div
+                    v-if="talent_data.language.length != 0"
+                    class="mb-2 border shadow-sm p-2 rounded-lg"
+                  >
+                    <b-badge
+                      v-for="lang in talent_data.language"
+                      :key="lang"
+                      class="mr-1 bg-talent p-1"
+                    >
+                      {{ lang }}
+                    </b-badge>
+                  </div>
+                  <div
+                    v-else
+                    class="mb-2 border shadow-sm p-2 rounded-lg text-muted"
+                  >
+                    -- Not Set --
+                  </div>
+                </div>
+                <!-- ROLE -->
+                <div>
+                  <span>Role :</span>
+                  <div
+                    v-if="talent_data.role"
+                    class="mb-2 border shadow-sm p-2 rounded-lg"
+                  >
+                    {{ talent_data.role }}
+                  </div>
+                  <div
+                    v-else
+                    class="mb-2 border shadow-sm p-2 rounded-lg text-muted"
+                  >
+                    -- Not Set --
+                  </div>
+                </div>
+                <!-- WORK EXPERIENCE -->
+                <div>
+                  <span>Work Experience :</span>
+                  <div
+                    v-if="talent_data.work_experience"
+                    class="mb-2 border shadow-sm p-2 rounded-lg"
+                  >
+                    {{ talent_data.work_experience }} Years
+                  </div>
+                  <div
+                    v-else
+                    class="mb-2 border shadow-sm p-2 rounded-lg text-muted"
+                  >
+                    -- Not Set --
+                  </div>
                 </div>
               </div>
             </b-card>
           </div>
         </div>
       </div>
+
+      <!-- EXPERIENCE ITEM -->
       <div class="col-md-12 mb-4">
-        <!-- Education -->
+        <!-- EDUCATION -->
         <b-card no-body class="shadow p-2 mb-4">
           <span>Education</span>
           <div class="mt-3 fs-12">
             <div class="mb-2 border shadow-sm p-2 rounded-lg">
+              <!-- TABLE COMPONENT -->
               <table-component :data="education_table" :no_pagination="true" />
             </div>
           </div>
         </b-card>
-        <!-- Course / Training -->
+        <!-- COURSE/TRAINING-->
         <b-card no-body class="shadow p-2 mb-4">
           <span>Course / Training</span>
           <div class="mt-3 fs-12">
             <div class="mb-2 border shadow-sm p-2 rounded-lg">
+              <!-- TABLE COMPONENT -->
               <table-component :data="course_table" :no_pagination="true" />
             </div>
           </div>
         </b-card>
-        <!-- Employment -->
+        <!-- EMPLOYMENT -->
         <b-card no-body class="shadow p-2 mb-4">
           <span>Employment</span>
           <div class="mt-3 fs-12">
             <div class="mb-2 border shadow-sm p-2 rounded-lg">
+              <!-- TABLE COMPONENT -->
               <table-component
                 :data="employment_table"
                 :no_pagination="true"
@@ -174,11 +365,12 @@
             </div>
           </div>
         </b-card>
-        <!-- Project Experience -->
+        <!-- PROJECT EXPERIENCE -->
         <b-card no-body class="shadow p-2">
           <span>Project Experience</span>
           <div class="mt-3 fs-12">
             <div class="mb-2 border shadow-sm p-2 rounded-lg">
+              <!-- TABLE COMPONENT -->
               <table-component :data="project_table" :no_pagination="true" />
             </div>
           </div>
@@ -195,7 +387,7 @@ export default {
   name: "detailTalentModal",
   components: {
     "table-component": table_component,
-    loader,
+    "loader-component": loader,
   },
   props: {
     id: {
@@ -310,92 +502,92 @@ export default {
             key: "name",
             label: "NAME",
             thClass: "fs-10 text-left bg-talent text-white p-2",
-            tdClass: " text-talent text-left fs-10",
+            tdClass: "text-left fs-10",
           },
           {
             key: "site",
             label: "SITE",
             thClass: "fs-10 text-left bg-talent text-white p-2",
-            tdClass: " text-talent text-center fs-10",
+            tdClass: "text-center fs-10",
           },
           {
             key: "project_start",
             label: "FROM",
             thClass: "fs-10 text-center bg-talent text-white p-2",
-            tdClass: " text-talent text-center fs-10",
+            tdClass: "text-center fs-10",
           },
           {
             key: "project_end",
             label: "TO",
             thClass: "fs-10 text-center bg-talent text-white p-2",
-            tdClass: " text-talent text-center fs-10",
+            tdClass: "text-center fs-10",
           },
           {
             key: "client",
             label: "CLIENT",
             thClass: "fs-10 text-left bg-talent text-white p-2",
-            tdClass: " text-talent text-left fs-10",
+            tdClass: "text-left fs-10",
             thStyle: "width:20rem !important",
           },
           {
             key: "description",
             label: "DESCRIPTIONS",
             thClass: "fs-10 text-left bg-talent text-white p-2",
-            tdClass: " text-talent text-left fs-10",
+            tdClass: "text-left fs-10",
           },
           {
             key: "app_type",
             label: "APP TYPE",
             thClass: "fs-10 text-left bg-talent text-white p-2",
-            tdClass: " text-talent text-left fs-10",
+            tdClass: "text-left fs-10",
           },
           {
             key: "dev_language",
             label: "DEV LANGUAGE",
             thClass: "fs-10 text-left bg-talent text-white p-2",
-            tdClass: " text-talent text-left fs-10",
+            tdClass: "text-left fs-10",
           },
           {
             key: "role",
             label: "ROLE",
             thClass: "fs-10 text-left bg-talent text-white p-2",
-            tdClass: " text-talent text-left fs-10",
+            tdClass: "text-left fs-10",
           },
           {
             key: "framework",
             label: "FRAMEWORK",
             thClass: "fs-10 text-left bg-talent text-white p-2",
-            tdClass: " text-talent text-left fs-10",
+            tdClass: "text-left fs-10",
           },
           {
             key: "dev_tools",
             label: "DEV TOOLS",
             thClass: "fs-10 text-left bg-talent text-white p-2",
-            tdClass: " text-talent text-left fs-10",
+            tdClass: "text-left fs-10",
           },
           {
             key: "server_os",
             label: "SERVER OS",
             thClass: "fs-10 text-left bg-talent text-white p-2",
-            tdClass: " text-talent text-left fs-10",
+            tdClass: "text-left fs-10",
           },
           {
             key: "database",
             label: "DATABASE",
             thClass: "fs-10 text-left bg-talent text-white p-2",
-            tdClass: " text-talent text-left fs-10",
+            tdClass: "text-left fs-10",
           },
           {
             key: "app_server",
             label: "APP SERVER",
             thClass: "fs-10 text-left bg-talent text-white p-2",
-            tdClass: " text-talent text-left fs-10",
+            tdClass: "text-left fs-10",
           },
           {
             key: "other_info",
             label: "OTHER INFO",
             thClass: "fs-10 text-left bg-talent text-white p-2",
-            tdClass: " text-talent text-left fs-10",
+            tdClass: "text-left fs-10",
           },
         ],
         items: null,
@@ -403,17 +595,17 @@ export default {
     };
   },
   methods: {
-    getData(id) {
+    getDetailTalent(id) {
       this.is_loading = true;
       let api = process.env.VUE_APP_API_URL + "talent/" + id;
       this.$url
         .get(api)
         .then((res) => {
-          this.talent_data = res.data.data.talent;
-          this.education_table.items = res.data.data.talent.education;
-          this.course_table.items = res.data.data.talent.courses;
-          this.employment_table.items = res.data.data.talent.employment;
-          this.project_table.items = res.data.data.talent.projectexperience;
+          this.talent_data = res.data.talent;
+          this.education_table.items = res.data.talent.education;
+          this.course_table.items = res.data.talent.courses;
+          this.employment_table.items = res.data.talent.employment;
+          this.project_table.items = res.data.talent.projectexperience;
         })
         .catch((err) => {
           console.log(err);
@@ -437,17 +629,6 @@ export default {
 };
 </script>
 <style scoped>
-.date-talent {
-  border-radius: 7px !important;
-  border-color: #0173a7 !important;
-  /* font-size: 16px !important; */
-  height: 2.5rem !important;
-  background-color: #eff2f4;
-}
-.date-talent:focus {
-  box-shadow: 2px 2px 2px #0173a7 !important;
-  border-color: none !important;
-}
 .scroller {
   max-height: 70vh;
   overflow: auto;

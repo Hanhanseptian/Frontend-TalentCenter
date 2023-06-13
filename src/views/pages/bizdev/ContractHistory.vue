@@ -9,41 +9,47 @@
     </div>
     <!-- MAIN CONTENT -->
     <b-card no-body>
-      <b-card-header>
-        <b-card-title class="d-flex align-items-center">
-          Contract History
-          <div class="ml-auto">
-            <div class="input-group input-group-sm">
-              <span class="input-group-text bg-white">
-                <i class="bi bi-search fs-12"></i>
-              </span>
-              <input
-                type="text"
-                class="form-control form-talent"
-                placeholder="Search..."
-                v-model="data_table.filter"
-              />
-            </div>
-          </div>
+      <b-card-header class="d-flex align-items-center pt-4">
+        <b-card-title>
+          <span> <i class="bi bi-x-circle"></i> Contract History </span> <br />
+          <span class="text-muted fs-14">
+            Showing Contract History of Talent
+          </span>
         </b-card-title>
-        <span>Showing Contract History of Talent</span>
+        <div class="ml-auto w-25">
+          <div class="input-group">
+            <span class="input-group-text bg-white">
+              <i class="bi bi-search fs-12"></i>
+            </span>
+            <input
+              type="text"
+              class="form-control form-talent"
+              placeholder="Search..."
+              v-model="data_table.filter"
+            />
+          </div>
+        </div>
       </b-card-header>
       <div class="mt-3">
-        <table-component striped hover :data="data_table" />
+        <loader v-if="is_loading" class="mb-5" />
+        <table-component v-else :data="data_table" />
       </div>
     </b-card>
   </div>
 </template>
 <script>
 import data_table from "../../components/data_table.vue";
+import loader from "../../components/loader.vue";
 
 export default {
   name: "ContractHistory",
   components: {
-    "table-component" : data_table,
+    "table-component": data_table,
+    loader,
   },
   data() {
     return {
+      is_loading: true,
       data_table: {
         row: 10,
         filter: "",
@@ -56,14 +62,14 @@ export default {
             thStyle: "background-color: #c1dbec;width:3%",
           },
           {
-            key: "company_name",
+            key: "recruiter",
             label: "RECRUITER NAME",
             thClass: "fs-14 text-left bg-talent text-white p-2",
             tdClass: "fs-14 text-left",
             thStyle: "background-color: #c1dbec;width:20%",
           },
           {
-            key: "talent_name",
+            key: "talent",
             label: "TALENT NAME",
             thClass: "fs-14 text-left bg-talent text-white p-2",
             tdClass: "fs-14 text-left",
@@ -84,7 +90,7 @@ export default {
             thStyle: "background-color: #c1dbec",
           },
           {
-            key: "type",
+            key: "status",
             label: "STATUS",
             thClass: "fs-14 text-center bg-talent text-white p-2",
             tdClass: "fs-14 text-center",
@@ -98,109 +104,28 @@ export default {
             thStyle: "background-color: #c1dbec;width:20%",
           },
         ],
-        items: [
-          {
-            id: 1,
-            company_name: "PT Len Indonesia",
-            talent_name: "Muhammad Hafidz",
-            work_from: "01 Januari 2023",
-            work_until: "13 Maret 2023",
-            type: "discontinue",
-            reason: "Not Dicipline",
-          },
-          {
-            id: 2,
-            company_name: "PT Len Indonesia",
-            talent_name: "Muhammad Hafidz",
-            work_from: "01 Januari 2023",
-            work_until: "13 Maret 2023",
-            type: "discontinue",
-            reason: "Not Dicipline",
-          },
-          {
-            id: 3,
-            company_name: "PT Len Indonesia",
-            talent_name: "Muhammad Hafidz",
-            work_from: "01 Januari 2023",
-            work_until: "13 Maret 2023",
-            type: "discontinue",
-            reason: "Not Dicipline",
-          },
-          {
-            id: 4,
-            company_name: "PT Len Indonesia",
-            talent_name: "Muhammad Hafidz",
-            work_from: "01 Januari 2023",
-            work_until: "13 Maret 2023",
-            type: "discontinue",
-            reason: "Not Dicipline",
-          },
-          {
-            id: 5,
-            company_name: "PT Len Indonesia",
-            talent_name: "Muhammad Hafidz",
-            work_from: "01 Januari 2023",
-            work_until: "13 Maret 2023",
-            type: "terminating",
-            reason: "Not Dicipline",
-          },
-          {
-            id: 6,
-            company_name: "PT Len Indonesia",
-            talent_name: "Muhammad Hafidz",
-            work_from: "01 Januari 2023",
-            work_until: "13 Maret 2023",
-            type: "discontinue",
-            reason: "Not Dicipline",
-          },
-          {
-            id: 7,
-            company_name: "PT Len Indonesia",
-            talent_name: "Muhammad Hafidz",
-            work_from: "01 Januari 2023",
-            work_until: "13 Maret 2023",
-            type: "terminating",
-            reason: "Not Dicipline",
-          },
-          {
-            id: 8,
-            company_name: "PT Len Indonesia",
-            talent_name: "Muhammad Hafidz",
-            work_from: "01 Januari 2023",
-            work_until: "13 Maret 2023",
-            type: "discontinue",
-            reason: "Not Dicipline",
-          },
-          {
-            id: 9,
-            company_name: "PT Len Indonesia",
-            talent_name: "Muhammad Hafidz",
-            work_from: "01 Januari 2023",
-            work_until: "13 Maret 2023",
-            type: "terminating",
-            reason: "Not Dicipline",
-          },
-          {
-            id: 10,
-            company_name: "PT Len Indonesia",
-            talent_name: "Muhammad Hafidz",
-            work_from: "01 Januari 2023",
-            work_until: "13 Maret 2023",
-            type: "discontinue",
-            reason: "Not Dicipline",
-          },
-          {
-            id: 11,
-            company_name: "PT Len Indonesia",
-            talent_name: "Muhammad Hafidz",
-            work_from: "01 Januari 2023",
-            work_until: "13 Maret 2023",
-            type: "discontinue",
-            reason: "Not Dicipline",
-          },
-        ],
+        items: [],
       },
     };
+  },
+  created() {
+    this.getData();
+  },
+  methods: {
+    getData() {
+      this.is_loading = true;
+      this.$url
+        .get("contract/history")
+        .then((res) => {
+          this.data_table.items = res.data.talents;
+        })
+        .catch(() => {
+          this.data_table.items = [];
+        })
+        .finally(() => {
+          this.is_loading = false;
+        });
+    },
   },
 };
 </script>

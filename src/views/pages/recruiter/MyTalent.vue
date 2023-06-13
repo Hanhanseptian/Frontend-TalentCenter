@@ -2,14 +2,20 @@
   <div id="recruiter-home">
     <div class="container">
       <b-card>
+        <!-- CARD TITLE -->
         <b-card-header>
           <b-card-title class="fs-20">
             <i class="bi bi-people-fill"></i> My Talent
           </b-card-title>
-          <span class="fs-14 text-muted">Showing History of Recruited Talents</span>
+          <span class="fs-14 text-muted"
+            >Showing History of Recruited Talents</span
+          >
         </b-card-header>
+
+        <!-- CARD ITEM -->
         <b-card-body>
           <div class="btn-group mb-3">
+            <!-- MY REQUEST TAB BUTTON -->
             <div
               class="btn btn-sm"
               :class="is_my_request ? 'btn-talent' : 'btn-outline-talent'"
@@ -17,6 +23,7 @@
             >
               My Request
             </div>
+            <!-- ON CONTRACT TAB BUTTON -->
             <div
               class="btn btn-sm"
               :class="is_on_contract ? 'btn-talent' : 'btn-outline-talent'"
@@ -24,35 +31,26 @@
             >
               On Contract
             </div>
-            <div
-              class="btn btn-sm"
-              :class="
-                is_terminate_contract ? 'btn-talent' : 'btn-outline-talent'
-              "
-              @click="changePage('terminate_contract')"
-            >
-              Contract History
-            </div>
           </div>
-          <MyRequest v-if="is_my_request" />
-          <OnContract v-else-if="is_on_contract" />
-          <ContractHistory v-else-if="is_terminate_contract" />
+
+          <!-- MY REQUEST TAB COMPONENT -->
+          <my-request-component v-if="is_my_request" />
+          <!-- ON CONTRACT TAB COMPONENT -->
+          <on-contract-component v-else-if="is_on_contract" />
         </b-card-body>
       </b-card>
     </div>
   </div>
 </template>
 <script>
-import OnContract from "./OnContract.vue";
 import MyRequest from "./MyRequest.vue";
-import ContractHistory from "./ContractHistory.vue";
+import OnContract from "./OnContract.vue";
 
 export default {
   name: "MyTalent",
   components: {
-    OnContract,
-    MyRequest,
-    ContractHistory,
+    "my-request-component": MyRequest,
+    "on-contract-component": OnContract,
   },
   data() {
     return {
@@ -66,15 +64,9 @@ export default {
       if (page == "my_request") {
         this.is_my_request = true;
         this.is_on_contract = false;
-        this.is_terminate_contract = false;
       } else if (page == "on_contract") {
         this.is_my_request = false;
         this.is_on_contract = true;
-        this.is_terminate_contract = false;
-      } else {
-        this.is_my_request = false;
-        this.is_on_contract = false;
-        this.is_terminate_contract = true;
       }
     },
   },

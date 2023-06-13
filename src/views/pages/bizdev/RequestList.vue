@@ -7,46 +7,54 @@
       <i class="bi bi-chevron-right fs-14 mt-1"></i>
       <small class="fs-14 mt-1">Request List</small>
     </div>
+
     <!-- MAIN CONTENT -->
     <b-card no-body>
-      <b-card-header>
-        <b-card-title class="d-flex align-items-center">
-          Request List
-          <div class="ml-auto">
-            <div class="input-group">
-              <span class="input-group-text bg-white">
-                <i class="bi bi-search fs-12"></i>
-              </span>
-              <input
-                type="text"
-                class="form-control form-talent-md"
-                placeholder="Search..."
-                v-model="data_table.filter"
-              />
-            </div>
-          </div>
+      <b-card-header class="d-flex align-items-center pt-4">
+        <!-- CARD TITLE -->
+        <b-card-title>
+          <span> <i class="bi bi-clipboard-check-fill"></i> Request List </span>
+          <br />
+          <span class="text-muted fs-14">Showing Recruiter Request List</span>
         </b-card-title>
-        <span class="text-muted">Showing Recruiter Request List</span>
+        <!-- SEARCH INPUT -->
+        <div class="ml-auto w-25">
+          <div class="input-group">
+            <span class="input-group-text bg-white">
+              <i class="bi bi-search fs-12"></i>
+            </span>
+            <input
+              type="text"
+              class="form-control form-talent"
+              placeholder="Search..."
+              v-model="data_table.filter"
+            />
+          </div>
+        </div>
       </b-card-header>
+      <!-- CARD ITEM -->
       <div class="mt-3">
-        <table-component
-          :data="data_table"
-          :showDetail="showDetail"
-        ></table-component>
+        <!-- LOADER COMPONENT -->
+        <loader-component v-if="is_loading" class="mb-5" />
+        <!-- TABLE COMPONENT -->
+        <table-component v-else :data="data_table" :showDetail="showDetail" />
       </div>
     </b-card>
   </div>
 </template>
 <script>
 import data_table from "../../components/data_table.vue";
+import loader from "../../components/loader.vue";
 
 export default {
   name: "RequestList",
   components: {
     "table-component": data_table,
+    "loader-component": loader,
   },
   data() {
     return {
+      is_loading: true,
       data_table: {
         row: 10,
         filter: "",
@@ -59,7 +67,7 @@ export default {
             thStyle: "width:3%",
           },
           {
-            key: "pic_name",
+            key: "full_name",
             label: "PIC NAME",
             thClass: "fs-14 text-left bg-talent text-white p-2",
             tdClass: " fs-14 text-left",
@@ -99,102 +107,33 @@ export default {
             thStyle: "width:15%",
           },
         ],
-        items: [
-          {
-            id: 1,
-            pic_name: "Dickerson",
-            company_name: "PT Jayandra",
-            company_subject: "Information Technology",
-            email: "recruiter@gmail.com",
-            phone_number: "082130123922",
-          },
-          {
-            id: 2,
-            pic_name: "Larsen",
-            company_name: "PT Jayandra",
-            company_subject: "Information Technology",
-            email: "recruiter@gmail.com",
-            phone_number: "082130123922",
-          },
-          {
-            id: 3,
-            pic_name: "Larsen",
-            company_name: "PT Jayandra",
-            company_subject: "Information Technology",
-            email: "recruiter@gmail.com",
-            phone_number: "082130123922",
-          },
-          {
-            id: 4,
-            pic_name: "Jami",
-            company_name: "CV Garuda Infinity",
-            company_subject: "Information Technology",
-            email: "recruiter@gmail.com",
-            phone_number: "082130123922",
-          },
-          {
-            id: 5,
-            pic_name: "Jami",
-            company_name: "Padepokan 79",
-            company_subject: "Information Technology",
-            email: "recruiter@gmail.com",
-            phone_number: "082130123922",
-          },
-          {
-            id: 6,
-            pic_name: "Jami",
-            company_name: "PT Jayandra",
-            company_subject: "Information Technology",
-            email: "recruiter@gmail.com",
-            phone_number: "082130123922",
-          },
-          {
-            id: 7,
-            pic_name: "Jami",
-            company_name: "PT Jayandra",
-            company_subject: "Information Technology",
-            email: "recruiter@gmail.com",
-            phone_number: "082130123922",
-          },
-          {
-            id: 8,
-            pic_name: "Jami",
-            company_name: "PT Jayandra",
-            company_subject: "Information Technology",
-            email: "recruiter@gmail.com",
-            phone_number: "082130123922",
-          },
-          {
-            id: 9,
-            pic_name: "Jami",
-            company_name: "PT Jayandra",
-            company_subject: "Information Technology",
-            email: "recruiter@gmail.com",
-            phone_number: "082130123922",
-          },
-          {
-            id: 10,
-            pic_name: "Jami",
-            company_name: "PT Jayandra",
-            company_subject: "Information Technology",
-            email: "recruiter@gmail.com",
-            phone_number: "082130123922",
-          },
-          {
-            id: 11,
-            pic_name: "Jami",
-            company_name: "PT Jayandra",
-            company_subject: "Information Technology",
-            email: "recruiter@gmail.com",
-            phone_number: "082130123922",
-          },
-        ],
+        items: [],
       },
     };
   },
+  created() {
+    this.getRequestList();
+  },
   methods: {
-    showDetail() {
-      this.$router.push("detail-request-list");
+    getRequestList() {
+      this.is_loading = true;
+      this.$url
+        .get("bizdev/request/waiting")
+        .then((res) => {
+          this.data_table.items = res.data.result;
+        })
+        .catch(() => {
+          this.data_table.items = [];
+        })
+        .finally(() => {
+          this.is_loading = false;
+        });
+    },
+    showDetail(id) {
+      this.$router.push({
+        path: "detail-request-list",
+        query: { id: btoa(id) },
+      });
     },
   },
 };

@@ -6,20 +6,24 @@
     @hidden="resetModal"
     no-close-on-backdrop
   >
+    <!-- MODAL TITLE -->
     <template #modal-title>
       <span class="fs-18">
         <i class="bi bi bi-person-square"></i>
         Add New Project Experience
       </span>
     </template>
+
+    <!-- MODAL ITEM -->
     <b-card no-body class="shadow p-2">
+      <!-- PROJECT EXPERIENCE FORM -->
       <ValidationObserver v-slot="{ handleSubmit }">
-        <form @submit.prevent="handleSubmit(addToCart)">
+        <form @submit.prevent="handleSubmit(addProject)">
           <div class="row">
-            <!-- Left Collumn -->
+            <!-- LEFT COLUMN -->
             <div class="col-md-6 col-sm-12">
+              <!-- PROJECT NAME -->
               <ValidationProvider rules="required" v-slot="{ errors }">
-                <!-- Project Name -->
                 <div class="mb-2">
                   <label for="project-name" class="fs-12">
                     Project Name <span class="text-danger">*</span>
@@ -41,7 +45,7 @@
                   <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
                 </span>
               </ValidationProvider>
-              <!-- Project Site -->
+              <!-- PROJECT SITE -->
               <div class="mb-2">
                 <label for="project-site" class="fs-12"> Project Site </label>
                 <div class="d-flex">
@@ -57,7 +61,7 @@
                   />
                 </div>
               </div>
-              <!-- Project From -->
+              <!-- PROJECT FROM -->
               <div class="mb-2">
                 <label for="project-from" class="fs-12"> Project From </label>
                 <div class="d-flex">
@@ -74,11 +78,11 @@
                     }"
                     locale="en"
                     placeholder="Choose Project Started"
-                    v-model="project.from"
+                    v-model="project.project_start"
                   ></b-form-datepicker>
                 </div>
               </div>
-              <!-- Project Until -->
+              <!-- PROJECT UNTIL -->
               <div class="mb-2">
                 <label for="project-until" class="fs-12"> Project Until </label>
                 <div class="d-flex">
@@ -95,11 +99,11 @@
                     }"
                     locale="en"
                     placeholder="Choose Project End"
-                    v-model="project.until"
+                    v-model="project.project_end"
                   ></b-form-datepicker>
                 </div>
               </div>
-              <!-- Client -->
+              <!-- CLIENT -->
               <div class="mb-2">
                 <label for="client" class="fs-12"> Client </label>
                 <div class="d-flex">
@@ -115,7 +119,7 @@
                   />
                 </div>
               </div>
-              <!-- App Type -->
+              <!-- APP TYPE -->
               <div class="mb-2">
                 <label for="app-type" class="fs-12"> App Type </label>
                 <div class="d-flex">
@@ -131,7 +135,7 @@
                   />
                 </div>
               </div>
-              <!-- Dev Language -->
+              <!-- DEV LANGUAGE -->
               <div class="mb-2">
                 <label for="dev-language" class="fs-12"> Dev Language </label>
                 <div class="d-flex">
@@ -147,7 +151,7 @@
                   />
                 </div>
               </div>
-              <!-- Role -->
+              <!-- ROLE -->
               <div class="mb-2">
                 <label for="role" class="fs-12"> Role </label>
                 <div class="d-flex">
@@ -165,9 +169,9 @@
               </div>
             </div>
 
-            <!-- Right Collumn -->
+            <!-- RIGHT COLUMN -->
             <div class="col-md-6 col-sm-12">
-              <!-- Framework -->
+              <!-- FRAMEWORK -->
               <div class="mb-2">
                 <label for="framework" class="fs-12"> Framework </label>
                 <div class="d-flex">
@@ -183,7 +187,7 @@
                   />
                 </div>
               </div>
-              <!-- Dev Tools -->
+              <!-- DEV TOOLS -->
               <div class="mb-2">
                 <label for="dev-tools" class="fs-12"> Dev Tools </label>
                 <div class="d-flex">
@@ -199,7 +203,7 @@
                   />
                 </div>
               </div>
-              <!-- Server OS -->
+              <!-- SERVER OS -->
               <div class="mb-2">
                 <label for="server-os" class="fs-12"> Server OS </label>
                 <div class="d-flex">
@@ -215,7 +219,7 @@
                   />
                 </div>
               </div>
-              <!-- Database -->
+              <!-- DATABASE -->
               <div class="mb-2">
                 <label for="database" class="fs-12"> Database </label>
                 <div class="d-flex">
@@ -231,7 +235,7 @@
                   />
                 </div>
               </div>
-              <!-- App Server -->
+              <!-- APP SERVER -->
               <div class="mb-2">
                 <label for="app-server" class="fs-12"> App Server </label>
                 <div class="d-flex">
@@ -247,7 +251,7 @@
                   />
                 </div>
               </div>
-              <!-- Descriptions -->
+              <!-- DESCRIPTIONS -->
               <div class="mb-2">
                 <label for="descriptions" class="fs-12"> Descriptions </label>
                 <div class="d-flex">
@@ -260,11 +264,11 @@
                     rows="4"
                     class="ml-auto input-area-talent"
                     placeholder="Input Project Descriptions"
-                    v-model="project.descriptions"
+                    v-model="project.description"
                   />
                 </div>
               </div>
-              <!-- Other Info -->
+              <!-- OTHER INFO -->
               <div class="mb-2">
                 <label for="other-info" class="fs-12"> Other Info </label>
                 <div class="d-flex">
@@ -283,9 +287,9 @@
               </div>
             </div>
           </div>
-
-          <!-- Action Button -->
+          <!-- ACTION BUTTON -->
           <div class="d-flex mt-3">
+            <!-- CANCEL BUTTON -->
             <b-button
               size="xs"
               variant="danger"
@@ -294,13 +298,14 @@
             >
               <span>Cancel</span>
             </b-button>
+            <!-- SAVE BUTTON -->
             <b-button
               size="xs"
               variant="secondary"
               class="btn-talent"
               type="submit"
             >
-              <span>Save</span>
+              Save <b-spinner v-if="is_process" small></b-spinner>
             </b-button>
           </div>
         </form>
@@ -325,12 +330,15 @@ export default {
   },
   data() {
     return {
+      account_id: this.$store.getters.user.user_id,
+      is_process: false,
       project: {
         name: "",
         site: "",
-        from: "",
-        until: "",
+        project_start: "",
+        project_end: "",
         client: "",
+        description: "",
         app_type: "",
         dev_language: "",
         role: "",
@@ -339,19 +347,66 @@ export default {
         server_os: "",
         database: "",
         app_server: "",
-        descriptions: "",
         other_info: "",
       },
     };
   },
   methods: {
-    addToCart() {
-      alert("submitted");
-      this.closeModal();
+    addProject() {
+      this.is_process = true;
+      let api =
+        process.env.VUE_APP_API_URL +
+        "talent/" +
+        this.account_id +
+        "/projectexp";
+      this.$url
+        .post(api, {
+          name: this.project.name,
+          site: this.project.site,
+          project_start: this.project.project_start,
+          project_end: this.project.project_end,
+          client: this.project.client,
+          description: this.project.description,
+          app_type: this.project.app_type,
+          dev_language: this.project.dev_language.split(","),
+          role: this.project.role,
+          framework: this.project.framework.split(","),
+          dev_tools: this.project.dev_tools.split(","),
+          server_os: this.project.server_os.split(","),
+          database: this.project.database.split(","),
+          app_server: this.project.app_server.split(","),
+          other_info: this.project.other_info,
+        })
+        .then(() => {
+          this.$toast.success(`Success! Project successfully added.`);
+          this.$parent.getProfile(false, false, false, false, true);
+        })
+        .catch(() => {
+          this.$toast.error(`Error! An Error occured while adding projecct.`);
+        })
+        .finally(() => {
+          this.is_process = false;
+          this.closeModal();
+        });
     },
     resetModal() {
-      this.start_date = null;
-      this.end_date = null;
+      this.project = {
+        name: "",
+        site: "",
+        project_start: "",
+        project_end: "",
+        client: "",
+        description: "",
+        app_type: "",
+        dev_language: "",
+        role: "",
+        framework: "",
+        dev_tools: "",
+        server_os: "",
+        database: "",
+        app_server: "",
+        other_info: "",
+      };
     },
     closeModal() {
       this.resetModal();
@@ -360,16 +415,3 @@ export default {
   },
 };
 </script>
-<style scoped>
-.date-talent {
-  border-radius: 7px !important;
-  border-color: #0173a7 !important;
-  /* font-size: 16px !important; */
-  height: 2.5rem !important;
-  background-color: #eff2f4;
-}
-.date-talent:focus {
-  box-shadow: 2px 2px 2px #0173a7 !important;
-  border-color: none !important;
-}
-</style>

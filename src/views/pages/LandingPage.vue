@@ -1,14 +1,18 @@
 <template>
   <div class="landing-page bg-info">
     <div class="d-flex nav">
+      <!-- APPS LOGO -->
       <img src="../../../public/logo.png" class="logo" />
-      <span class="text-white ml-auto btn-hover" @click="$router.push('login')"
-        >Sign In</span
-      >
-      <span class="text-white ml-3 btn-hover" @click="$router.push('register')"
-        >Sign Up</span
-      >
+      <!-- SIGN IN MENU -->
+      <span class="text-white ml-auto btn-hover" @click="$router.push('login')">
+        Sign In
+      </span>
+      <!-- SIGN UP MENU -->
+      <span class="text-white ml-3 btn-hover" @click="$router.push('register')">
+        Sign Up
+      </span>
     </div>
+    <!-- BODY PAGE -->
     <div class="text-white text-landing text-justify">
       Find the professional “Talent” for your success IT project
     </div>
@@ -19,21 +23,21 @@
           <div class="icon-container">
             <i class="bi bi-card-checklist fs-26 m-auto icon-get"></i>
           </div>
-          <span class="ml-2 fs-20"
-            >Set Your <br />
-            Requirements</span
-          >
+          <span class="ml-2 fs-20">
+            Set Your <br />
+            Requirements
+          </span>
         </div>
       </div>
       <div class="col-4">
         <div class="d-flex align-items-center text-white">
           <div class="icon-container">
-            <i class="bi bi-cart-plus fs-26 icon-get"></i>
+            <i class="bi bi-bookmark-fill fs-26 icon-get"></i>
           </div>
-          <span class="ml-2 fs-20"
-            >Add Talents <br />
-            to Cart</span
-          >
+          <span class="ml-2 fs-20">
+            Mark Selected <br />
+            Talent
+          </span>
         </div>
       </div>
       <div class="col-4">
@@ -41,16 +45,17 @@
           <div class="icon-container">
             <i class="bi bi-check2-square fs-26 m-auto icon-get"></i>
           </div>
-          <span class="ml-2 fs-20"
-            >Checkout Your <br />
-            Request</span
-          >
+          <span class="ml-2 fs-20">
+            Send Your <br />
+            Request
+          </span>
         </div>
       </div>
     </div>
+    <!-- JAYANDRA'S CONTACT -->
     <div class="footer text-white">
       <i class="bi bi-telephone fs-20 mr-2"></i>
-      <span class="mr-4 text-footer">Call Center : (021) 12345</span>
+      <span class="mr-4 text-footer">Call Center : (021) 3244-0093</span>
       <i class="bi bi-envelope fs-20 mr-2"></i>
       <span class="text-footer">Email : jayandracompany@gmail.com</span>
       <i class="bi bi-facebook fs-26 ml-auto text-facebook"></i>
@@ -159,7 +164,7 @@ export default {
     padding-left: 5%;
     padding-right: 5%;
   }
-  .row-get{
+  .row-get {
     padding-left: 5%;
     padding-right: 5%;
   }

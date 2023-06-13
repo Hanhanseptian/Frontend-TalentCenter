@@ -282,6 +282,31 @@
 .custom-select:focus {
   box-shadow: 2px 2px 2px #0173a7 !important;
 }
+/* custom checkbox */
+input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+}
+input[type="checkbox"] + label::before {
+  content: "";
+  display: inline-block;
+  border: 2px solid #ccc;
+  background-color: #fff;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+input[type="checkbox"]:checked + label::before {
+  background-color: #0173a7 !important;
+}
+
+input[type="checkbox"] + label::before {
+  border-color: #17a2b8 !important;
+}
+
+input[type="checkbox"]:checked + label::before {
+  border-color: #17a2b8 !important;
+}
+/* end custom checkbox */
 .page-link {
   background-color: #c1dbec !important;
   color: #0173a7 !important;

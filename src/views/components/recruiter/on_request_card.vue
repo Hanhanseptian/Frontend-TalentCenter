@@ -1,51 +1,51 @@
 <template>
   <div id="on-request-card">
-    <!-- talent card -->
     <b-card no-body class="shadow-sm border p-3">
-      <!-- identity -->
+      <!-- IDENTITY -->
       <div class="d-flex">
         <i class="bi bi-person-circle fs-30"></i>
         <div class="ml-2">
-          <!-- talent name -->
-          <span class="fs-14"> {{ data.talent_name }} </span>
-          <!-- type contract -->
+          <!-- FULL NAME -->
+          <span class="fs-14"> {{ data.full_name }} </span>
+          <!-- CONTRACT TYPE -->
           <span class="fs-12 ml-1">
             <b-badge
               style="position: absolute"
-              :variant="data.type == 'extend_contract' ? 'warning' : 'success'"
+              :variant="data.type == 'new_contract' ? 'success' : 'warning'"
             >
               {{
-                data.type == "extend_contract"
-                  ? "Extend Contract"
-                  : "New Contract"
+                data.type == "new_contract" ? "New Contract" : "Extend Contract"
               }}
             </b-badge>
           </span>
           <br />
-          <!-- role -->
+          <!-- ROLE -->
           <div class="fs-12">
             <i class="bi bi-toggles2"></i>
-            Frontend Developer
+            {{ data.role }}
           </div>
         </div>
-        <!-- status -->
+        <!-- REJECTED STATUS -->
         <span
           v-if="data.status == 'rejected'"
           class="text-danger ml-auto fs-14"
         >
           Rejected
         </span>
+        <!-- WAITING STATUS -->
         <span v-else class="text-talent ml-auto fs-14"> Waiting </span>
       </div>
-      <!-- Work From -->
+
+      <!-- REQUEST WORK DATE -->
       <div class="d-flex align-items-center mt-2">
+        <!-- WORK FROM -->
         <div class="mr-2 w-50">
           <label for="work-from" class="fs-12">Work From</label>
           <b-form-datepicker
             id="work-from"
             size="sm"
             class="mb-2 form-date-talent"
-            v-model="data.start_date"
+            v-model="data.work_from"
             :date-format-options="{
               year: 'numeric',
               month: 'long',
@@ -55,14 +55,14 @@
             disabled
           ></b-form-datepicker>
         </div>
-        <!-- Work Until -->
+        <!-- WORK UNTIL -->
         <div class="w-50">
           <label for="work-until" class="fs-12">Work Until</label>
           <b-form-datepicker
             id="work-until"
             size="sm"
             class="mb-2 form-date-talent"
-            v-model="data.end_date"
+            v-model="data.work_until"
             :date-format-options="{
               year: 'numeric',
               month: 'long',
@@ -73,12 +73,15 @@
           ></b-form-datepicker>
         </div>
       </div>
-      <!-- cancel button -->
+
+      <!-- ACTION BUTTON -->
       <div class="ml-auto">
+        <!-- VIEW DETAIL BUTTON -->
         <b-button size="xs" variant="warning" class="mr-1" @click="viewDetail">
           <i class="bi bi-info-circle mr-1"></i>
           <small>View Detail</small>
         </b-button>
+        <!-- DELETE REQUEST BUTTON -->
         <b-button
           v-if="data.status == 'rejected'"
           size="xs"
@@ -88,18 +91,22 @@
           <i class="bi bi-trash mr-1"></i>
           <small>Delete</small>
         </b-button>
+        <!-- CANCEL REQUEST BUTTON -->
         <b-button v-else size="xs" variant="danger" @click="cancelRequest">
           <i class="bi bi-x-circle mr-1"></i>
           <small>Cancel</small>
         </b-button>
       </div>
-      <!-- rejected reason info -->
-      <div class="text-danger fs-12" v-if="data.status == 'rejected'">
+      
+      <!-- REJECTED REASON INFORMATION -->
+      <div class="text-danger fs-12 mt-2" v-if="data.status == 'rejected'">
         <i class="bi bi-exclamation-circle"></i>
         {{ data.reason ? data.reason : "-" }}
       </div>
     </b-card>
-    <detail-talent-component :id="data.id" />
+
+    <!-- DETAIL TALENT MODAL COMPONENT -->
+    <detail-talent-component :id="data.id_talent" ref="detail_talent" />
   </div>
 </template>
 <script>
@@ -114,9 +121,15 @@ export default {
   props: {
     data: Object,
   },
+  data() {
+    return {
+      account_id: this.$store.getters.user.user_id,
+    };
+  },
   methods: {
     viewDetail() {
-      this.$bvModal.show("detail-talent-" + this.data.id.toString());
+      this.$refs.detail_talent.getDetailTalent(this.data.id_talent);
+      this.$bvModal.show("detail-talent-" + this.data.id_talent);
     },
     cancelRequest() {
       Swal.fire({
@@ -130,7 +143,28 @@ export default {
         reverseButtons: true,
       }).then((result) => {
         if (result.isConfirmed) {
-          this.$toast.success("Success! Request has been canceled.");
+          let api =
+            process.env.VUE_APP_API_URL +
+            "request/" +
+            this.account_id +
+            "/delete";
+          this.$url
+            .post(api, {
+              talents: [
+                {
+                  talent_id: this.data.id_talent,
+                },
+              ],
+            })
+            .then(() => {
+              this.$toast.success("Success! Request has been canceled.");
+              this.$parent.getRequest();
+            })
+            .catch(() => {
+              this.$toast.error(
+                "Error! An Error occured while canceling data."
+              );
+            });
         }
       });
     },
@@ -146,7 +180,28 @@ export default {
         reverseButtons: true,
       }).then((result) => {
         if (result.isConfirmed) {
-          this.$toast.success("Success! Request has been deleted.");
+          let api =
+            process.env.VUE_APP_API_URL +
+            "request/" +
+            this.account_id +
+            "/delete";
+          this.$url
+            .post(api, {
+              talents: [
+                {
+                  talent_id: this.data.id_talent,
+                },
+              ],
+            })
+            .then(() => {
+              this.$toast.success("Success! Request has been canceled.");
+              this.$parent.getRequest();
+            })
+            .catch(() => {
+              this.$toast.error(
+                "Error! An Error occured while canceling data."
+              );
+            });
         }
       });
     },

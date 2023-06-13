@@ -6,17 +6,21 @@
     @hidden="resetModal"
     no-close-on-backdrop
   >
+    <!-- MODAL TITLE -->
     <template #modal-title>
       <span class="fs-18">
         <i class="bi bi bi-pencil-square"></i>
         Edit Course / Training
       </span>
     </template>
+
+    <!-- MODAL ITEM -->
     <b-card no-body class="shadow p-2">
+      <!-- COURSE FORM -->
       <ValidationObserver v-slot="{ handleSubmit }">
-        <form @submit.prevent="handleSubmit(addToCart)">
+        <form @submit.prevent="handleSubmit(updateCourse)">
+          <!-- TITLE -->
           <ValidationProvider rules="required" v-slot="{ errors }">
-            <!-- Title -->
             <div class="mb-2">
               <label for="title" class="fs-12">
                 Title <span class="text-danger">*</span>
@@ -38,8 +42,8 @@
               <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
             </span>
           </ValidationProvider>
+          <!-- PROVIDER -->
           <ValidationProvider rules="required" v-slot="{ errors }">
-            <!-- Provider -->
             <div class="mb-2">
               <label for="provider" class="fs-12">
                 Provider <span class="text-danger">*</span>
@@ -61,8 +65,8 @@
               <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
             </span>
           </ValidationProvider>
+          <!-- DATE -->
           <ValidationProvider rules="required" v-slot="{ errors }">
-            <!-- Date -->
             <div class="mb-2">
               <label for="date" class="fs-12">
                 Date <span class="text-danger">*</span>
@@ -89,8 +93,8 @@
               <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
             </span>
           </ValidationProvider>
+          <!-- DURATION -->
           <ValidationProvider rules="required" v-slot="{ errors }">
-            <!-- Duration -->
             <div class="mb-2">
               <label for="duration" class="fs-12">
                 Duration <span class="text-danger">*</span>
@@ -112,8 +116,9 @@
               <i class="bi bi-exclamation-circle mr-1"></i> {{ errors[0] }}
             </span>
           </ValidationProvider>
-          <!-- Action Button -->
+          <!-- ACTION BUTTON -->
           <div class="d-flex mt-3">
+            <!-- CANCEL BUTTON -->
             <b-button
               size="xs"
               variant="danger"
@@ -122,13 +127,14 @@
             >
               <span>Cancel</span>
             </b-button>
+            <!-- SAVE BUTTON -->
             <b-button
               size="xs"
               variant="secondary"
               class="btn-talent"
               type="submit"
             >
-              <span>Save</span>
+              Save <b-spinner v-if="is_process" small></b-spinner>
             </b-button>
           </div>
         </form>
@@ -153,6 +159,9 @@ export default {
   },
   data() {
     return {
+      account_id: this.$store.getters.user.user_id,
+      _id: "",
+      is_process: false,
       course: {
         title: "",
         provider: "",
@@ -162,31 +171,40 @@ export default {
     };
   },
   methods: {
-    addToCart() {
-      alert("submitted");
-      this.closeModal();
+    updateCourse() {
+      this.is_process = true;
+      let api =
+        process.env.VUE_APP_API_URL +
+        "talent/" +
+        this.account_id +
+        "/course/" +
+        this._id;
+      this.$url
+        .post(api, this.course)
+        .then(() => {
+          this.$toast.success(`Success! Course successfully updated.`);
+          this.$parent.getProfile(false, false, true, false, false);
+        })
+        .catch(() => {
+          this.$toast.error(`Error! An Error occured while updating courses.`);
+        })
+        .finally(() => {
+          this.is_process = false;
+          this.closeModal();
+        });
     },
     resetModal() {
-      this.start_date = null;
-      this.end_date = null;
+      this.course = {
+        title: "",
+        provider: "",
+        date: "",
+        duration: "",
+      };
     },
     closeModal() {
       this.resetModal();
-      this.$bvModal.hide("add-course-modal");
+      this.$bvModal.hide("edit-course-modal");
     },
   },
 };
 </script>
-<style scoped>
-.date-talent {
-  border-radius: 7px !important;
-  border-color: #0173a7 !important;
-  /* font-size: 16px !important; */
-  height: 2.5rem !important;
-  background-color: #eff2f4;
-}
-.date-talent:focus {
-  box-shadow: 2px 2px 2px #0173a7 !important;
-  border-color: none !important;
-}
-</style>
